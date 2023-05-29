@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/api")
 public class ScheduleController {
-    @GetMapping("/schedules")
-    public String getAllSchedules(@RequestParam Long movieNumber,
-                                  @RequestParam String screeningDate){
-
-    }
+//    @GetMapping("/schedules")
+//    public String getAllSchedules(@RequestParam Long movieNumber,
+//                                  @RequestParam String screeningDate){
+//
+//    }
 
 }
