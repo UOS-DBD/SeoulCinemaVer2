@@ -12,6 +12,7 @@ public class ScheduleController {
     public String getAllSchedules(@RequestParam Long movieNumber,
                                   @RequestParam String screeningDate){
 
+        return "schedule";
     }
 
 }
