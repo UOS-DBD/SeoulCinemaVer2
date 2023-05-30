@@ -12,9 +12,10 @@
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <!--        <link th:href="@{css/styles.css}" rel="stylesheet" />-->
-    <link href="../static/css/styles.css" rel="stylesheet" />
-    <link href="../static/css/login.css" rel="stylesheet" />
+            <link th:href="@{css/styles.css}" rel="stylesheet" />
+    <link th:href="@{css/login.css}" rel="stylesheet" />
+<!--    <link href="../static/css/styles.css" rel="stylesheet" />-->
+<!--    <link href="../static/css/login.css" rel="stylesheet" />-->
 </head>
 <body>
 <!-- Navigation-->
@@ -65,9 +66,6 @@
     </div>
 </header>
 <!-- Section-->
-<a href="https://front.codes/" class="logo" target="_blank">
-    <img src="https://assets.codepen.io/1462889/fcy.png" alt="">
-</a>
 
 <div class="section">
     <div class="container">
@@ -83,15 +81,17 @@
                                 <div class="center-wrap">
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Log In</h4>
-                                        <div class="form-group">
-                                            <input type="email" name="logemail" class="form-style" placeholder="ID" id="logemail" autocomplete="off">
-                                            <i class="input-icon uil uil-at"></i>
-                                        </div>
-                                        <div class="form-group mt-2">
-                                            <input type="password" name="logpass" class="form-style" placeholder="PASSWORD" id="logpass" autocomplete="off">
-                                            <i class="input-icon uil uil-lock-alt"></i>
-                                        </div>
-                                        <a href="#" class="btn mt-4">submit</a>
+                                        <form th:action="@{/api/auth/login}" method="post">
+                                            <div class="form-group">
+                                                <input type="email" name="logemail" class="form-style" placeholder="ID" id="logemail" autocomplete="off" th:value="${logindto.id}>
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="logpass" class="form-style" placeholder="PASSWORD" id="logpass" autocomplete="off" th:value="${logindto.password}">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <a href="#" class="btn mt-4">submit</a>
+                                        </form>
                                         <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
                                     </div>
                                 </div>
