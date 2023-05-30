@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     TARGET_ENUM_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 코드에 맞는 enum 데이터가 없습니다."),
-    TARGET_CODE_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 enum에 맞는 코드 데이터가 없습니다.");
+    TARGET_CODE_NOT_FOUND(HttpStatus.NOT_FOUND,"해당 enum에 맞는 코드 데이터가 없습니다."),
+    DUPLICATE_ID_ERROR(HttpStatus.CONFLICT, "중복된 ID입니다.");
+
     private HttpStatus status;
     private String desc;
 

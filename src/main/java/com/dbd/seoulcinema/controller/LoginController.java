@@ -4,11 +4,11 @@ import com.dbd.seoulcinema.dto.LoginDto;
 import com.dbd.seoulcinema.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,27 +22,25 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping(value = "/api/auth/login")
-    public ModelAndView loginCheck(@ModelAttribute LoginDto loginDto, HttpSession session){
+    @PostMapping(value = "/api/auth/login")
+    public String loginCheck(@ModelAttribute LoginDto loginDto, HttpSession session, Model model){
         String userId = loginService.login(loginDto, session);
-        ModelAndView mav = new ModelAndView();
 
         if(userId != null){ // 로그인 성공
-             mav.setViewName("index");
+            model.addAttribute("success", "true");
+            return "index";
         }
         else{
-            mav.setViewName("login");
-            mav.addObject("message", "error");
+            model.addAttribute("success", "false");
+            return "login";
         }
-        return mav;
     }
 
-    @GetMapping("/api/auth/logout")
-    public ModelAndView logout(ModelAndView mav, HttpSession session){
+    @PostMapping("/api/auth/logout")
+    public String logout(Model model, HttpSession session){
         loginService.logout(session);
-        mav.setViewName("index");
-        mav.addObject("message", "logout");
-        return mav;
+        model.addAttribute("success", "true");
+        return "index";
     }
 
 }
