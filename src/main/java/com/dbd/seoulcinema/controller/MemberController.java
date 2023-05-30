@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signUp(){
+        return "signup";
+    }
+
     @GetMapping("/api/members/dup/{id}") // 아이디 중복 확인
     public String checkDuplicateId(@PathVariable String id){
         memberService.checkDuplicateId(id);
