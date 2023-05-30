@@ -4271,7 +4271,9 @@ textarea.form-control-lg {
 }
 
 .card-img,
-.card-img-top,
+.card-img-top {
+    height: 250px;
+}
 .card-img-bottom {
   width: 100%;
 }
