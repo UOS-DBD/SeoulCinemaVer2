@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.security.auth.login.FailedLoginException;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import static com.dbd.seoulcinema.global.exception.ErrorCode.DUPLICATE_ID_ERROR;
 import static com.dbd.seoulcinema.global.exception.ErrorCode.LOGIN_FAILED;
@@ -24,19 +25,23 @@ public class LoginController {
     private final LoginService loginService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(){
+    public String login(Model model){
+        model.addAttribute("formData", new LoginDto());
         return "login";
     }
 
     @PostMapping(value = "/api/auth/login")
-    public String loginCheck(@ModelAttribute LoginDto loginDto, HttpSession session, Model model){
+    public String loginCheck(@ModelAttribute("formData") @Valid LoginDto loginDto, HttpSession session, Model model){
+        System.out.println("this is logincheck");
         String userId = loginService.login(loginDto, session);
 
         if(userId != null){ // 로그인 성공
+            System.out.println("login success");
             model.addAttribute("success", "true");
-            return "index";
+            return "home";
         }
         else{
+            System.out.println("login failed");
             model.addAttribute("success", "false");
             model.addAttribute("exception", new LoginFailedException(LOGIN_FAILED));
             return "login";
@@ -47,7 +52,7 @@ public class LoginController {
     public String logout(Model model, HttpSession session){
         loginService.logout(session);
         model.addAttribute("success", "true");
-        return "index";
+        return "home";
     }
 
 }
