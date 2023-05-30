@@ -27,7 +27,7 @@ public class Movie {
     @Column(name = "MOVIE_NUMBER")
     private Long movieMovie;
 
-    @Column(name = "MOVIE_NAME", length = 30)
+    @Column(name = "MOVIE_NAME", length = 100)
     private String movieName;
 
     @Column(name = "RUNNING_TIME", length = 5)
