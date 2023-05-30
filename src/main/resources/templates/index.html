@@ -6,13 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Shop Homepage - Start Bootstrap Template</title>
+        <title>Seoul-Cinema</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link th:href="@{css/styles.css}" rel="stylesheet" />
+
+<!--        테스트용-->
+        <link href="../static/css/styles.css" rel="stylesheet" />
+<!--        배포용-->
+        <!--<link th:href="@{/css/styles.css}" rel="stylesheet" />-->
+
     </head>
     <body>
         <!-- Navigation-->
@@ -22,34 +27,15 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">영화</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                                <li><a class="dropdown-item" href="#!">전체영화</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">큐레이션</a></li>
-                                <li><a class="dropdown-item" href="#!">무비포스트</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">예매</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">극장</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">이벤트</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">진행중이벤트</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" href="#!">영화</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">예매</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">이벤트</a></li>
                     </ul>
-                    <form class="d-flex">
+                    <a class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            로그인
                         </button>
-                    </form>
+                    </a>
                 </div>
             </div>
         </nav>
@@ -74,7 +60,7 @@
                             <div class="card-body p-4">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">범죄도시3</h5>
+                                    <h5 class="fw-bolder"></h5>
                                     <!-- Product price-->
                                     $40.00 - $80.00
                                 </div>
