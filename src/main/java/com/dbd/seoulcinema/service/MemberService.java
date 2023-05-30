@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Book;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -17,16 +20,23 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public void checkDuplicateId(String id) {
+    public Boolean checkDuplicateId(String id) {
         Optional<Member> userId = memberRepository.findById(id);
 
-        if(userId.isPresent()) { // 사용 불가능한 아이디인 경우
-            throw new DuplicateIdException(ErrorCode.DUPLICATE_ID_ERROR);
+        if(userId.isEmpty()) { // 사용 불가능한 아이디인 경우
+            return Boolean.TRUE;
+        }
+        else{
+            return Boolean.FALSE;
         }
     }
 
     @Transactional
     public void createMember(CreateMemberDto createMemberDto) {
+        String birth = createMemberDto.getBirth();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(birth, formatter);
+        memberRepository.save(createMemberDto.toEntitiy(createMemberDto, localDate));
 
     }
 }

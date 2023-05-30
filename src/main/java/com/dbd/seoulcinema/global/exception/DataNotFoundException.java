@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public class    DataNotFoundException extends CustomException {
+public class DataNotFoundException extends CustomException {
 
     public DataNotFoundException(ErrorCode errorCode) {
         super(errorCode);
