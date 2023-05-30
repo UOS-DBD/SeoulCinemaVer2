@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.security.auth.login.FailedLoginException;
 import javax.servlet.http.HttpSession;
@@ -31,20 +32,21 @@ public class LoginController {
     }
 
     @PostMapping(value = "/api/auth/login")
-    public String loginCheck(@ModelAttribute("formData") @Valid LoginDto loginDto, HttpSession session, Model model){
+    public RedirectView loginCheck(@ModelAttribute("formData") @Valid LoginDto loginDto, HttpSession session, Model model){
         System.out.println("this is logincheck");
         String userId = loginService.login(loginDto, session);
 
         if(userId != null){ // 로그인 성공
             System.out.println("login success");
             model.addAttribute("success", "true");
-            return "home";
+            //return "redirect:home";
+            return new RedirectView("/home");
         }
         else{
             System.out.println("login failed");
             model.addAttribute("success", "false");
             model.addAttribute("exception", new LoginFailedException(LOGIN_FAILED));
-            return "login";
+            return new RedirectView("/login");
         }
     }
 
