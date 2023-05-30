@@ -26,12 +26,12 @@ class MovieTest {
     void injectMovieData(){
 
         em.persist(Movie.builder()
-                .movieName("영화1")
-                .runningTime("02:30")
-                .movieGenre(MovieGenre.SF)
+                .movieName("범죄도시3")
+                .runningTime("02:08")
+                .movieGenre(MovieGenre.ACTION)
                 .movieGrade(MovieGrade.ADULT)
-                .movieIntroduction("영화1설명")
-                .movieImage("static/img/영화1.png")
+                .movieIntroduction("마동석 나오는 범죄자 잡는 영화입니다.")
+                .movieImage("static/assets/img/범죄도시3.png")
                 .screeningStatus(ScreeningStatus.SHOWING)
                 .build());
         em.persist(Movie.builder()
