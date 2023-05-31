@@ -24,9 +24,9 @@ import lombok.NoArgsConstructor;
 @Getter
 public class Ticket {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
     @Column(name = "TICKET_NUMBER")
-    private Long ticketNumber;
+    private String ticketNumber;
 
     @Column(name = "TICKETING_STATUS")
     private TicketingStatus ticketingStatus;
