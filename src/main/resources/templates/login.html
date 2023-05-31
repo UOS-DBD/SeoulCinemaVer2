@@ -101,23 +101,25 @@
                                 <div class="center-wrap">
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Sign Up</h4>
-                                        <div class="form-group">
-                                            <input type="text" name="logname" class="form-style" placeholder="ID" id="logname" autocomplete="off">
-                                            <i class="input-icon uil uil-user"></i>
-                                        </div>
-                                        <div class="form-group mt-2">
-                                            <input type="email" name="logemail" class="form-style" placeholder="PASSWORD" id="logemail" autocomplete="off">
-                                            <i class="input-icon uil uil-at"></i>
-                                        </div>
-                                        <div class="form-group mt-2">
-                                            <input type="password" name="logpass" class="form-style" placeholder="PHONE NUMBER(01012341234)" id="logpass" autocomplete="off">
-                                            <i class="input-icon uil uil-lock-alt"></i>
-                                        </div>
-                                        <div class="form-group mt-2">
-                                            <input type="password" name="logpass" class="form-style" placeholder="BIRTHDAY(2000-01-01)" id="logpass" autocomplete="off">
-                                            <i class="input-icon uil uil-lock-alt"></i>
-                                        </div>
-                                        <a href="#" class="btn mt-4">submit</a>
+                                        <form th:action="@{/api/members" method="post" th:object="${signup}">
+                                            <div class="form-group">
+                                                <input type="text" name="clientId" class="form-style" placeholder="ID" id="clientId" autocomplete="off" th:field="*{clientId}">
+                                                <i class="input-icon uil uil-user"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="email" name="password" class="form-style" placeholder="PASSWORD" id="password" autocomplete="off" th:field="*{password}">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="phoneNumber" class="form-style" placeholder="PHONE NUMBER(01012341234)" id="phoneNumber" autocomplete="off" th:field="*{phoneNumber}">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="birth" class="form-style" placeholder="BIRTHDAY(2000-01-01)" id="birth" autocomplete="off" th:field="*{birth}">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <button class="btn mt-4">submit</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>

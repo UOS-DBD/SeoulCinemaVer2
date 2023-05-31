@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import static com.dbd.seoulcinema.global.exception.ErrorCode.DUPLICATE_ID_ERROR;
 
@@ -29,9 +30,9 @@ public class MemberController {
     }
 
     @PostMapping("/api/members")
-    public String createMember(@ModelAttribute CreateMemberDto createMemberDto, Model model){
+    public RedirectView createMember(@ModelAttribute("signup") CreateMemberDto createMemberDto, Model model){
         memberService.createMember(createMemberDto);
         model.addAttribute("success", "true");
-        return "login";
+        return new RedirectView("/login");
     }
 }

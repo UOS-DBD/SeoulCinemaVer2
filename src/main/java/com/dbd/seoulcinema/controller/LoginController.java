@@ -1,5 +1,6 @@
 package com.dbd.seoulcinema.controller;
 
+import com.dbd.seoulcinema.dto.CreateMemberDto;
 import com.dbd.seoulcinema.dto.LoginDto;
 import com.dbd.seoulcinema.global.exception.DuplicateIdException;
 import com.dbd.seoulcinema.global.exception.LoginFailedException;
@@ -28,6 +29,7 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model){
         model.addAttribute("formData", new LoginDto());
+        model.addAttribute("signup", new CreateMemberDto());
         return "login";
     }
 
