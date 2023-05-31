@@ -13,8 +13,10 @@ public class NonMemberService {
 
     @Transactional
     public void createNonmember(String phoneNumber) {
+        System.out.println("service start");
         nonmemberRepository.save(NonMember.builder()
                 .phoneNumber(phoneNumber)
                 .build());
+        System.out.println("service end");
     }
 }

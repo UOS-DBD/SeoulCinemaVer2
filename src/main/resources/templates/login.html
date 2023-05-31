@@ -13,7 +13,7 @@
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-            <link th:href="@{css/styles.css}" rel="stylesheet" />
+    <link th:href="@{css/styles.css}" rel="stylesheet" />
     <link th:href="@{css/login.css}" rel="stylesheet" />
 <!--    <link href="../static/css/styles.css" rel="stylesheet" />-->
 <!--    <link href="../static/css/login.css" rel="stylesheet" />-->
@@ -101,21 +101,21 @@
                                 <div class="center-wrap">
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Sign Up</h4>
-                                        <form th:action="@{/api/members" method="post" th:object="${signup}">
+                                        <form th:action="@{/api/members}" method="post" th:object="${signup}">
                                             <div class="form-group">
                                                 <input type="text" name="clientId" class="form-style" placeholder="ID" id="clientId" autocomplete="off" th:field="*{clientId}">
                                                 <i class="input-icon uil uil-user"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="email" name="password" class="form-style" placeholder="PASSWORD" id="password" autocomplete="off" th:field="*{password}">
+                                                <input type="password" name="password" class="form-style" placeholder="PASSWORD" id="password" autocomplete="off" th:field="*{password}">
                                                 <i class="input-icon uil uil-at"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="password" name="phoneNumber" class="form-style" placeholder="PHONE NUMBER(01012341234)" id="phoneNumber" autocomplete="off" th:field="*{phoneNumber}">
+                                                <input type="text" name="phoneNumber" class="form-style" placeholder="PHONE NUMBER(01012341234)" id="phoneNumber" autocomplete="off" th:field="*{phoneNumber}">
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="password" name="birth" class="form-style" placeholder="BIRTHDAY(2000-01-01)" id="birth" autocomplete="off" th:field="*{birth}">
+                                                <input type="text" name="birth" class="form-style" placeholder="BIRTHDAY(2000-01-01)" id="birth" autocomplete="off" th:field="*{birth}">
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
                                             <button class="btn mt-4">submit</button>
