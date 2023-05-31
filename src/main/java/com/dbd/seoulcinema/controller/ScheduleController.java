@@ -1,35 +1,44 @@
 package com.dbd.seoulcinema.controller;
 
+import com.dbd.seoulcinema.domain.entity.Movie;
+import com.dbd.seoulcinema.service.MovieService;
 import com.dbd.seoulcinema.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 
 @Controller
-@RequestMapping("/api")
 @RequiredArgsConstructor
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
+    private final MovieService movieService;
+
 
     @GetMapping("/schedules")
-    public String getAllSchedules(@RequestParam(required = false) Long movieNumber,
-                                  @RequestParam(required = false) String screeningDate){
+    public String showSchedulesForm(Model model){
+        List<Movie> movies = movieService.getAllMovies();
+        model.addAttribute("movies", movies);
+        model.addAttribute("date", new Date());
+        return "schedule";
+    }
 
-        if(movieNumber==null && screeningDate==null){
-            //예외처리
-        }else if(movieNumber == null && screeningDate != null){
-            // 상영하는 영화를 보여줘
+    @PostMapping("/api/schedules")
+    public String processSchedulesForm(@RequestParam(required = false) Long movieNumber,
+                                  @RequestParam(required = false) LocalDate screeningDate){
 
-        }else if(movieNumber != null && screeningDate == null){
-            // 영화의 상영일정들을 보여줘
+        if(movieNumber == null){
+            // 이 날에 상영하는 영화를 보여줘
 
         }else{ //둘다 널이 아닐 시에
-            //
 
         }
 
