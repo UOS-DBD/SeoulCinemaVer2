@@ -16,18 +16,18 @@ import static com.dbd.seoulcinema.global.exception.ErrorCode.DUPLICATE_ID_ERROR;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/api/members/dup/{id}") // 아이디 중복 확인
-    public String checkDuplicateId(@PathVariable String id, Model model){
-        Boolean tf = memberService.checkDuplicateId(id);
-        if(tf){
-            model.addAttribute("success", "true");
-        }
-        else{
-            model.addAttribute("success", "false");
-            model.addAttribute("exception", new DuplicateIdException(DUPLICATE_ID_ERROR));
-        }
-        return "signup";
-    }
+//    @GetMapping("/api/members/dup/{id}") // 아이디 중복 확인
+//    public String checkDuplicateId(@PathVariable String id, Model model){
+//        Boolean tf = memberService.checkDuplicateId(id);
+//        if(tf){
+//            model.addAttribute("success", "true");
+//        }
+//        else{
+//            model.addAttribute("success", "false");
+//            model.addAttribute("exception", new DuplicateIdException(DUPLICATE_ID_ERROR));
+//        }
+//        return "signup";
+//    }
 
     @PostMapping("/api/members")
     public RedirectView createMember(@ModelAttribute("signup") CreateMemberDto createMemberDto, Model model){
