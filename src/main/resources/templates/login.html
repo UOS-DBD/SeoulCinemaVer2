@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Seoul-Cinema</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link th:href="@{css/styles.css}" rel="stylesheet" />
+    <link th:href="@{css/login.css}" rel="stylesheet" />
+<!--    <link href="../static/css/styles.css" rel="stylesheet" />-->
+<!--    <link href="../static/css/login.css" rel="stylesheet" />-->
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">Seoul Cinema</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">영화</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                        <li><a class="dropdown-item" href="#!">전체영화</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">큐레이션</a></li>
+                        <li><a class="dropdown-item" href="#!">무비포스트</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">예매</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">극장</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">이벤트</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">진행중이벤트</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <button class="btn btn-outline-dark" type="submit">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Seoul Cinema</h1>
+            <p class="lead fw-normal text-white-50 mb-0">데이터베이스 설계 수업</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+
+<div class="section">
+    <div class="container">
+        <div class="row full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                    <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+                    <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+                    <label for="reg-log"></label>
+                    <div class="card-3d-wrap mx-auto">
+                        <div class="card-3d-wrapper">
+                            <div class="card-front">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">Log In</h4>
+                                        <form th:action="@{/api/auth/login}" method="post" th:object="${formData}">
+                                            <div class="form-group">
+                                                <input class="form-style" placeholder="ID" id="id" autocomplete="off" th:field="*{id}">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" class="form-style" placeholder="PASSWORD" id="password" autocomplete="off" th:field="*{password}">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <button type="submit" class="btn mt-4">submit</button>
+                                        </form>
+                                        <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">Sign Up</h4>
+                                        <form th:action="@{/api/members}" method="post" th:object="${signup}">
+                                            <div class="form-group">
+                                                <input type="text" name="clientId" class="form-style" placeholder="ID" id="clientId" autocomplete="off" th:field="*{clientId}">
+                                                <i class="input-icon uil uil-user"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="password" class="form-style" placeholder="PASSWORD" id="password" autocomplete="off" th:field="*{password}">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="text" name="phoneNumber" class="form-style" placeholder="PHONE NUMBER(01012341234)" id="phoneNumber" autocomplete="off" th:field="*{phoneNumber}">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="text" name="birth" class="form-style" placeholder="BIRTHDAY(2000-01-01)" id="birth" autocomplete="off" th:field="*{birth}">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <button class="btn mt-4">submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script th:src="@{js/scripts.js}"></script>
+</body>
+</html>
