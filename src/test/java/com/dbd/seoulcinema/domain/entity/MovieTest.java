@@ -80,12 +80,12 @@ class MovieTest {
                 .screeningStatus(ScreeningStatus.N)
                 .build());
         em.persist(Movie.builder()
-                .movieName("스즈메의문단속")
+                .movieName("스즈메의 문단속")
                 .runningTime("02:23")
                 .movieGenre(MovieGenre.COMEDY)
                 .movieGrade(MovieGrade.ALL)
                 .movieIntroduction("문단속을 생활화합시다.")
-                .movieImage("static/assets/img/스즈메의문단속.png")
+                .movieImage("static/assets/img/스즈메의 문단속.png")
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
         em.persist(Movie.builder()
