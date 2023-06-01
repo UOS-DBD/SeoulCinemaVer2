@@ -19,6 +19,6 @@ import lombok.NoArgsConstructor;
 public class NonMember {
 
     @Id
-    @Column(name = "REGISTRATION_NUMBER",length = 20)
-    private String registrationNumber;
+    @Column(name = "PHONE_NUMBER",length = 20)
+    private String phoneNumber;
 }
