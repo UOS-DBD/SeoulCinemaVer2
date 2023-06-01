@@ -1,5 +1,6 @@
 package com.dbd.seoulcinema.domain.entity;
 
+import com.dbd.seoulcinema.domain.enumeration.TicketingStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
@@ -32,5 +33,18 @@ class TheaterTest {
         em.persist(theater);
         em.flush();
         em.clear();
+    }
+
+    @Test
+    void  selectSeat(){
+
+        Member member = em.find(Member.class, "mim501");
+
+        em.persist(Ticket.builder()
+                .ticketingStatus(TicketingStatus.Y)
+                .standardPrice(20000L)
+                .member(member)
+                .build());
+        em.flush();
     }
 }
