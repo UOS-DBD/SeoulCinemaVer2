@@ -1,15 +1,11 @@
 package com.dbd.seoulcinema.domain.entity;
 
-import java.time.LocalDate;
-import javax.persistence.*;
-
 import com.dbd.seoulcinema.domain.enumeration.ClientGrade;
 import com.dbd.seoulcinema.global.utils.ClientGradeConverter;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "MEMBER")

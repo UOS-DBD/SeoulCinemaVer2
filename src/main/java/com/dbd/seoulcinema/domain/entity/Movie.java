@@ -25,7 +25,7 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "MOVIE_NUMBER")
-    private Long movieMovie;
+    private Long movieNumber;
 
     @Column(name = "MOVIE_NAME", length = 100)
     private String movieName;

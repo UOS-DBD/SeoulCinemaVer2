@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ScheduleSeatId implements Serializable {
 
-    private String seatNumber;
+    private Long seatNumber;
 
     private String scheduleNumber;
 
