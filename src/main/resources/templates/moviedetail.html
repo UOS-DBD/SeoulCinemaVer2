@@ -14,7 +14,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
 
     <!--        테스트용-->
-<!--        <link href="../static/css/styles.css" rel="stylesheet" />-->
+    <!--        <link href="../static/css/styles.css" rel="stylesheet" />-->
     <!--        배포용-->
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link href="../static/css/movielist.css" rel="stylesheet">
@@ -128,54 +128,82 @@
 </header>
 <!-- Section-->
 <section class="py-5">
+    <h1 class="text-body-emphasis">Get started with Bootstrap</h1>
+    <p class="fs-5 col-md-8">Quickly and easily get started with Bootstrap's compiled, production-ready files with this barebones example featuring some basic HTML and helpful links. Download all our examples to get started.</p>
 
-<!--        <div class="container px-4 px-lg-5 mt-5">-->
-<!--            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">-->
-<!--                <div class="layout">-->
-<!--                    <table>-->
-<!--                        <thead>-->
-<!--                        <tr>-->
-<!--                            <th>포스터</th>-->
-<!--                            <th>제목</th>-->
-<!--                            <th>상영시간</th>-->
-<!--                            <th>장르</th>-->
-<!--                            <th>이용연령가</th>-->
-<!--                        </tr>-->
-<!--                        </thead>-->
-<!--                        <tbody>-->
-<!--                        <tr th:each = "movie : ${movies}">-->
-<!--                            <img class="card-img-top" th:src = "@{${movie.movieImage}}" alt="..." />-->
-<!--                            <td th:text="${movie.movieName}">영화제목</td>-->
-<!--                            <td th:text="${movie.runningTime}">상영시간</td>-->
-<!--                            <td th:text="${movie.movieGenre}">장르</td>-->
-<!--                            <td th:text="${movie.movieGrade}">이용연령가</td>-->
-<!--                        </tr>-->
-<!--                        </tbody>-->
-<!--                    </table>-->
-<!--                </div>-->
+    <div class="mb-5">
+        <a href="../examples/" class="btn btn-primary btn-lg px-4">Download examples</a>
+    </div>
 
-    <div class="album py-5 bg-body-tertiary">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <div class="col"  th:each = "movie : ${movies}">
-                    <div class="card shadow-sm" th:onclick="|location.href='@{/moive/detail(movieNumber=${movie.movieNumber})}'|">
-<!--                        <img class="card-img-top" src="../static/assets/img/범죄도시3.png" alt="..." />-->
-                        <img class="card-img-top" th:src = "@{${movie.movieImage}}" alt="..." />
-<!--                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" th:src = "@{${movie.movieImage}}"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
-<!--                        <img class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" th:src = "@{${movie.movieImage}}"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></img>-->
-                        <div class="card-body">
-                            <p class="card-text" th:text="${movie.movieName}">범죄도시3</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${movie.movieGenre}">액션</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${movie.movieGrade}">19세 이상 연령가</button>
-                                </div>
-                                <small class="text-body-secondary" th:text="${movie.runningTime}">02:08</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <hr class="col-3 col-md-2 mb-5">
+
+    <div class="row g-5">
+        <div class="col-md-6">
+            <h2 class="text-body-emphasis">Starter projects</h2>
+            <p>Ready to beyond the starter template? Check out these open source projects that you can quickly duplicate to a new GitHub repository.</p>
+            <ul class="list-unstyled ps-0">
+                <li>
+                    <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/icons-font" rel="noopener" target="_blank">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Bootstrap npm starter
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/parcel" rel="noopener" target="_blank">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Bootstrap Parcel starter
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/vite" rel="noopener" target="_blank">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Bootstrap Vite starter
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Bootstrap Webpack starter
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="text-body-emphasis">Guides</h2>
+            <p>Read more detailed instructions and documentation on using or contributing to Bootstrap.</p>
+            <ul class="list-unstyled ps-0">
+                <li>
+                    <a class="icon-link mb-1" href="../getting-started/introduction/">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Bootstrap quick start guide
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-link mb-1" href="../getting-started/webpack/">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Bootstrap Webpack guide
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-link mb-1" href="../getting-started/parcel/">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Bootstrap Parcel guide
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-link mb-1" href="../getting-started/vite/">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Bootstrap Vite guide
+                    </a>
+                </li>
+                <li>
+                    <a class="icon-link mb-1" href="../getting-started/contribute/">
+                        <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>
+                        Contributing to Bootstrap
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 
