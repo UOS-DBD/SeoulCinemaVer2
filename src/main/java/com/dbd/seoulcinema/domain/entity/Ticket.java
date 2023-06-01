@@ -1,20 +1,18 @@
 package com.dbd.seoulcinema.domain.entity;
 
 import com.dbd.seoulcinema.domain.enumeration.TicketingStatus;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "TICKET")
@@ -22,11 +20,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class Ticket {
+public class Ticket extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
     @Column(name = "TICKET_NUMBER")
-    private Long ticketNumber;
+    private String ticketNumber;
 
     @Column(name = "TICKETING_STATUS")
     private TicketingStatus ticketingStatus;
@@ -34,7 +32,15 @@ public class Ticket {
     @Column(name = "STANDARD_PRICE")
     private Long standardPrice;
 
-   /* @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_NUMBER")
-    private */
+    private Member member;
+
+    @Column(name = "MOVIE_NAME")
+    private String movieName;
+
+    @OneToMany(mappedBy = "ticket")
+    private List<ScheduleSeat> scheduleSeats = new ArrayList<>();
+
+
 }
