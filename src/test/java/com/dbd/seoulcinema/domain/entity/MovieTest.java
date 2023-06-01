@@ -31,7 +31,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.ACTION)
                 .movieGrade(MovieGrade.ADULT)
                 .movieIntroduction("마동석 나오는 범죄자 잡는 영화입니다.")
-                .movieImage("static/assets/img/범죄도시3.png")
+                .movieImage("/assets/img/범죄도시3.png")
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
         em.persist(Movie.builder()
@@ -40,7 +40,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.COMEDY)
                 .movieGrade(MovieGrade.ALL)
                 .movieIntroduction("아이유 박서준이 나오는 노숙자 축구단 이야기입니다.")
-                .movieImage("static/assets/img/드림.png")
+                .movieImage("/assets/img/드림.png")
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
         em.persist(Movie.builder()
@@ -49,7 +49,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.DRAMA)
                 .movieGrade(MovieGrade.ALL)
                 .movieIntroduction("강백호의 농구 이야기입니다.")
-                .movieImage("static/assets/img/더 퍼스트 슬램덩크.png")
+                .movieImage("/assets/img/더 퍼스트 슬램덩크.png")
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
         em.persist(Movie.builder()
@@ -58,7 +58,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.SF)
                 .movieGrade(MovieGrade.FIFTEEN)
                 .movieIntroduction("아이엠그루트")
-                .movieImage("static/assets/img/가디언즈 오브 갤럭시 VOL.3.png")
+                .movieImage("/assets/img/가디언즈 오브 갤럭시 VOL.3.png")
                 .screeningStatus(ScreeningStatus.N)
                 .build());
         em.persist(Movie.builder()
@@ -67,7 +67,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.DRAMA)
                 .movieGrade(MovieGrade.FIFTEEN)
                 .movieIntroduction("무슨 영화인지 모릅니다.")
-                .movieImage("static/assets/img/라이드 온.png")
+                .movieImage("/assets/img/라이드 온.png")
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
         em.persist(Movie.builder()
@@ -76,7 +76,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.ACTION)
                 .movieGrade(MovieGrade.ADULT)
                 .movieIntroduction("분노의 질주 시리즈로 빡빡이 형님이 나옵니다.")
-                .movieImage("static/assets/img/분노의 질주 라이드 오어 다이.png")
+                .movieImage("/assets/img/분노의 질주 라이드 오어 다이.png")
                 .screeningStatus(ScreeningStatus.N)
                 .build());
         em.persist(Movie.builder()
@@ -85,7 +85,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.COMEDY)
                 .movieGrade(MovieGrade.ALL)
                 .movieIntroduction("문단속을 생활화합시다.")
-                .movieImage("static/assets/img/스즈메의 문단속.png")
+                .movieImage("/assets/img/스즈메의 문단속.png")
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
         em.persist(Movie.builder()
@@ -94,7 +94,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.SF)
                 .movieGrade(MovieGrade.ALL)
                 .movieIntroduction("언더더씨")
-                .movieImage("static/assets/img/인어공주.png")
+                .movieImage("/assets/img/인어공주.png")
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
 

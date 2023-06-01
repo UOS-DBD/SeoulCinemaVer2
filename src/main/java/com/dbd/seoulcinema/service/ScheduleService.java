@@ -18,7 +18,7 @@ public class ScheduleService {
     private final MovieRepository movieRepository;
     private final ScheduleRepository scheduleRepository;
 
-    public List<Object[]> getMovieAndSchedule(LocalDate screeningDate){
+    public List<Object[]> getMovieAndSchedules(LocalDate screeningDate){
         return scheduleRepository.findMovieAndSchedule(screeningDate);
     }
 

@@ -10,10 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -35,23 +34,36 @@ public class ScheduleController {
         return "schedule";
     }
 
+    @GetMapping("/selectMovieAndSchedules")
+    public String selectmovieAndScheduleForm(Model model){
+        return "selectMovieSchedules";
+    }
+    @GetMapping("/selectMovieSchedules")
+    public String selectmoiveSchedulesForm(Model model){
+        return "selectMovieSchedules";
+    }
+
     @PostMapping("/api/schedules")
     public String processSchedulesForm(@RequestParam(required = false) Long movieNumber,
-                                  @RequestParam(value = "date", required = false) String screeningDate){
+                                       @RequestParam(required = false) String date,
+                                       RedirectAttributes redirectAttributes){
 
-        LocalDate date = LocalDate.parse(screeningDate);
+        //폼에서 String으로 받은거 LocalDate로 가공
+        LocalDate screeningDate = LocalDate.parse(date);
+
         if(movieNumber == null){
             // 이 날에 상영하는 영화를 보여줘
-            List<Object[]> movieAndSchedule = scheduleService.getMovieAndSchedule(date);
+            List<Object[]> movieAndSchedules = scheduleService.getMovieAndSchedules(screeningDate);
             //TODO : movie, schedule List 만들어서 model에 추가해서 보내 + 상영일정좌석 어케하지? + LocalDate와 오라클 DATE 비교
-
+            redirectAttributes.addFlashAttribute("movieAndSchedules", movieAndSchedules);
+            return "redirect:/selectMovieAndSchedules";
 
         }else{ //둘다 널이 아닐 시에
             System.out.println(date);
-            List<Object[]> movieSchedules = scheduleService.getMovieSchedules(movieNumber, date);
+            List<Object[]> movieSchedules = scheduleService.getMovieSchedules(movieNumber, screeningDate);
+            redirectAttributes.addFlashAttribute("movieSchedules", movieSchedules);
+            return "redirect:/selectMovieSchedules";
         }
-
-        return "schedule";
     }
 
 }
