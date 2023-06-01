@@ -17,8 +17,86 @@
 <!--        <link href="../static/css/styles.css" rel="stylesheet" />-->
     <!--        배포용-->
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link href="../static/css/movielist.css" rel="stylesheet">
 
-<!--</head>-->
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+      .text-body-secondary{
+        font-weight: bold;
+      }
+    </style>
+</head>
+
 <body>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -50,63 +128,58 @@
 </header>
 <!-- Section-->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="layout">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>포스터</th>
-                        <th>제목</th>
-                        <th>상영시간</th>
-                        <th>장르</th>
-                        <th>이용연령가</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each = "movie : ${movies}">
-                        <img class="card-img-top" th:src = "@{${movie.movieImage}}" alt="..." />
-                        <td th:text="${movie.movieName}">영화제목</td>
-                        <td th:text="${movie.runningTime}">상영시간</td>
-                        <td th:text="${movie.movieGenre}">장르</td>
-                        <td th:text="${movie.movieGrade}">이용연령가</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
 
-<!--            <div th:each= "movie : ${movies}">-->
-<!--                <div class="col mb-5">-->
-<!--                    <div class="card h-100">-->
-<!--                        &lt;!&ndash; Product image&ndash;&gt;-->
-<!--                        &lt;!&ndash;                        <img class="card-img-top" th:src="@{/assets/img/범죄도시3.png}" alt="..." />&ndash;&gt;-->
-<!--                        <img class="card-img-top" th:src = "@{${movie.movieImage}}" alt="..." />-->
-<!--                        &lt;!&ndash; Product details&ndash;&gt;-->
-<!--                        <div class="card-body p-4">-->
-<!--                            <div class="text-center">-->
-<!--                                &lt;!&ndash; Product name&ndash;&gt;-->
-<!--                                <h5 class="fw-bolder">-->
-<!--                                    <span th:text="${movie.movieName}"></span>-->
-<!--                                </h5>-->
-<!--                                &lt;!&ndash; Product running time&ndash;&gt;-->
-<!--                                <span th:text="${movie.runningTime}"></span>-->
-<!--                                <br>-->
-<!--                                <span th:text="${movie.movieGenre}"></span>-->
-<!--                                <br>-->
-<!--                                <span th:text="${movie.movieGrade}"></span>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash; Product actions&ndash;&gt;-->
-<!--                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">-->
-<!--                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">상세보기</a></div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+<!--        <div class="container px-4 px-lg-5 mt-5">-->
+<!--            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">-->
+<!--                <div class="layout">-->
+<!--                    <table>-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <th>포스터</th>-->
+<!--                            <th>제목</th>-->
+<!--                            <th>상영시간</th>-->
+<!--                            <th>장르</th>-->
+<!--                            <th>이용연령가</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr th:each = "movie : ${movies}">-->
+<!--                            <img class="card-img-top" th:src = "@{${movie.movieImage}}" alt="..." />-->
+<!--                            <td th:text="${movie.movieName}">영화제목</td>-->
+<!--                            <td th:text="${movie.runningTime}">상영시간</td>-->
+<!--                            <td th:text="${movie.movieGenre}">장르</td>-->
+<!--                            <td th:text="${movie.movieGrade}">이용연령가</td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
 <!--                </div>-->
-<!--            </div>-->
 
-
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col"  th:each = "movie : ${movies}">
+                    <div class="card shadow-sm">
+<!--                        <img class="card-img-top" src="../static/assets/img/범죄도시3.png" alt="..." />-->
+                        <img class="card-img-top" th:src = "@{${movie.movieImage}}" alt="..." />
+<!--                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" th:src = "@{${movie.movieImage}}"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+<!--                        <img class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" th:src = "@{${movie.movieImage}}"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></img>-->
+                        <div class="card-body">
+                            <p class="card-text" th:text="${movie.movieName}">범죄도시3</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${movie.movieGenre}">액션</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" th:text="${movie.movieGrade}">19세 이상 연령가</button>
+                                </div>
+                                <small class="text-body-secondary" th:text="${movie.runningTime}">02:08</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
 </section>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
