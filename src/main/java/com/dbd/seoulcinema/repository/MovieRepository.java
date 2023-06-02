@@ -14,8 +14,9 @@ import java.util.*;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     // movie 상세 정보 조회
-    @Query("SELECT m.movieNumber, m.movieName, m.runningTime, m.movieGenre, m.movieGrade, m.movieImage, m.screeningStatus, " +
-            "p.participantNumber, p.participantName, p.participantType " +
+    @Query("SELECT new com.dbd.seoulcinema.dto.MovieDetailDto(" +
+            "m.movieNumber, m.movieName, m.runningTime, m.movieGenre, m.movieGrade, m.movieIntroduction, m.movieImage, m.screeningStatus, " +
+            "p.participantNumber, p.participantName, p.participantType) " +
             "FROM Movie m " +
             "INNER JOIN ParticipantMovie pm " +
             "ON m.movieNumber = pm.movieNumber " +

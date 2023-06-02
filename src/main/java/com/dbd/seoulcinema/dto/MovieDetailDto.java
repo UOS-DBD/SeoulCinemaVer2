@@ -14,24 +14,16 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MovieDetailDto {
-    private Long movieNumber;
-    private String movieName;
-    private String runningTime;
-
-    //private MovieGenre movieGenre;
-    private String movieGenre;
-
-    //private MovieGrade movieGrade;
-    private String movieGrade;
-
-    private String movieImage;
-
-    //private ScreeningStatus screeningStatus;
-    private String screeningStatus;
-
+    private Long movieNumber;//
+    private String movieName;//
+    private String runningTime;//
+    private MovieGenre movieGenre;//
+    private MovieGrade movieGrade;//
+    private String movieIntroduction;//
+    private String movieImage;//
+    private ScreeningStatus screeningStatus;//
     private Long participantNumber;
     private String participantName;
+    private ParticipantType participantType;
 
-    //private ParticipantType participantType;
-    private String participantType;
 }

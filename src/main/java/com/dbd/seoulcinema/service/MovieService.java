@@ -27,7 +27,7 @@ public class MovieService {
             return null;
         }
         else{
-            System.out.println(movieDetail.get(0).getMovieGenre());
+            System.out.println(movieDetail.get(0).getMovieGrade().toString());
             return movieDetail;
         }
     }
