@@ -12,11 +12,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, String> {
-    @Query("SELECT new com.dbd.seoulcinema.dto.MovieAndSchedulesDto(m.movieNumber, m.movieName, m.movieGrade, s.scheduleNumber, s.screeningStartTime, s.screeningEndTime, s.screeningDate)" +
-            " FROM Schedule s JOIN s.movie m WHERE s.screeningDate = :date ")
+    @Query("SELECT new com.dbd.seoulcinema.dto.MovieAndSchedulesDto(m.movieNumber, m.movieName," +
+            " s.scheduleNumber, s.screeningStartTime, s.screeningEndTime, s.screeningDate," +
+            " t.theaterNumber, t.theaterFloor, t.seatQuantity)" +
+            " FROM Schedule s JOIN s.movie m JOIN s.theater t " +
+            "WHERE s.screeningDate = :date ")
     List<MovieAndSchedulesDto> findMovieAndSchedules(@Param("date") LocalDate date);
 
-    @Query("SELECT s FROM Schedule s JOIN s.movie m " +
+    @Query("SELECT new com.dbd.seoulcinema.dto.MovieAndSchedulesDto(m.movieNumber, m.movieName," +
+            " s.scheduleNumber, s.screeningStartTime, s.screeningEndTime, s.screeningDate," +
+            " t.theaterNumber, t.theaterFloor, t.seatQuantity)" +
+            "FROM Schedule s JOIN s.movie m JOIN s.theater t " +
             "WHERE m.movieNumber = :movieNumber AND s.screeningDate = :screeningDate")
-    List<Schedule> findMovieSchedules(@Param("movieNumber") Long movieNumber, @Param("screeningDate") LocalDate screeningDate);
+    List<MovieAndSchedulesDto> findMovieSchedules(@Param("movieNumber") Long movieNumber, @Param("screeningDate") LocalDate screeningDate);
 }
