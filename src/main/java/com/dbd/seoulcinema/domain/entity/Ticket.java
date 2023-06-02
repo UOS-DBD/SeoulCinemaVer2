@@ -30,7 +30,7 @@ public class Ticket extends BaseTimeEntity {
     private TicketingStatus ticketingStatus;
 
     @Column(name = "STANDARD_PRICE")
-    private Long standardPrice;
+    private Integer standardPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CLIENT_NUMBER")
