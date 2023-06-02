@@ -29,7 +29,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Getter
 public class Schedule {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
     @Column(name = "SCHEDULE_NUMBER",length = 11)
     private String scheduleNumber;
 
