@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Seoul-Cinema</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+
+    <!--        테스트용-->
+    <!--    <link href="../static/css/styles.css" rel="stylesheet" />-->
+    <!--        배포용-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">Seoul Cinema</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link" href="#!">영화</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">예매</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">이벤트</a></li>
+            </ul>
+            <a class="d-flex">
+                <button class="btn btn-outline-dark" type="submit">
+                    로그인
+                </button>
+            </a>
+        </div>
+    </div>
+</nav>
+<table>
+    <thead>
+    <tr>
+        <th>영화제목</th>
+        <th>상영일</th>
+        <th>상영시작시간</th>
+        <th>상영종료시간</th>
+        <th>관</th>
+        <th>층</th>
+        <th>총좌석</th>
+        <th>잔여좌석</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="schedule : ${schedulesForm}">
+        <td th:text="${schedule.movieName}" />
+        <td th:text="${schedule.screeningDate}" />
+        <td th:text="${schedule.screeningStartTime}" />
+        <td th:text="${schedule.screeningEndTime}" />
+        <td th:text="${schedule.theaterNumber}" />
+        <td th:text="${schedule.theaterFloor}" />
+        <td th:text="${schedule.seatQuantity}" />
+        <td th:text="${schedule.remainingSeat}" />
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
