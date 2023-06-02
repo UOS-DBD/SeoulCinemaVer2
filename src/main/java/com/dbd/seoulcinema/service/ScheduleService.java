@@ -1,5 +1,7 @@
 package com.dbd.seoulcinema.service;
 
+import com.dbd.seoulcinema.domain.entity.Schedule;
+import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.repository.MovieRepository;
 import com.dbd.seoulcinema.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +20,11 @@ public class ScheduleService {
     private final MovieRepository movieRepository;
     private final ScheduleRepository scheduleRepository;
 
-    public List<Object[]> getMovieAndSchedules(LocalDate screeningDate){
-        return scheduleRepository.findMovieAndSchedule(screeningDate);
+    public List<MovieAndSchedulesDto> getMovieAndSchedules(LocalDate screeningDate){
+        return scheduleRepository.findMovieAndSchedules(screeningDate);
     }
 
-    public List<Object[]> getMovieSchedules(Long movieNumber, LocalDate screeningDate){
-        return scheduleRepository.findMovieSchedule(movieNumber, screeningDate);
+    public List<Schedule> getMovieSchedules(Long movieNumber, LocalDate screeningDate){
+        return scheduleRepository.findMovieSchedules(movieNumber, screeningDate);
     }
 }

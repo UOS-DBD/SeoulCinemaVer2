@@ -1,6 +1,8 @@
 package com.dbd.seoulcinema.controller;
 
 import com.dbd.seoulcinema.domain.entity.Movie;
+import com.dbd.seoulcinema.domain.entity.Schedule;
+import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.service.MovieService;
 import com.dbd.seoulcinema.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
@@ -53,14 +55,23 @@ public class ScheduleController {
 
         if(movieNumber == null){
             // 이 날에 상영하는 영화를 보여줘
-            List<Object[]> movieAndSchedules = scheduleService.getMovieAndSchedules(screeningDate);
+            List<MovieAndSchedulesDto> movieAndSchedules = scheduleService.getMovieAndSchedules(screeningDate);
+            for (MovieAndSchedulesDto movieAndSchedule : movieAndSchedules) {
+                System.out.println(movieAndSchedule.getMovieName());
+                System.out.println(movieAndSchedule.getScreeningDate());
+            }
             //TODO : movie, schedule List 만들어서 model에 추가해서 보내 + 상영일정좌석 어케하지? + LocalDate와 오라클 DATE 비교
             redirectAttributes.addFlashAttribute("movieAndSchedules", movieAndSchedules);
             return "redirect:/selectMovieAndSchedules";
 
         }else{ //둘다 널이 아닐 시에
             System.out.println(date);
-            List<Object[]> movieSchedules = scheduleService.getMovieSchedules(movieNumber, screeningDate);
+            List<Schedule> movieSchedules = scheduleService.getMovieSchedules(movieNumber, screeningDate);
+            for (Schedule movieSchedule : movieSchedules) {
+                System.out.println(movieSchedule.getMovie().getMovieName());
+                System.out.println(movieSchedule.getScreeningDate());
+                System.out.println(movieSchedule.getScreeningStartTime());
+            }
             redirectAttributes.addFlashAttribute("movieSchedules", movieSchedules);
             return "redirect:/selectMovieSchedules";
         }

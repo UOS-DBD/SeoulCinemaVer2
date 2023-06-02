@@ -13,11 +13,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, String> {
-    @Query("SELECT s, m FROM Schedule s JOIN fetch s.movie m WHERE s.screeningDate = :date ")
-    List<Object[]> findMovieAndSchedule(@Param("date") LocalDate date);
+    @Query("SELECT new com.dbd.seoulcinema.dto.MovieAndSchedulesDto(m.movieNumber, m.movieName, m.movieGrade, s.scheduleNumber, s.screeningStartTime, s.screeningEndTime, s.screeningDate)" +
+            " FROM Schedule s JOIN s.movie m WHERE s.screeningDate = :date ")
+    List<MovieAndSchedulesDto> findMovieAndSchedules(@Param("date") LocalDate date);
 
-    @Query("SELECT s, m FROM Schedule s JOIN FETCH s.movie m " +
+    @Query("SELECT s FROM Schedule s JOIN s.movie m " +
             "WHERE m.movieNumber = :movieNumber AND s.screeningDate = :screeningDate")
+    List<Schedule> findMovieSchedules(@Param("movieNumber") Long movieNumber, @Param("screeningDate") LocalDate screeningDate);
     List<Object[]> findMovieSchedule(@Param("movieNumber") Long movieNumber, @Param("screeningDate") LocalDate screeningDate);
 
     @Query("select m.movieName from Movie m, Schedule s "
