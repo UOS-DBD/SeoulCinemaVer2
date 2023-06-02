@@ -67,6 +67,9 @@
                     <h4 class="mb-3">Payment</h4>
 
                     <div class="my-3">
+                        <div>
+                            <label>결제할 금액: <span th:text="${standardPrice}"></span></label>
+                        </div>
                         <div class="form-check">
                             <input id="credit" type="radio" class="form-check-input"
                                    name="paymentType" value="CARD" checked required>
