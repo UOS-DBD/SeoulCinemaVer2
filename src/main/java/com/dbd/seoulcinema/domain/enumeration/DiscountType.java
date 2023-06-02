@@ -5,19 +5,21 @@ import lombok.Getter;
 @Getter
 public enum DiscountType implements CommonDescCode {
 
-    KB("국민", "01"),
-    SAMSUNG("삼성", "02"),
-    TOSS("토스", "03"),
-    SHINHAN("신한", "04"),
-    SKT("SKT", "04"),
-    KT("KT", "06"),
-    POINTDISCOUNT("포인트차감", "07");
+    KB("국민", 1000, "01"),
+    SAMSUNG("삼성", 2000, "02"),
+    TOSS("토스", 3000, "03"),
+    SHINHAN("신한", 3500,"04"),
+    SKT("SKT", 1000,"04"),
+    KT("KT", 1000,"06"),
+    POINTDISCOUNT("포인트차감", 0,"07");
 
     private String desc;
+    private Integer amount;
     private String code;
 
-    DiscountType(String desc, String code) {
+    DiscountType(String desc, Integer amount, String code) {
         this.desc = desc;
+        this.amount = amount;
         this.code = code;
     }
 }
