@@ -10,13 +10,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "NONMEMBER")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Getter
-public class NonMember {
+public class NonMember extends BaseTimeEntity{
 
     @Id
     @Column(name = "PHONE_NUMBER",length = 20)

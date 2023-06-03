@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequiredArgsConstructor
 public class NonmemberController {
@@ -26,9 +28,9 @@ public class NonmemberController {
     }
 
     @PostMapping("/api/nonmembers")
-    public RedirectView createNonmember(@ModelAttribute("phoneNumber") String phoneNumber, Model model){
+    public RedirectView createNonmember(@ModelAttribute("phoneNumber") String phoneNumber, Model model, HttpSession session){
         System.out.println("controller start");
-        nonMemberService.createNonmember(phoneNumber);
+        nonMemberService.createNonmember(phoneNumber, session);
         model.addAttribute("success", true);
         System.out.println("controller end");
         return new RedirectView("/home");// 예약 페이지 리다이렉트 수정 필요
