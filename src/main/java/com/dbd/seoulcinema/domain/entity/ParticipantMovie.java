@@ -26,10 +26,10 @@ public class ParticipantMovie {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARTICIPANT_NUMBER")
-    private Participant participant;
+    private Participant participantNumber;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MOVIE_NUMBER")
-    private Movie movie;
+    private Movie movieNumber;
 }
