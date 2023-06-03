@@ -22,14 +22,21 @@ class ScheduleSeatTest {
     void injectScheduleSeat(){
 
         Schedule schedule = em.find(Schedule.class, "20230601011");
-        Seat seat = em.find(Seat.class, 1L);
-        Ticket ticket = em.find(Ticket.class, "202306010111");
+        Seat seat1 = em.find(Seat.class, 9L);
+        Seat seat2 = em.find(Seat.class, 10L);
+       // Ticket ticket = em.find(Ticket.class, "202306010111");
 
         em.persist(ScheduleSeat.builder()
                 .scheduleNumber(schedule)
-                .seatNumber(seat)
+                .seatNumber(seat1)
                 .paymentStatus(PaymentStatus.Y)
-                .ticket(ticket)
+                .ticket(null)
+                .build());
+        em.persist(ScheduleSeat.builder()
+                .scheduleNumber(schedule)
+                .seatNumber(seat2)
+                .paymentStatus(PaymentStatus.Y)
+                .ticket(null)
                 .build());
     }
 }
