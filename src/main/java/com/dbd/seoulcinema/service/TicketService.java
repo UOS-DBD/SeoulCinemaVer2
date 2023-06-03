@@ -73,7 +73,9 @@ public class TicketService {
             memberRepository.findById(clientId).get().accumulateAndUsePoint(vo.getPoint(),vo.getTotalPrice());
         }
 
+        //티켓 엔티티에 영화 이름을 삽입하기 위함
         String movieName = scheduleRepository.findMovieNameByScheduleNumber(vo.getScheduleNumber());
+        //상영 일정 좌석의 티켓 외래키에 티켓 번호를 삽입하기 위해 조회
         List<ScheduleSeat> findScheduleSeats = scheduleSeatRepository.
                 findAllByScheduleNumberAndSeats(vo.getScheduleNumber(), vo.getSeats());
 
@@ -90,6 +92,7 @@ public class TicketService {
 
         ticketRepository.flush();
 
+        //상영 일정 좌석 외래키에 생성된 티켓 번호를 삽입
         for (ScheduleSeat scheduleSeat : ticket.getScheduleSeats()) {
             scheduleSeat.setTicketWhenPayment(ticket);
         }
@@ -97,7 +100,12 @@ public class TicketService {
         //결제 엔티티 생성
         Payment payment = Payment.makePayment(vo, ticket, paymentType);
         paymentRepository.save(payment);
+        paymentRepository.flush();
 
+        //결제 할인 엔티티 생성
+        if(vo.getPoint()==0){
+
+        }
         return "success";
     }
 }
