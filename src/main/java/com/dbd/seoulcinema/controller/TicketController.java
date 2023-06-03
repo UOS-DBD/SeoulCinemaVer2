@@ -43,9 +43,10 @@ public class TicketController {
     }
 
     @GetMapping("/tickets/{ticketNumber}")
-    public String viewSpecificTicket(@PathVariable("ticketNumber")String ticketNumber, Model model){
+    public String viewSpecificTicket(@PathVariable("ticketNumber") String ticketNumber, HttpSession httpSession, Model model) {
 
         ViewSpecificTicketDto dto = ticketService.viewSpecificTicket(ticketNumber);
+        httpSession.setAttribute("ticketNumber", ticketNumber); //예매 취소할때 사용될 티켓 넘버 세션에 저장
         model.addAttribute("ticketInfo", dto);
 
         return "viewSpecificTicket";
