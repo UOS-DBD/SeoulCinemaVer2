@@ -11,4 +11,6 @@ public class Constants {
 
     public static String DISOUNT_TYPE = "discountType";
 
+    public static String USER_ID_SESSION = "userId";
+
 }
