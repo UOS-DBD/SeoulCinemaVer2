@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ViewTicketsListDto {
 
-    private String movieImage;
+    private String ticketNumber;
 
     private String movieName;
 
@@ -19,5 +19,5 @@ public class ViewTicketsListDto {
 
     private LocalDateTime screeningEndTime;
 
-    private LocalDateTime screeningDate;
+
 }
