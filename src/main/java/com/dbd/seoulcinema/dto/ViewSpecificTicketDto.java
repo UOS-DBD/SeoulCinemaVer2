@@ -3,6 +3,7 @@ package com.dbd.seoulcinema.dto;
 import com.dbd.seoulcinema.dao.ViewSpecificTicketDao;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,7 +16,7 @@ public class ViewSpecificTicketDto {
 
     private LocalDateTime screeningEndTime;
 
-    private LocalDateTime screeningDate;
+    private LocalDate screeningDate;
 
     private String theaterFloor;
 

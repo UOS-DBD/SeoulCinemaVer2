@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -19,7 +20,7 @@ public class ViewSpecificTicketDao {
 
     private LocalDateTime screeningEndTime;
 
-    private LocalDateTime screeningDate;
+    private LocalDate screeningDate;
 
     private String theaterFloor;
 
