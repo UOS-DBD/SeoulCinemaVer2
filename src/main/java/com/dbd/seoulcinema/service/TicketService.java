@@ -1,12 +1,11 @@
 package com.dbd.seoulcinema.service;
 
-import com.dbd.seoulcinema.domain.ScheduleSeatId;
-import com.dbd.seoulcinema.domain.entity.Member;
-import com.dbd.seoulcinema.domain.entity.Payment;
-import com.dbd.seoulcinema.domain.entity.ScheduleSeat;
-import com.dbd.seoulcinema.domain.entity.Ticket;
+import com.dbd.seoulcinema.domain.entity.*;
 import com.dbd.seoulcinema.domain.enumeration.DiscountType;
 import com.dbd.seoulcinema.domain.enumeration.PaymentType;
+import com.dbd.seoulcinema.dao.ViewSpecificTicketDao;
+import com.dbd.seoulcinema.dto.ViewSpecificTicketDto;
+import com.dbd.seoulcinema.dto.ViewTicketsListDto;
 import com.dbd.seoulcinema.repository.*;
 import com.dbd.seoulcinema.vo.CreateTicketFinalVo;
 import lombok.RequiredArgsConstructor;
