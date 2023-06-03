@@ -28,7 +28,7 @@ class MemberTest {
                 .clientId("mim501")
                 .password("1234")
                 .phoneNumber("010-3370-1111")
-                .point(0L)
+                .point(20000L)
                 .clientGrade(ClientGrade.NORMAL)
                 .localDate(LocalDate.now())
                 .build());
