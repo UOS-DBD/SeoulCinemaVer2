@@ -6,6 +6,7 @@ import com.dbd.seoulcinema.domain.enumeration.DiscountType;
 import com.dbd.seoulcinema.global.utils.DiscountTypeConverter;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Builder
 public class Discount {
 
     @Id
@@ -25,5 +27,5 @@ public class Discount {
     private DiscountType discountType;
 
     @Column(name = "DISCOUNT_PRICE")
-    private String discountPrice;
+    private Integer discountPrice;
 }
