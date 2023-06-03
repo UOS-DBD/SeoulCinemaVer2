@@ -30,14 +30,13 @@ class TicketTest {
     void injectTicket(){
 
         Member member = em.find(Member.class, "mim501");
-      /*  em.persist(Ticket.builder()
+        em.persist(Ticket.builder()
                 .ticketNumber("202306010111")
                 .ticketingStatus(TicketingStatus.Y)
-                .standardPrice(10000L)
+                .standardPrice(10000)
                 .member(member)
                 .movieName("범죄도시3")
-                .build()); */
-        Optional<Ticket> byId = ticketRepository.findById("202306010111");
-        System.out.println(byId.get().getStandardPrice());
+                .build());
+
     }
 }
