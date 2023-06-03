@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -14,11 +13,12 @@
     <!-- Core theme CSS (includes Bootstrap)-->
 
     <!--        테스트용-->
-<!--    <link href="../static/css/styles.css" rel="stylesheet" />-->
+    <!--    <link href="../static/css/styles.css" rel="stylesheet" />-->
     <!--        배포용-->
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
 </head>
 <body>
+<!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="#!">Seoul Cinema</a>
@@ -26,7 +26,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link" href="#!">영화</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/schedules}">예매</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">예매</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">이벤트</a></li>
             </ul>
             <a class="d-flex">
@@ -37,39 +37,37 @@
         </div>
     </div>
 </nav>
-<br/>
-
-<form th:action="@{/api/schedules}" method="post">
-    <div class="form-group">
-        <label for="movie">영화를 선택하지 않고 제출하셔도 됩니다.</label>
-        <select name="movieNumber" id="movie" class="form-control">
-            <option value="" selected="selected">-- 영화를 선택해주세요 --</option>
-            <option th:each="movie : ${movies}" th:value="${movie.movieNumber}" th:text="${movie.movieName}"></option>
-        </select>
-    </div> <br/>
-
-    <div class="form-group">
-        <label for="date">날짜선택: <br/></label> </br>
-        <input type="date" name="date" id="date" class="form-control" th:value="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
-<!--        <input type="date" name="date" id="date" class="form-control" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />-->
-    </div> <br/>
-
-    <div class="btn-right">
-        <button type="submit" class="btn btn-primary">검색</button>
-    </div>
-</form>
+<table>
+    <thead>
+    <tr>
+        <th>영화제목</th>
+        <th>상영일</th>
+        <th>상영시작시간</th>
+        <th>상영종료시간</th>
+        <th>관</th>
+        <th>층</th>
+        <th>총좌석</th>
+        <th>잔여좌석</th>
+        <th>선택</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="schedule : ${schedulesForm}">
+        <td th:text="${schedule.movieName}" />
+        <td th:text="${schedule.screeningDate}" />
+        <td th:text="${schedule.screeningStartTime}" />
+        <td th:text="${schedule.screeningEndTime}" />
+        <td th:text="${schedule.theaterNumber}" />
+        <td th:text="${schedule.theaterFloor}" />
+        <td th:text="${schedule.seatQuantity}" />
+        <td th:text="${schedule.remainingSeat}" />
+        <td>
+            <form th:action="@{/api/schedules/{scheduleNumber}(scheduleNumber=${schedule.scheduleNumber})}" method="post">
+                <input type="submit" th:value="선택"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
-<style>
-    form {
-        border: black;
-        border-style: solid;
-        width:500px;
-        text-align: left;
-        padding: 20px;
-        margin : 0 auto;
-    }
-    .btn-right{
-        text-align: right;
-    }
-</style>

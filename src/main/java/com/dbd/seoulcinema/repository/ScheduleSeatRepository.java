@@ -9,12 +9,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, ScheduleSeatId> {
+    List<ScheduleSeat> findByScheduleNumber(String scheduleNumber);
 
     @Query("select s from ScheduleSeat s "
             + "where s.scheduleNumber.scheduleNumber = :scheduleNumber "
             + "and s.seatNumber.seatNumber in (:seats)")
     List<ScheduleSeat> findAllByScheduleNumberAndSeats(@Param("scheduleNumber") String scheduleNumber,
                                                        @Param("seats") List<Long> seats);
-
-
 }

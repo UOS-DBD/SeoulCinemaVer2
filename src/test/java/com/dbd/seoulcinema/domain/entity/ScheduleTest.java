@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +31,7 @@ class ScheduleTest {
                 .scheduleNumber("20230601011")
                 .screeningStartTime(LocalDateTime.now())
                 .screeningEndTime(LocalDateTime.now())
-                .screeningDate(LocalDateTime.now())
+                .screeningDate(LocalDate.now())
                 .screeningSession(1)
                 .movie(movie)
                 .theater(theater)

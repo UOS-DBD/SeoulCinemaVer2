@@ -1,5 +1,6 @@
 package com.dbd.seoulcinema.domain.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,7 +40,7 @@ public class Schedule {
     private LocalDateTime screeningEndTime;
 
     @Column(name = "SCREENING_DATE", columnDefinition = "DATE")
-    private LocalDateTime screeningDate;
+    private LocalDate screeningDate;
 
     @Column(name = "SCREENING_SESSION")
     @ColumnDefault("0")
