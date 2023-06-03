@@ -11,7 +11,9 @@ public enum DiscountType implements CommonDescCode {
     SHINHAN("신한", 3500,"04"),
     SKT("SKT", 1000,"04"),
     KT("KT", 1000,"06"),
-    POINTDISCOUNT("포인트차감", 0,"07");
+    POINTDISCOUNT("포인트차감", 0,"07"),
+    BC("BC",0,"08"),
+    WOORI("WOORI",0,"09");
 
     private String desc;
     private Integer amount;
