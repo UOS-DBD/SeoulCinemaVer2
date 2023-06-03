@@ -42,7 +42,7 @@ class TheaterTest {
 
         em.persist(Ticket.builder()
                 .ticketingStatus(TicketingStatus.Y)
-                .standardPrice(20000L)
+                .standardPrice(20000)
                 .member(member)
                 .build());
         em.flush();
