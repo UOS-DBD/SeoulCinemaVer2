@@ -9,13 +9,11 @@ import com.dbd.seoulcinema.domain.enumeration.DiscountType;
 import com.dbd.seoulcinema.domain.enumeration.PaymentType;
 import com.dbd.seoulcinema.repository.*;
 import com.dbd.seoulcinema.vo.CreateTicketFinalVo;
-import com.dbd.seoulcinema.vo.CreateTicketVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -66,19 +64,36 @@ public class TicketService {
     }
 
     @Transactional
-    public String makeTicketsAndPayment(CreateTicketFinalVo vo, String memberId, PaymentType paymentType) {
+    public String makeTicketsAndPayment(CreateTicketFinalVo vo, String clientId, PaymentType paymentType) {
 
-        Member findMember = memberRepository.findById(memberId).get();
-        System.out.println("vo스케줄 넘버"+vo.getScheduleNumber());
+        Ticket ticket = null;
+        Boolean isMember = memberService.isMember(clientId);
+
+        //고객이 회원인지 비회원인지 판단하는 로직 for 10프로 포인트 적립
+        if (isMember) {
+            memberRepository.findById(clientId).get().accumulateAndUsePoint(vo.getPoint(),vo.getTotalPrice());
+        }
+
         String movieName = scheduleRepository.findMovieNameByScheduleNumber(vo.getScheduleNumber());
-        System.out.println("영화 이름"+movieName);
         List<ScheduleSeat> findScheduleSeats = scheduleSeatRepository.
                 findAllByScheduleNumberAndSeats(vo.getScheduleNumber(), vo.getSeats());
-        System.out.println("크기!!!!!"+findScheduleSeats.size());
+
         //티켓 엔티티 생성
-        Ticket ticket = Ticket.makeTicket(vo, findMember, movieName,findScheduleSeats);
-        findScheduleSeats.forEach(s ->s.setTicket(ticket));
-        ticketRepository.save(ticket);
+        if (isMember) {
+            Member member = memberRepository.findById(clientId).get();
+            ticket = Ticket.makeMemberTicket(vo, member, movieName, findScheduleSeats);
+            ticketRepository.save(ticket);
+        } else {
+            NonMember nonMember = nonmemberRepository.findById(clientId).get();
+            ticket = Ticket.makeNonMemberTicket(vo, nonMember, movieName, findScheduleSeats);
+            ticketRepository.save(ticket);
+        }
+
+        ticketRepository.flush();
+
+        for (ScheduleSeat scheduleSeat : ticket.getScheduleSeats()) {
+            scheduleSeat.setTicketWhenPayment(ticket);
+        }
 
         //결제 엔티티 생성
         Payment payment = Payment.makePayment(vo, ticket, paymentType);
