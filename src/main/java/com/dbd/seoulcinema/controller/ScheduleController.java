@@ -31,21 +31,24 @@ public class ScheduleController {
     public String showSchedulesForm(Model model){
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("movies", movies);
-        model.addAttribute("date", new Date());
+        model.addAttribute("date", "");
         return "schedule";
     }
 
     @PostMapping("/api/schedules")
     public String processSchedulesForm(@RequestParam(required = false) Long movieNumber,
-                                  @RequestParam(required = false) LocalDateTime screeningDate){
+                                  @RequestParam(value = "date", required = false) String screeningDate){
 
+        LocalDate date = LocalDate.parse(screeningDate);
         if(movieNumber == null){
             // 이 날에 상영하는 영화를 보여줘
-            List<Object[]> movieAndSchedule = scheduleService.getMovieAndSchedule(screeningDate);
-            //TODO : movie, schedule List 만들어서 model에 추가해서 보내 + 상영일정좌석 어케하지?
+            List<Object[]> movieAndSchedule = scheduleService.getMovieAndSchedule(date);
+            //TODO : movie, schedule List 만들어서 model에 추가해서 보내 + 상영일정좌석 어케하지? + LocalDate와 오라클 DATE 비교
+
 
         }else{ //둘다 널이 아닐 시에
-            List<Object[]> movieSchedules = scheduleService.getMovieSchedules(movieNumber, screeningDate);
+            System.out.println(date);
+            List<Object[]> movieSchedules = scheduleService.getMovieSchedules(movieNumber, date);
         }
 
         return "schedule";
