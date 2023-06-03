@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Seoul-Cinema</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+
+    <!--        테스트용-->
+    <!--        <link href="../static/css/styles.css" rel="stylesheet" />-->
+    <!--        배포용-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link href="../static/css/movielist.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+      .text-body-secondary{
+        font-weight: bold;
+      }
+    </style>
+</head>
+
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">Seoul Cinema</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link" href="#!">영화</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">예매</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">이벤트</a></li>
+            </ul>
+            <a class="d-flex">
+                <button class="btn btn-outline-dark" type="submit">
+                    로그인
+                </button>
+            </a>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Seoul Cinema</h1>
+            <p class="lead fw-normal text-white-50 mb-0">데이터베이스 설계 수업</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <div class="col">
+        <div th:with="movie=${movie[0]}">
+            <img class="card-img-top" th:src = "@{/}+${movie.movieImage}" alt="..." />
+            <h1 class="text-body-emphasis" th:text="${'영화이름: '+movie.movieName}">movieName</h1>
+            <p class="fs-5 col-md-8" th:text="${'영화소개: '+movie.movieIntroduction}">movieIntroduction</p>
+            <hr class="col-3 col-md-2 mb-5">
+      </div>
+
+        <div class="row g-5">
+            <div class="col-md-6" th:with="movie=${movie[0]}">
+                <h2 class="text-body-emphasis">영화 정보</h2>
+<!--                <p>Ready to beyond the starter template? Check out these open source projects that you can quickly duplicate to a new GitHub repository.</p>-->
+                <ul class="list-unstyled ps-0">
+                    <li>
+
+<!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/icons-font" rel="noopener" target="_blank">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Bootstrap npm starter-->
+<!--                        </a>-->
+                    </li>
+                    <li>
+                        <p th:text="${'영화장르: '+movie.movieGenre}">영화 장르</p>
+<!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/parcel" rel="noopener" target="_blank">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Bootstrap Parcel starter-->
+<!--                        </a>-->
+                    </li>
+                    <li>
+                        <p th:text="${'연령가: '+movie.movieGrade}">연령가</p>
+<!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/vite" rel="noopener" target="_blank">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Bootstrap Vite starter-->
+<!--                        </a>-->
+                    </li>
+                    <li>
+                        <p th:text="${'상영시간: '+movie.runningTime}">상영 시간</p>
+<!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Bootstrap Webpack starter-->
+<!--                        </a>-->
+                    </li>
+                    <li>
+                        <p th:text="${'상영여부: '+movie.screeningStatus}">상영 여부</p>
+                        <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
+                        <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+                        <!--                            Bootstrap Webpack starter-->
+                        <!--                        </a>-->
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <h2 class="text-body-emphasis">영화 상세 정보</h2>
+<!--                <p>Read more detailed instructions and documentation on using or contributing to Bootstrap.</p>-->
+
+                        <h4>감독: </h4>
+                        <div th:each = "movie : ${movie}">
+                            <div th:if="${movie.participantType.toString().equals('DIRECTOR')}" th:text="${movie.participantName}">감독</div>
+                        </div>
+                        <!--                        <a class="icon-link mb-1" href="../getting-started/introduction/">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Bootstrap quick start guide-->
+<!--                        </a>-->
+<br>
+                        <h4>배우: </h4>
+                        <div th:each = "movie : ${movie}">
+                            <div th:if="${movie.participantType.toString().equals('ACTOR')}" th:text="${movie.participantName}">배우</div>
+                        </div>
+<!--                        <a class="icon-link mb-1" href="../getting-started/webpack/">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Bootstrap Webpack guide-->
+<!--                        </a>-->
+<br>
+                        <h4>배급사: </h4>
+                        <div th:each = "movie : ${movie}">
+                            <div th:if="${movie.participantType.toString().equals('DISTRIBUTOR')}" th:text="${movie.participantName}">배급사</div>
+                        </div>
+<!--                        <a class="icon-link mb-1" href="../getting-started/parcel/">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Bootstrap Parcel guide-->
+<!--                        </a>-->
+
+<!--                    <li>-->
+<!--                        <a class="icon-link mb-1" href="../getting-started/vite/">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Bootstrap Vite guide-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="icon-link mb-1" href="../getting-started/contribute/">-->
+<!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+<!--                            Contributing to Bootstrap-->
+<!--                        </a>-->
+<!--                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+</body>
+</html>

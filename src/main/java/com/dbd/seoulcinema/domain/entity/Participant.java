@@ -21,7 +21,7 @@ public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "PARTICIPANT_NUMBER")
-    private Long ParticipantNumber;
+    private Long participantNumber;
 
     @Column(name = "PARTICIPANT_NAME", length = 16)
     private String participantName;

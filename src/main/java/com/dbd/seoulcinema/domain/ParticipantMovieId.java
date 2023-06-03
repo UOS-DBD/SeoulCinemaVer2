@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ParticipantMovieId implements Serializable {
 
-    private Long participant;
-    private Long movie;
+    private Long participantNumber;
+    private Long movieNumber;
 
     @Override
     public int hashCode() {
-        return Objects.hash(participant, movie);
+        return Objects.hash(participantNumber, movieNumber);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ParticipantMovieId implements Serializable {
             return false;
         }
         ParticipantMovieId id = (ParticipantMovieId) obj;
-        return Objects.equals(this.participant, id.getParticipant()) &&
-            Objects.equals(this.movie, id.getMovie());
+        return Objects.equals(this.participantNumber, id.getParticipantNumber()) &&
+            Objects.equals(this.movieNumber, id.getMovieNumber());
     }
 }

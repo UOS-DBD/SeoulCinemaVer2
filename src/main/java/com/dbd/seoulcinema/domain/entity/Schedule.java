@@ -32,13 +32,13 @@ public class Schedule {
     @Column(name = "SCHEDULE_NUMBER",length = 11)
     private String scheduleNumber;
 
-    @Column(name = "SCREENING_START_TIME")
+    @Column(name = "SCREENING_START_TIME", columnDefinition = "DATE")
     private LocalDateTime screeningStartTime;
 
-    @Column(name = "SCREENING_END_TIME")
+    @Column(name = "SCREENING_END_TIME", columnDefinition = "DATE")
     private LocalDateTime screeningEndTime;
 
-    @Column(name = "SCREENING_DATE")
+    @Column(name = "SCREENING_DATE", columnDefinition = "DATE")
     private LocalDateTime screeningDate;
 
     @Column(name = "SCREENING_SESSION")
