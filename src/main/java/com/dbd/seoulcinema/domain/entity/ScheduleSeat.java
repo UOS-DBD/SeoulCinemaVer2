@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @IdClass(ScheduleSeatId.class)
-public class ScheduleSeat {
+public class ScheduleSeat extends BaseTimeEntity{
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,4 +42,11 @@ public class ScheduleSeat {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUMBER")
     private Ticket ticket;
+
+
+
+    public void setTicketWhenPayment(Ticket ticket){
+        this.ticket=ticket;
+    }
+
 }

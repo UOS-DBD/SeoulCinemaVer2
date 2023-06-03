@@ -34,4 +34,9 @@ public class Member {
 
     @Column(name = "BIRTH")
     private LocalDate localDate;
+
+    public void accumulateAndUsePoint(Integer point, Integer totalPrice) {
+        this.point-=point;
+        this.point += (long)(totalPrice * 0.1);
+    }
 }

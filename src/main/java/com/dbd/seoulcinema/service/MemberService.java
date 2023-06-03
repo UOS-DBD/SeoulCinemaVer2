@@ -39,4 +39,20 @@ public class MemberService {
         memberRepository.save(createMemberDto.toEntitiy(createMemberDto, localDate));
 
     }
+
+    @Transactional
+    public Long getMemberPoint(String userId){
+        Optional<Member> findMember = memberRepository.findById(userId);
+        return findMember.get().getPoint();
+    }
+
+    @Transactional
+    public Boolean isMember(String clientId){
+        Optional<Member> findMember = memberRepository.findById(clientId);
+        if(findMember.isEmpty())
+            return false;
+        else
+            return true;
+    }
+
 }
