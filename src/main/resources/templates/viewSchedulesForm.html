@@ -48,6 +48,7 @@
         <th>층</th>
         <th>총좌석</th>
         <th>잔여좌석</th>
+        <th>선택</th>
     </tr>
     </thead>
     <tbody>
@@ -60,6 +61,11 @@
         <td th:text="${schedule.theaterFloor}" />
         <td th:text="${schedule.seatQuantity}" />
         <td th:text="${schedule.remainingSeat}" />
+        <td>
+            <form th:action="@{/api/schedules/{scheduleNumber}(scheduleNumber=${schedule.scheduleNumber})}" method="post">
+                <input type="submit" th:value="선택"/>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

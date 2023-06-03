@@ -1,6 +1,8 @@
 package com.dbd.seoulcinema.controller;
 
 import com.dbd.seoulcinema.domain.entity.Movie;
+import com.dbd.seoulcinema.domain.entity.Schedule;
+import com.dbd.seoulcinema.domain.entity.Seat;
 import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.dto.ViewSchedulesFormDto;
 import com.dbd.seoulcinema.service.MovieService;
@@ -9,14 +11,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -42,6 +43,26 @@ public class ScheduleController {
     public String selectMovieAndScheduleForm(Model model, @ModelAttribute("schedulesForm")List<ViewSchedulesFormDto> viewSchedulesFormDtos){
         model.addAttribute("viewSchedulesForms", viewSchedulesFormDtos);
         return "viewSchedulesForm";
+    }
+
+    @PostMapping("/api/schedules/{scheduleNumber}")
+    public String showScheduleSeatsForm(Model model,
+                                      @PathVariable String scheduleNumber){
+        MovieAndSchedulesDto movieAndSchedule = scheduleService.getSchedule(scheduleNumber);
+        ViewSchedulesFormDto scheduleForm = scheduleService.getScheduleForm(movieAndSchedule);
+        List<Seat> seats = scheduleService.getSeats(scheduleForm.getTheaterNumber());
+
+        Map<Long, Boolean> seatBookingStatusMap = new HashMap<>();
+
+        for (Seat seat : seats) {
+            boolean isBooked = scheduleService.isSeatBooked(seat.getSeatNumber(), scheduleForm.getScheduleNumber());
+            seatBookingStatusMap.put(seat.getSeatNumber(), isBooked);
+        }
+
+        model.addAttribute("scheduleForm", scheduleForm);
+        model.addAttribute("seats", seats);
+        model.addAttribute("seatBookingStatusMap", seatBookingStatusMap);
+        return "viewScheduleSeatsForm";
     }
 
     @PostMapping("/api/schedules")
