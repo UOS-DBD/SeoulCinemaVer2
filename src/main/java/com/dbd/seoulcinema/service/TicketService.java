@@ -49,17 +49,15 @@ public class TicketService {
     }
 
     @Transactional
-    public Optional<Ticket> viewTicketList() {
+    public ViewSpecificTicketDto viewSpecificTicket(String ticketNumber) {
 
-        List<ScheduleSeat> findTickets = ticketRepository.findAllByMember("mim501");
-        // Optional<Ticket> mim501 = ticketRepository.findTicketByMember(userId);
-        // Optional<Ticket> byId = ticketRepository.findById("202306010111");
-        return null;
-    }
+        ViewSpecificTicketDao ticketInfoById = ticketRepository.findSpecificTicketInfoById(ticketNumber);
+        List<Seat> seats = seatRepository.findAllSeatsByTicketNumber(ticketNumber);
+        //티켓에 좌석 번호 출력을 위한 메소드(ex) A10/ A11)
+        String seatInfo = Seat.getSeatLocation(seats);
 
-    public String buyTicket(String clientId, String scheduleNumber, List<Long> seatNumber) {
+        return new ViewSpecificTicketDto(ticketInfoById,seatInfo);
 
-        return null;
     }
 
     public Integer calculateTotalPrice(Integer seatCount, DiscountType discountType, Integer point) {
