@@ -34,8 +34,12 @@ public class Ticket extends BaseTimeEntity {
     private Integer standardPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CLIENT_NUMBER")
+    @JoinColumn(name = "MEMBER_NUMBER")
     private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NONMEMBER_NUMBER")
+    private NonMember nonMember;
 
     @Column(name = "MOVIE_NAME")
     private String movieName;
@@ -50,6 +54,18 @@ public class Ticket extends BaseTimeEntity {
                 .ticketingStatus(TicketingStatus.Y)
                 .standardPrice(vo.getStandardPrice())
                 .member(member)
+                .scheduleSeats(scheduleSeats)
+                .movieName(movieName)
+                .build();
+    }
+
+    public static Ticket makeNonMemberTicket(CreateTicketFinalVo vo, NonMember nonmember, String movieName,List<ScheduleSeat> scheduleSeats) {
+
+        return Ticket.builder()
+                .ticketNumber(vo.getScheduleNumber() + vo.getSeats().get(0)) //티켓번호는 상영일정번호+좌석(첫 좌석= 인덱스 0 )번호
+                .ticketingStatus(TicketingStatus.Y)
+                .standardPrice(vo.getStandardPrice())
+                .nonMember(nonmember)
                 .scheduleSeats(scheduleSeats)
                 .movieName(movieName)
                 .build();
