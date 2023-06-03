@@ -30,6 +30,24 @@ public class TicketService {
     private final ScheduleSeatRepository scheduleSeatRepository;
 
     private final PaymentRepository paymentRepository;
+
+    private final MemberService memberService;
+
+    private final NonmemberRepository nonmemberRepository;
+
+    private final SeatRepository seatRepository;
+
+    @Transactional
+    public List<ViewTicketsListDto> viewTicketList(String clientId) {
+
+        if (memberService.isMember(clientId)) {
+            return ticketRepository.findTicketListByMember(clientId);
+        } else {
+            return ticketRepository.findTicketListByNonMember(clientId);
+        }
+
+    }
+
     @Transactional
     public Optional<Ticket> viewTicketList() {
 
