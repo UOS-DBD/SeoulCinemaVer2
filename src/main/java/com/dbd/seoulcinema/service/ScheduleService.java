@@ -34,7 +34,7 @@ public class ScheduleService {
     }
 
     public ViewSchedulesFormDto getScheduleForm(MovieAndSchedulesDto movieAndSchedulesDto){
-        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(movieAndSchedulesDto.getScheduleNumber());
+        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(scheduleRepository.findById(movieAndSchedulesDto.getScheduleNumber()).get());
         return ViewSchedulesFormDto.builder()
                 .movieNumber(movieAndSchedulesDto.getMovieNumber())
                 .movieName(movieAndSchedulesDto.getMovieName())
@@ -51,7 +51,7 @@ public class ScheduleService {
     public List<ViewSchedulesFormDto> getSchedulesForm(List<MovieAndSchedulesDto> movieAndSchedulesDtos){
         List<ViewSchedulesFormDto> schedulesFormDto = new ArrayList<>();
         for (MovieAndSchedulesDto dto : movieAndSchedulesDtos) {
-            List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(dto.getScheduleNumber());
+            List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(scheduleRepository.findById(dto.getScheduleNumber()).get());
             Long remainingSeat = dto.getSeatQuantity() - scheduleSeats.size();
             ViewSchedulesFormDto viewDto = ViewSchedulesFormDto.builder()
                     .movieNumber(dto.getMovieNumber())

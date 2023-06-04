@@ -1,6 +1,7 @@
 package com.dbd.seoulcinema.repository;
 
 import com.dbd.seoulcinema.domain.ScheduleSeatId;
+import com.dbd.seoulcinema.domain.entity.Schedule;
 import com.dbd.seoulcinema.domain.entity.ScheduleSeat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, ScheduleSeatId> {
-    List<ScheduleSeat> findByScheduleNumber(String scheduleNumber);
+    List<ScheduleSeat> findByScheduleNumber(Schedule schedule);
 
     @Query("select s from ScheduleSeat s "
             + "where s.scheduleNumber.scheduleNumber = :scheduleNumber "

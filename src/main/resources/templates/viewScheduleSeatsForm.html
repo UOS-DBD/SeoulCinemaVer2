@@ -32,7 +32,7 @@
 <!--    <button type="button" onclick="submitForm()">Submit</button>-->
 <!--</form>-->
 
-<form id="seatForm" action="/api/schedule-seat" method="post">
+<form id="seatForm" th:action="@{/api/schedule-seat}" method="post">
     <table>
         <tbody>
         <tr>
@@ -42,7 +42,7 @@
         <tr th:each="row : ${rowList}">
             <td th:text="${row}"></td>
             <td th:each="col : ${#numbers.sequence(1,20)}">
-                <input type="checkbox" class="seat" onchange="updateSelectedSeats()" th:value="${row + '-' + col}" />
+                <input type="checkbox" class="seat" onchange="updateSelectedSeats()" th:value="${row + '-' + col}" th:disabled="${scheduleSeats.contains(row + '-' + col)}"/>
             </td>
         </tr>
         </tbody>

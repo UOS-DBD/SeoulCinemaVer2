@@ -19,6 +19,6 @@ public class SeatController {
         for (String seat : selectedSeats) {
             System.out.println("Selected seat: " + seat);
         }
-        return "schedules";
+        return "redirect:/home";
     }
 }

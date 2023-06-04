@@ -17,10 +17,8 @@ import lombok.NoArgsConstructor;
 public class Admin {
 
     @Id
-    @Column(name = "ADMIN_ID")
     private String adminId;
-
-    @Column(name = "PASSWORD")
+    
     private String password;
 
     //TODO(관리자등급)

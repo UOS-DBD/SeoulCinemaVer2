@@ -18,6 +18,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
             " FROM Schedule s JOIN s.movie m JOIN s.theater t " +
             "WHERE s.scheduleNumber = :scheduleNumber")
     MovieAndSchedulesDto findMovieAndSchedule(@Param("scheduleNumber") String scheduleNumber);
+
     @Query("SELECT new com.dbd.seoulcinema.dto.MovieAndSchedulesDto(m.movieNumber, m.movieName," +
             " s.scheduleNumber, s.screeningStartTime, s.screeningEndTime, s.screeningDate," +
             " t.theaterNumber, t.theaterFloor, t.seatQuantity)" +

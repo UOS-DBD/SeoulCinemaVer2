@@ -7,6 +7,7 @@ import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.dto.ViewSchedulesFormDto;
 import com.dbd.seoulcinema.service.MovieService;
 import com.dbd.seoulcinema.service.ScheduleService;
+import com.dbd.seoulcinema.service.SeatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +24,7 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
     private final MovieService movieService;
+    private final SeatService seatService;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
@@ -54,11 +53,15 @@ public class ScheduleController {
         List<Seat> seats = scheduleService.getSeats(scheduleForm.getTheaterNumber());
 
         Map<Long, Boolean> seatBookingStatusMap = new HashMap<>();
+        List<String> scheduleSeats = new ArrayList<>();
 
         for (Seat seat : seats) {
             boolean isBooked = scheduleService.isSeatBooked(seat.getSeatNumber(), scheduleForm.getScheduleNumber());
-            seatBookingStatusMap.put(seat.getSeatNumber(), isBooked);
+            if(isBooked){
+                scheduleSeats.add(seatService.makeSeatFormat(seat));
+            }
         }
+        model.addAttribute("scheduleSeats", scheduleSeats);
 
         model.addAttribute("scheduleForm", scheduleForm);
         model.addAttribute("seats", seats);
@@ -83,8 +86,10 @@ public class ScheduleController {
         if(movieNumber == null){ // 입력한 날짜에 상영하는 영화들과 일정 보여주기
 
             List<MovieAndSchedulesDto> movieAndSchedules = scheduleService.getMovieAndSchedules(screeningDate);
+            System.out.println(movieAndSchedules.size());
             List<ViewSchedulesFormDto> schedulesForm = scheduleService.getSchedulesForm(movieAndSchedules);
             //schedulesForm: 영화이름 + 몇관 몇층 + 스케쥴 + 총 좌석 + 잔여좌석 + 영화번호,스케쥴번호
+            System.out.println(schedulesForm.size());
 
             redirectAttributes.addFlashAttribute("schedulesForm", schedulesForm);
 
