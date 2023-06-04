@@ -16,7 +16,7 @@ public class CreateMemberDto {
     private String birth;
 
     @Builder
-    public Member toEntitiy(CreateMemberDto createMemberDto, LocalDate birth){
+    public Member toEntity(CreateMemberDto createMemberDto, LocalDate birth){
         return Member.builder()
                 .clientId(createMemberDto.getClientId())
                 .password(createMemberDto.getPassword())

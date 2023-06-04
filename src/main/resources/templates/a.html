@@ -1,0 +1,15 @@
+<ul th:each i rowize>
+    <div th:each j colisze>
+    <li>th:if seatbooked[row * rowsize + col]==booked</li>
+    </div>
+    줄바꿈
+    <ul>
+
+
+        <div class="grid">
+            <div class="grid">
+                <div th:each="row : ${#numbers.sequence(0, 19)}">
+                    <div th:each="col : ${#numbers.sequence(0, 14)}" class="grid-item"></div>
+                </div>
+            </div>
+        </div>

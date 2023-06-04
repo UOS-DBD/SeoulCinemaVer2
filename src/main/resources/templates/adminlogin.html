@@ -15,8 +15,8 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <link th:href="@{/css/login.css}" rel="stylesheet" />
-<!--        <link href="../static/css/styles.css" rel="stylesheet" />-->
-<!--        <link href="../static/css/login.css" rel="stylesheet" />-->
+    <!--    <link href="../static/css/styles.css" rel="stylesheet" />-->
+    <!--    <link href="../static/css/login.css" rel="stylesheet" />-->
 </head>
 <body>
 <!-- Navigation-->
@@ -61,7 +61,7 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Seoul Cinema</h1>
+            <h1 class="display-4 fw-bolder">Seoul Cinema 관리자 페이지</h1>
             <p class="lead fw-normal text-white-50 mb-0">데이터베이스 설계 수업</p>
         </div>
     </div>
@@ -73,26 +73,48 @@
         <div class="row full-height justify-content-center">
             <div class="col-12 text-center align-self-center py-5">
                 <div class="section pb-5 pt-5 pt-sm-2 text-center">
-
+                    <h6 class="mb-0 pb-3"><span>Log In </span><span>Sign Up</span></h6>
+                    <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+                    <label for="reg-log"></label>
                     <div class="card-3d-wrap mx-auto">
                         <div class="card-3d-wrapper">
                             <div class="card-front">
                                 <div class="center-wrap">
                                     <div class="section text-center">
-                                        <h4 class="mb-4 pb-3">비회원 LogIn</h4>
-                                        <form th:action="@{/api/nonmembers}" method="post">
+                                        <h4 class="mb-4 pb-3">Log In</h4>
+                                        <form th:action="@{/api/admin/auth/login}" method="post" th:object="${formData}">
                                             <div class="form-group">
-                                                <input name="phoneNumber" class="form-style" placeholder="PHONE NUMBER" id="phoneNumber" autocomplete="off" th:value="${phoneNumber}">
+                                                <input class="form-style" placeholder="ID" id="id" autocomplete="off" th:field="*{id}">
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
-
+                                            <div class="form-group mt-2">
+                                                <input type="password" class="form-style" placeholder="PASSWORD" id="password1" autocomplete="off" th:field="*{password}">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
                                             <button type="submit" class="btn mt-4">submit</button>
                                         </form>
-
+                                        <p class="mb-0 mt-4 text-center"><a href="#0" class="link">Forgot your password?</a></p>
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="card-back">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">Sign Up</h4>
+                                        <form th:action="@{/api/admin}" method="post" th:object="${signup}">
+                                            <div class="form-group">
+                                                <input type="text" name="clientId" class="form-style" placeholder="ID" id="clientId" autocomplete="off" th:field="*{adminId}">
+                                                <i class="input-icon uil uil-user"></i>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="password" class="form-style" placeholder="PASSWORD" id="password" autocomplete="off" th:field="*{password}">
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                            <button class="btn mt-4">submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

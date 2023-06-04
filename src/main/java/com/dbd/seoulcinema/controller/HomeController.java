@@ -45,4 +45,10 @@ public class HomeController {
         return "home";
     }
 
+    @GetMapping("/admin/home")
+    public String adminHome(Model model){
+
+        return "adminhome";
+    }
+
 }

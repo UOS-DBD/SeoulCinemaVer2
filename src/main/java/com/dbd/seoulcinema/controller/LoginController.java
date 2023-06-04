@@ -1,5 +1,6 @@
 package com.dbd.seoulcinema.controller;
 
+import com.dbd.seoulcinema.dto.CreateAdminDto;
 import com.dbd.seoulcinema.dto.CreateMemberDto;
 import com.dbd.seoulcinema.dto.LoginDto;
 import com.dbd.seoulcinema.global.exception.DuplicateIdException;
@@ -59,4 +60,28 @@ public class LoginController {
         return "home";
     }
 
+    // admin
+    @RequestMapping(value = "/admin/login", method = RequestMethod.GET)
+    public String adminLogin(Model model){
+        model.addAttribute("formData", new LoginDto());
+        model.addAttribute("signup", new CreateAdminDto());
+        return "adminlogin";
+    }
+
+    @PostMapping(value = "/api/admin/auth/login")
+    public RedirectView adminLoginCheck(@ModelAttribute("formData") @Valid LoginDto loginDto, HttpSession session, Model model){
+
+        String userId = loginService.adminLogin(loginDto, session);
+
+        if(userId != null){ // 로그인 성공
+            model.addAttribute("success", "true");
+            // 페이지 생성 필요
+            return new RedirectView("/admin/home");
+        }
+        else{
+            model.addAttribute("success", "false");
+            model.addAttribute("exception", new LoginFailedException(LOGIN_FAILED));
+            return new RedirectView("/admin/login");
+        }
+    }
 }
