@@ -21,6 +21,6 @@ import java.time.LocalDateTime;
 public class NonMember extends BaseTimeEntity{
 
     @Id
-    @Column(name = "PHONE_NUMBER",length = 20)
+    @Column(length = 20)
     private String phoneNumber;
 }

@@ -22,10 +22,10 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long discountNumber;
 
-    @Column(name = "DISCOUNT_CODE")
+
     @Convert(converter = DiscountTypeConverter.class)
     private DiscountType discountType;
 
-    @Column(name = "DISCOUNT_PRICE")
+
     private Integer discountPrice;
 }

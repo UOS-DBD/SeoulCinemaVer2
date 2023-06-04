@@ -18,26 +18,26 @@ import lombok.*;
 public class Payment {
 
     @Id
-    @Column(name = "PAYMENT_NUMBER", length = 36)
+    @Column(length = 36)
     private String paymentNumber;
 
-    @Column(name = "PAYMENT_PRICE")
+
     private Integer paymentPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TICKET_NUMBER")
     private Ticket ticket;
 
-    @Column(name = "PAYMENT_DATE")
+
     private LocalDate paymentDate;
 
-    @Column(name = "BANK_NAME", length = 14)
+    @Column(length = 14)
     private String bankName;
 
-    @Column(name = "PAYMENT_APPROVE_NUMBER", length = 36)
+    @Column(length = 36)
     private String paymentApproveNumber;
 
-    @Column(name = "PAYMENT_TYPE_CODE")
+
     @Convert(converter = PaymentTypeConverter.class)
     private PaymentType paymentType;
 

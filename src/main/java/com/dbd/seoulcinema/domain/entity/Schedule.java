@@ -30,19 +30,19 @@ import org.hibernate.annotations.ColumnDefault;
 public class Schedule {
 
     @Id
-    @Column(name = "SCHEDULE_NUMBER",length = 11)
+    @Column(length = 11)
     private String scheduleNumber;
 
-    @Column(name = "SCREENING_START_TIME", columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE")
     private LocalDateTime screeningStartTime;
 
-    @Column(name = "SCREENING_END_TIME", columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE")
     private LocalDateTime screeningEndTime;
 
-    @Column(name = "SCREENING_DATE", columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE")
     private LocalDate screeningDate;
 
-    @Column(name = "SCREENING_SESSION")
+
     @ColumnDefault("0")
     private Integer screeningSession;
 

@@ -14,10 +14,10 @@ import javax.persistence.Column;
 @AllArgsConstructor
 public class ScheduleSeatId implements Serializable {
 
-    @Column(name = "SEAT_NUMBER")
+
     private Long seatNumber;
 
-    @Column(name="SCHEDULE_NUMBER")
+
     private String scheduleNumber;
 
     @Override

@@ -1,6 +1,7 @@
 package com.dbd.seoulcinema.domain.entity;
 
 import com.dbd.seoulcinema.domain.PaymentDiscountId;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -10,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,16 +20,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Builder
 @IdClass(PaymentDiscountId.class)
-public class PaymentDiscount {
+public class PaymentDiscount implements Serializable {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PAYMENT_NUMBER")
-    private Payment payment;
+    private Payment paymentNumber;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DISCOUNT_NUMBER")
-    private Discount discount;
+    private Discount discountNumber;
 }

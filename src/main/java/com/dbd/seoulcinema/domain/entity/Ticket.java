@@ -24,13 +24,12 @@ import java.util.List;
 public class Ticket extends BaseTimeEntity {
 
     @Id
-    @Column(name = "TICKET_NUMBER")
     private String ticketNumber;
 
-    @Column(name = "TICKETING_STATUS")
+
     private TicketingStatus ticketingStatus;
 
-    @Column(name = "STANDARD_PRICE")
+
     private Integer standardPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +40,7 @@ public class Ticket extends BaseTimeEntity {
     @JoinColumn(name = "NONMEMBER_NUMBER")
     private NonMember nonMember;
 
-    @Column(name = "MOVIE_NAME")
+
     private String movieName;
 
     @OneToMany(mappedBy = "ticket")

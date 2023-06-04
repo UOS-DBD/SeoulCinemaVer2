@@ -36,7 +36,7 @@ public class ScheduleSeat extends BaseTimeEntity{
     @JoinColumn(name = "SCHEDULE_NUMBER")
     private Schedule scheduleNumber;
 
-    @Column(name = "PAYMENT_STATUS")
+
     private PaymentStatus paymentStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
