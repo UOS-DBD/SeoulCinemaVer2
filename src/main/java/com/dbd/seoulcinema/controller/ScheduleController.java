@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,12 @@ public class ScheduleController {
         model.addAttribute("scheduleForm", scheduleForm);
         model.addAttribute("seats", seats);
         model.addAttribute("seatBookingStatusMap", seatBookingStatusMap);
+
+        /*
+
+         */
+        List<String> rowList = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O");
+        model.addAttribute("rowList", rowList);
         return "viewScheduleSeatsForm";
     }
 

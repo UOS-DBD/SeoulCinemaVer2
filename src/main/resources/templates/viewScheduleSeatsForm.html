@@ -11,23 +11,98 @@
 <span th:text="${scheduleForm.remainingSeat}"></span>
 <span th:text="${scheduleForm.screeningStartTime}"></span>
 <span th:text="${scheduleForm.screeningEndTime}"></span>
+<br/>
 
-<form th:action="@{/bookSeat}" method="post">
+<!--<form id="seatForm" th:action="@{/api/schedule-seat}" method="post">-->
+<!--    <table>-->
+<!--        <tbody>-->
+<!--        <tr>-->
+<!--            <th></th> &lt;!&ndash; Empty cell for spacing &ndash;&gt;-->
+<!--            <th th:each="col : ${#numbers.sequence(1,20)}" th:text="${col}"></th> &lt;!&ndash; Column headers &ndash;&gt;-->
+<!--        </tr>-->
+<!--        <tr th:each="row : ${rowList}"> &lt;!&ndash; Rows &ndash;&gt;-->
+<!--            <td th:text="${row}"></td> &lt;!&ndash; Row headers &ndash;&gt;-->
+<!--            <td th:each="col : ${#numbers.sequence(1,20)}">-->
+<!--            <input type="hidden" name="selectedSeats" value=""/>-->
+<!--                <button class="seat" onclick="toggleSeatStatus(event, this)" th:data-seat="${row + '-' + col}"></button>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--    <button type="button" onclick="submitForm()">Submit</button>-->
+<!--</form>-->
+
+<form id="seatForm" action="/api/schedule-seat" method="post">
     <table>
         <tbody>
-        <tr th:each="seat : ${seats}">
-            <td>
-                <button th:if="${!seatBookingStatusMap[seat.seatNumber]}"
-                        th:value="${seat.seatNumber}"
-                        type="submit">
-                    Seat <span th:text="${seat.rowNumber + seat.colNumber}"></span>
-                </button>
+        <tr>
+            <th></th>
+            <th th:each="col : ${#numbers.sequence(1,20)}" th:text="${col}"></th>
+        </tr>
+        <tr th:each="row : ${rowList}">
+            <td th:text="${row}"></td>
+            <td th:each="col : ${#numbers.sequence(1,20)}">
+                <input type="checkbox" class="seat" onchange="updateSelectedSeats()" th:value="${row + '-' + col}" />
             </td>
         </tr>
         </tbody>
     </table>
+    <input type="hidden" name="selectedSeats" id="selectedSeats" value="" />
+    <button type="button" onclick="submitForm()">Submit</button>
 </form>
-
 
 </body>
 </html>
+
+
+<style>
+    .seat {
+        width: 30px;
+        height: 30px;
+        background-color: lightgray;
+        border: none;
+        cursor: pointer;
+    }
+
+    .selected {
+        background-color: green;
+    }
+</style>
+
+<script>
+    // function toggleSeatStatus(event, seatElement) {
+    //     event.preventDefault();
+    //     seatElement.classList.toggle("selected");
+    // }
+    //
+    // function submitForm() {
+    //     var seatElements = document.querySelectorAll(".seat");
+    //     var selectedSeats = [];
+    //
+    //     for (var i = 0; i < seatElements.length; i++) {
+    //         var seatElement = seatElements[i];
+    //         if (seatElement.classList.contains("selected")) {
+    //             var seatValue = seatElement.getAttribute("data-seat");
+    //             selectedSeats.push(seatValue);
+    //         }
+    //     }
+    //
+    //     document.querySelector("input[name='selectedSeats']").value = selectedSeats.join(",");
+    //     document.getElementById("seatForm").submit();
+    // }
+
+    function updateSelectedSeats() {
+        var selectedSeats = Array.from(document.querySelectorAll(".seat:checked")).map(function(seat) {
+            return seat.value;
+        });
+
+        document.getElementById("selectedSeats").value = selectedSeats.join(",");
+    }
+
+    function submitForm() {
+        updateSelectedSeats();
+        document.getElementById("seatForm").submit();
+    }
+
+</script>
+
