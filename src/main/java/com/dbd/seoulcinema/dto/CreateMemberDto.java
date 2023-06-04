@@ -23,7 +23,7 @@ public class CreateMemberDto {
                 .phoneNumber(createMemberDto.getPhoneNumber())
                 .point(0L)
                 .clientGrade(ClientGrade.NORMAL)
-                .localDate(birth)
+                .birth(birth)
                 .build();
     }
 }
