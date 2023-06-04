@@ -1,5 +1,6 @@
 package com.dbd.seoulcinema.service;
 
+import com.dbd.seoulcinema.domain.PaymentDiscountId;
 import com.dbd.seoulcinema.domain.entity.*;
 import com.dbd.seoulcinema.domain.enumeration.DiscountType;
 import com.dbd.seoulcinema.domain.enumeration.PaymentType;
@@ -7,6 +8,7 @@ import com.dbd.seoulcinema.dao.ViewSpecificTicketDao;
 import com.dbd.seoulcinema.dto.ViewSpecificTicketDto;
 import com.dbd.seoulcinema.dto.ViewTicketsListDto;
 import com.dbd.seoulcinema.repository.*;
+import com.dbd.seoulcinema.repository.PaymentDiscountRepository;
 import com.dbd.seoulcinema.vo.CreateTicketFinalVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,10 @@ public class TicketService {
     private final NonmemberRepository nonmemberRepository;
 
     private final SeatRepository seatRepository;
+
+    private final PaymentDiscountRepository paymentDiscountRepository;
+
+    private final DiscountRepository discountRepository;
 
     @Transactional
     public List<ViewTicketsListDto> viewTicketList(String clientId) {
@@ -102,9 +108,25 @@ public class TicketService {
         paymentRepository.save(payment);
         paymentRepository.flush();
 
+        System.out.println("break point~~~~~~~~~~~~~~~~~~~");
         //결제 할인 엔티티 생성
-        if(vo.getPoint()==0){
+        if(vo.getPoint()!=0){
 
+            Discount findDiscount = discountRepository.findDiscountByDiscountType();
+
+            System.out.println("break point2~~~~~~~~~~~~~~~~~~~");
+            System.out.println(findDiscount.getDiscountType().getDesc());
+            System.out.println(payment.getPaymentNumber());
+            System.out.println(findDiscount.getDiscountNumber());
+
+            PaymentDiscount paymentDiscount = PaymentDiscount.builder()
+                .paymentNumber(payment)
+                .discountNumber(findDiscount)
+                .build();
+
+            System.out.println(paymentDiscount.getPaymentNumber().getPaymentNumber());
+            System.out.println(paymentDiscount.getDiscountNumber().getDiscountNumber());
+            paymentDiscountRepository.save(paymentDiscount);
         }
         return "success";
     }

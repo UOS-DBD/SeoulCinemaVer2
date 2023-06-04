@@ -30,7 +30,7 @@ class MemberTest {
                 .phoneNumber("010-3370-1111")
                 .point(20000L)
                 .clientGrade(ClientGrade.NORMAL)
-                .localDate(LocalDate.now())
+                .birth(LocalDate.now())
                 .build());
        em.flush();
     }

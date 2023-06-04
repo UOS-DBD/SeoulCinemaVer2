@@ -16,24 +16,24 @@ import java.time.LocalDate;
 public class Member {
 
     @Id
-    @Column(name = "CLIENT_ID", length = 20)
+    @Column(length = 20)
     private String clientId;
 
-    @Column(name = "PASSWORD", length = 64)
+    @Column(length = 64)
     private String password;
 
-    @Column(name = "PHONE_NUMBER")
+
     private String phoneNumber;
 
-    @Column(name = "POINT")
+
     private Long point;
 
-    @Column(name = "CLIENT_GRADE_CODE")
+
     @Convert(converter = ClientGradeConverter.class)
     private ClientGrade clientGrade;
 
-    @Column(name = "BIRTH")
-    private LocalDate localDate;
+
+    private LocalDate birth;
 
     public void accumulateAndUsePoint(Integer point, Integer totalPrice) {
         this.point-=point;

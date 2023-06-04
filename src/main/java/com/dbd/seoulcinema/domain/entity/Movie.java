@@ -24,29 +24,28 @@ public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "MOVIE_NUMBER")
     private Long movieNumber;
 
-    @Column(name = "MOVIE_NAME", length = 100)
+    @Column(length = 100)
     private String movieName;
 
-    @Column(name = "RUNNING_TIME", length = 5)
+    @Column(length = 5)
     private String runningTime;
 
-    @Column(name = "MOVIE_GRNRE_CODE")
+
     @Convert(converter = MovieGenreConverter.class)
     private MovieGenre movieGenre;
 
-    @Column(name = "MOVIE_GRADE_CODE")
+
     @Convert(converter = MovieGradeConverter.class)
     private MovieGrade movieGrade;
 
-    @Column(name = "MOVIE_INTRODUCTION", length = 256)
+    @Column(length = 256)
     private String movieIntroduction;
 
-    @Column(name = "MOVIE_IMAGE", length = 70)
+    @Column(length = 70)
     private String movieImage;
 
-    @Column(name = "SCREENING_STATUS", length = 2)
+    @Column(length = 2)
     private ScreeningStatus screeningStatus;
 }

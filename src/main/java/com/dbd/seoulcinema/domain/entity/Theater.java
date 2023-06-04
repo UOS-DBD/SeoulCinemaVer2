@@ -20,15 +20,13 @@ import org.hibernate.annotations.ColumnDefault;
 public class Theater {
 
     @Id
-    @Column(name = "THEATER_NUMBER")
     private String theaterNumber;
 
 
-    @Column(name = "THEATER_FLOOR")
     private String theaterFloor;
 
 
-    @Column(name = "SEAT_QUANTITY")
+
     @ColumnDefault("0")
     private Long seatQuantity;
 

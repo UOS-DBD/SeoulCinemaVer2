@@ -20,13 +20,12 @@ public class Participant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "PARTICIPANT_NUMBER")
     private Long participantNumber;
 
-    @Column(name = "PARTICIPANT_NAME", length = 16)
+    @Column(length = 16)
     private String participantName;
 
-    @Column(name = "PARTICIPANT_CODE")
+
     @Convert(converter = ParticipantTypeConverter.class)
     private ParticipantType participantType;
 }
