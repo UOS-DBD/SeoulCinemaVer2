@@ -9,8 +9,12 @@ import com.dbd.seoulcinema.repository.ScheduleRepository;
 import com.dbd.seoulcinema.repository.ScheduleSeatRepository;
 import com.dbd.seoulcinema.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +80,13 @@ public class ScheduleService {
 
     public boolean isSeatBooked(Long seatNumber, String scheduleNumber) {
         return scheduleSeatRepository.existsById(new ScheduleSeatId(seatNumber, scheduleNumber));
+    }
+
+    @Transactional
+    @Scheduled(cron = "0/30 * * ? * *")
+    public void deleteScheduleSeatLock(){
+        LocalDateTime fiveMinutesAgo = LocalDateTime.now().minusMinutes(5);
+        scheduleSeatRepository.deleteOldRecords(fiveMinutesAgo);
     }
 
 }
