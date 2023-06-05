@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -47,12 +48,14 @@ public class ScheduleController {
 
     @PostMapping("/api/schedules/{scheduleNumber}")
     public String showScheduleSeatsForm(Model model,
+                                      HttpSession session,
                                       @PathVariable String scheduleNumber){
+        // TODO: 쿼리 300개 해결
+
         MovieAndSchedulesDto movieAndSchedule = scheduleService.getSchedule(scheduleNumber);
         ViewSchedulesFormDto scheduleForm = scheduleService.getScheduleForm(movieAndSchedule);
         List<Seat> seats = scheduleService.getSeats(scheduleForm.getTheaterNumber());
 
-        Map<Long, Boolean> seatBookingStatusMap = new HashMap<>();
         List<String> scheduleSeats = new ArrayList<>();
 
         for (Seat seat : seats) {
@@ -65,7 +68,7 @@ public class ScheduleController {
 
         model.addAttribute("scheduleForm", scheduleForm);
         model.addAttribute("seats", seats);
-        model.addAttribute("seatBookingStatusMap", seatBookingStatusMap);
+        session.setAttribute("scheduleNumber", scheduleNumber);
 
         /*
 
