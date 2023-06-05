@@ -6,31 +6,33 @@
     <title>Title</title>
 </head>
 <body>
-<span th:text="${scheduleForm.scheduleNumber}"></span>
-<span th:text="${scheduleForm.seatQuantity}"></span>
-<span th:text="${scheduleForm.remainingSeat}"></span>
-<span th:text="${scheduleForm.screeningStartTime}"></span>
-<span th:text="${scheduleForm.screeningEndTime}"></span>
-<br/>
 
-<!--<form id="seatForm" th:action="@{/api/schedule-seat}" method="post">-->
-<!--    <table>-->
-<!--        <tbody>-->
-<!--        <tr>-->
-<!--            <th></th> &lt;!&ndash; Empty cell for spacing &ndash;&gt;-->
-<!--            <th th:each="col : ${#numbers.sequence(1,20)}" th:text="${col}"></th> &lt;!&ndash; Column headers &ndash;&gt;-->
-<!--        </tr>-->
-<!--        <tr th:each="row : ${rowList}"> &lt;!&ndash; Rows &ndash;&gt;-->
-<!--            <td th:text="${row}"></td> &lt;!&ndash; Row headers &ndash;&gt;-->
-<!--            <td th:each="col : ${#numbers.sequence(1,20)}">-->
-<!--            <input type="hidden" name="selectedSeats" value=""/>-->
-<!--                <button class="seat" onclick="toggleSeatStatus(event, this)" th:data-seat="${row + '-' + col}"></button>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-<!--    <button type="button" onclick="submitForm()">Submit</button>-->
-<!--</form>-->
+<div id="user-select-info">
+    <p class="theater-info">
+        <span class="site">Seoul Cinema</span>
+        <span class="screen">
+            <b class="theaterNum" th:text = "${scheduleForm.theaterNumber}"></b>
+            관
+            <b class="theaterFloor" th:text = "${scheduleForm.theaterFloor}"> </b>
+            층
+        </span>
+        <span class="seatNum">남은 좌석
+            <b class="restNum" th:text = "${scheduleForm.remainingSeat}"> </b>
+            /
+            <b class="totalNum" th:text = "${scheduleForm.seatQuantity}"> </b>
+        </span>
+    </p>
+    <p class="playYMD-info">
+        <b th:text = "${scheduleForm.screeningDate}"></b>
+        <b > </b>
+
+        <b th:text = "${scheduleForm.screeningStartTime}"> </b>
+        <b>~</b>
+        <b th:text = "${scheduleForm.screeningEndTime}"> </b>
+    </p>
+</div>
+
+<br/>
 
 <form id="seatForm" th:action="@{/api/schedule-seat}" method="post">
     <table>
@@ -64,10 +66,92 @@
         cursor: pointer;
     }
 
-    .selected {
-        background-color: green;
+
+    /*b {*/
+    /*    font-weight: bold;*/
+    /*}*/
+
+    /*#user-select-info p.playYMD-info b {*/
+    /*    display: block;*/
+    /*    float: left;*/
+    /*    line-height: 20px;*/
+    /*}*/
+
+    /*#user-select-info p.theater-info span:first-child {*/
+    /*    padding-left: 0;*/
+    /*    max-width: 150px;*/
+    /*}*/
+
+    /*#user-select-info p.theater-info .seatNum .restNum {*/
+    /*    color: #CA4D10;*/
+    /*}*/
+
+    /*#user-select-info p.theater-info .seatNum .totalNum {*/
+    /*    font-weight: normal;*/
+    /*}*/
+
+    html {
+        font-family: "Open Sans", sans-serif;
+        font-size: 16px;
     }
+
+    /* Center the cinema name */
+    #user-select-info p.theater-info span:first-child {
+        display: block;
+        margin: 0 auto;
+        max-width: 150px;
+        text-align: center;
+    }
+
+    /* Style the theater number and floor */
+    #user-select-info p.theater-info .screen {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+    }
+    #user-select-info p.theater-info .screen .theaterNum {
+        font-weight: bold;
+    }
+    #user-select-info p.theater-info .screen .theaterFloor {
+        margin-left: 5px;
+    }
+
+    /* Style the remaining seats and total seats */
+    #user-select-info p.theater-info .seatNum {
+        display: block;
+        margin-top: 10px;
+        text-align: center;
+    }
+    #user-select-info p.theater-info .seatNum .restNum {
+        color: #CA4D10;
+        font-weight: bold;
+    }
+    #user-select-info p.theater-info .seatNum .totalNum {
+        font-weight: normal;
+    }
+
+    /* Style the screening date, start time, and end time */
+    #user-select-info p.playYMD-info {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+    }
+    #user-select-info p.playYMD-info b {
+        font-weight: bold;
+        line-height: 1.5;
+        margin: 0 auto;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
 </style>
+
 
 <script>
     // function toggleSeatStatus(event, seatElement) {
