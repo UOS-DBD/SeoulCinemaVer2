@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -85,8 +86,17 @@ public class ScheduleService {
     @Transactional
     @Scheduled(cron = "0/30 * * ? * *")
     public void deleteScheduleSeatLock(){
-        LocalDateTime fiveMinutesAgo = LocalDateTime.now().minusMinutes(5);
-        scheduleSeatRepository.deleteOldRecords(fiveMinutesAgo);
+        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findAll();
+        for (ScheduleSeat scheduleSeat : scheduleSeats) {
+            LocalDateTime createdDate = scheduleSeat.getCreatedDate();
+            Duration elapsed = Duration.between(createdDate, LocalDateTime.now());
+            Duration fiveMinutes = Duration.ofMinutes(5);
+            System.out.println("elapsed = " + elapsed);
+            System.out.println("fiveMinutes = " + fiveMinutes);
+            if (elapsed.compareTo(fiveMinutes) >= 0) {
+                scheduleSeatRepository.delete(scheduleSeat);
+            }
+        }
     }
 
 }
