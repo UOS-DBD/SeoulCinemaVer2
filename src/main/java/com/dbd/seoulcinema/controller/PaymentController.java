@@ -1,10 +1,12 @@
 package com.dbd.seoulcinema.controller;
 
+import com.dbd.seoulcinema.domain.entity.ScheduleSeat;
 import com.dbd.seoulcinema.dto.ViewPaymentListDto;
 import com.dbd.seoulcinema.dto.ViewSpecificPaymentDto;
 import com.dbd.seoulcinema.global.constants.Constants;
 import com.dbd.seoulcinema.service.PaymentService;
 import com.dbd.seoulcinema.vo.ScheduleSeatVo;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,11 +32,16 @@ public class PaymentController {
     public String viewPaymentRadio(HttpSession httpSession, Model model) {
 
 
-        String scheduleNumber = "20230601011";
-        List<Long> seats = new ArrayList<>(Arrays.asList(11L, 12L)); // 좌석 선택하는 api 완료된 후 @ModelAttribute 사용해서 코드 수정할 것
-        model.addAttribute(Constants.STANDARD_PRICE, 12000 * seats.size()); // 할인전 표준 금액 렌더링
-
-        ScheduleSeatVo scheduleSeatVo = new ScheduleSeatVo(scheduleNumber, seats);
+//       String scheduleNumber = "20230601011";
+//        List<Long> seats = new ArrayList<>(Arrays.asList(9L, 10L)); // 좌석 선택하는 api 완료된 후 @ModelAttribute 사용해서 코드 수정할 것
+        List<ScheduleSeat> selectedSeats = (List<ScheduleSeat>) httpSession.getAttribute(
+            "selectedSeats");
+        model.addAttribute(Constants.STANDARD_PRICE, 12000 *selectedSeats.size()); // 할인전 표준 금액 렌더링
+        List<Long> seats = selectedSeats.stream().map(s -> s.getSeatNumber().getSeatNumber())
+           .collect(Collectors.toList());
+        ScheduleSeatVo scheduleSeatVo = new ScheduleSeatVo(
+            selectedSeats.get(0).getScheduleNumber().getScheduleNumber(), seats);
+//        ScheduleSeatVo scheduleSeatVo = new ScheduleSeatVo(scheduleNumber, seats);
         httpSession.setAttribute(Constants.USER_ID_SESSION, "mim501");
         httpSession.setAttribute("scheduleSeatVo", scheduleSeatVo);
 
