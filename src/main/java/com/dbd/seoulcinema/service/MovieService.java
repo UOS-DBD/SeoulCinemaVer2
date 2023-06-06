@@ -7,6 +7,7 @@ import com.dbd.seoulcinema.domain.enumeration.MovieGenre;
 import com.dbd.seoulcinema.domain.enumeration.MovieGrade;
 import com.dbd.seoulcinema.domain.enumeration.ParticipantType;
 import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
+import com.dbd.seoulcinema.dto.CreateMovieAndParticipantDto;
 import com.dbd.seoulcinema.dto.CreateMovieDto;
 import com.dbd.seoulcinema.dto.CreateParticipantDto;
 import com.dbd.seoulcinema.dto.MovieDetailDto;
@@ -16,7 +17,13 @@ import com.dbd.seoulcinema.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
@@ -44,8 +51,22 @@ public class MovieService {
     }
 
     @Transactional
-    public void craeteMovie(CreateMovieDto createMovieDto, List<CreateParticipantDto> createParticipantDtoList) {
+    public void craeteMovie(MultipartFile image, CreateMovieAndParticipantDto createMovieAndParticipantDto)  {
+        String fileName = image.getOriginalFilename();
+        Path imagePath = Path.of("src/main/resources/static/img/" + fileName); // 이미지를 저장할 경로
 
+        try {
+            // 이미지 파일을 지정된 경로로 복사합니다.
+            InputStream inputStream = image.getInputStream();
+            Files.copy(inputStream, imagePath, StandardCopyOption.REPLACE_EXISTING);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // 파일 복사 실패 처리
+        }
+
+        CreateMovieDto createMovieDto = createMovieAndParticipantDto.getCreateMovieDto();
+        List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
 
         Movie movie = Movie.builder()
                 .movieName(createMovieDto.getMovieName())
@@ -53,8 +74,9 @@ public class MovieService {
                 .movieGenre(createMovieDto.getMovieGenre())
                 .movieGrade(createMovieDto.getMovieGrade())
                 .movieIntroduction(createMovieDto.getMovieIntroduction())
-                .movieImage("") // 이미지 어떻게 넣을지
-                .screeningStatus(createMovieDto.getScreeningStatus()).build();
+                .movieImage(createMovieDto.getMovieImage()) // 이미지 어떻게 넣을지
+                .screeningStatus(createMovieDto.getScreeningStatus())
+                .build();
         movieRepository.save(movie);
         movieRepository.flush();
 
@@ -74,6 +96,6 @@ public class MovieService {
                     .participantNumber(participant).build());
             participantMovieRepositorty.flush();
         }
+        System.out.println("service end");
     }
-
 }

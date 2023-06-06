@@ -112,6 +112,33 @@
       margin-left: 10px;
       cursor: pointer;
     }
+
+    li {
+      list-style: none;
+    }
+
+    img {
+      width: 300px;
+      height: 300px;
+    }
+
+    .real-upload {
+      display: none;
+    }
+
+    .upload {
+      width: 120px;
+      height: 30px;
+      background-color: antiquewhite;
+    }
+
+    .image-preview {
+      width: 300px;
+      height: 300px;
+      display: flex;
+      gap: 20px;
+      border: 1px solid black;
+    }
     </style>
 </head>
 
@@ -148,7 +175,59 @@
 <section class="py-5">
     <div class="col">
         <div>
-                <input class="card-img-top" id="movieImage" alt="..."></input>
+<!--                <input class="card-img-top" id="movieImage" alt="..."></input>-->
+            <input type="file" class="real-upload" id="movieImage" accept="image/*" required multiple>
+            <div class="upload">이미지 업로드</div>
+            <ul class="image-preview"></ul>
+            <script>
+                function getImageFiles(e) {
+                  const uploadFiles = [];
+                  const files = e.currentTarget.files;
+                  const imagePreview = document.querySelector('.image-preview');
+                  const docFrag = new DocumentFragment();
+
+                  if ([...files].length >= 7) {
+                    alert('이미지는 최대 6개 까지 업로드가 가능합니다.');
+                    return;
+                  }
+
+                  // 파일 타입 검사
+                  [...files].forEach(file => {
+                    if (!file.type.match("image/.*")) {
+                      alert('이미지 파일만 업로드가 가능합니다.');
+                      return
+                    }
+
+                    // 파일 갯수 검사
+                    if ([...files].length < 7) {
+                      uploadFiles.push(file);
+                      const reader = new FileReader();
+                      reader.onload = (e) => {
+                        const preview = createElement(e, file);
+                        imagePreview.appendChild(preview);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  });
+                }
+
+                function createElement(e, file) {
+                  const li = document.createElement('li');
+                  const img = document.createElement('img');
+                  img.setAttribute('src', e.target.result);
+                  img.setAttribute('data-file', file.name);
+                  li.appendChild(img);
+
+                  return li;
+                }
+
+                const realUpload = document.querySelector('.real-upload');
+                const upload = document.querySelector('.upload');
+
+                upload.addEventListener('click', () => realUpload.click());
+
+                realUpload.addEventListener('change', getImageFiles);
+              </script>
                 <div>
                     <input class="text-body-emphasis" id="movieName" PLACEHOLDER="영화이름"></input>
                 </div>
@@ -291,13 +370,17 @@
 
                           // Function to submit all the added data
                           function submitData() {
-
+                            var movieImageFile = document.getElementById('movieImage');
+                            console.log("file");
+                            console.log(movieImageFile.files[0]);
+                            console.log("name");
+                            console.log(movieImageFile.files[0].name);
                           var movieName= document.getElementById("movieName").value;
                           var runningTime= document.getElementById("runningTime").value;
                           var movieGenre= document.getElementById("movieGenre").value;
                           var movieGrade= document.getElementById("movieGrade").value;
                           var movieIntroduction= document.getElementById("movieIntroduction").value;
-                          var movieImage= document.getElementById("movieName").value;
+                          var movieImage= "assets/img/"+movieImageFile.files[0].name;
                           var screeningStatus= document.getElementById("screeningStatus").value;
 
                           var createMovieDto = {
@@ -320,32 +403,52 @@
                                 createMovieDto: createMovieDto,
                                 createParticipantDto: createParticipantDto
                             };
+                          var createMovieAndParticipantDto = JSON.stringify(createMovieAndParticipantDto);
+                          console.log(createMovieAndParticipantDto);
 
+                            var formData = new FormData();
+                                formData.append('image', movieImageFile.files[0]); // 'file'은 Spring 컨트롤러에서 받을 때 사용할 파라미터 이름입니다.
+                            formData.append('createMovieAndParticipantDto', createMovieAndParticipantDto); // 'stringData'는 Spring 컨트롤러에서 받을 때 사용할 파라미터 이름입니다.
+
+                            var xhr = new XMLHttpRequest();
+                              xhr.open('POST', '/api/admin/movie/create', true); // '/your-endpoint'는 실제 Spring 컨트롤러의 엔드포인트 URL로 변경해야 합니다.
+
+                              xhr.onload = function () {
+                                if (xhr.status === 200) {
+                                  console.log('Upload successful');
+                                  // 성공적으로 업로드되었을 때 수행할 작업 추가
+                                } else {
+                                  console.log('Upload failed');
+                                  // 업로드 실패 시 수행할 작업 추가
+                                }
+                              };
+
+                              xhr.send(formData);
 
                             // 데이터 전송
-                            fetch('/api/admin/movie/create', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(createMovieAndParticipantDto)
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    console.log('Data sent successfully');
-                                    console.log(createMovieDto);
-                                    console.log(createParticipantDto);
-                                    console.log(createMovieAndParticipantDto);
-                                    // 데이터 전송 성공 후 처리할 로직
-                                } else {
-                                    throw new Error('Error sending data');
-                                }
-                            })
-                            .catch(error => {
+<!--                            fetch('/api/admin/movie/create', {-->
+<!--                                method: 'POST',-->
+<!--                                headers: {-->
+<!--                                    'Content-Type': 'application/json'-->
+<!--                                },-->
+<!--                                body: JSON.stringify(createMovieAndParticipantDto)-->
+<!--                            })-->
+<!--                            .then(response => {-->
+<!--                                if (response.ok) {-->
+<!--                                    console.log('Data sent successfully');-->
+<!--                                    console.log(createMovieDto);-->
+<!--                                    console.log(createParticipantDto);-->
+<!--                                    console.log(createMovieAndParticipantDto);-->
+<!--                                    // 데이터 전송 성공 후 처리할 로직-->
+<!--                                } else {-->
+<!--                                    throw new Error('Error sending data');-->
+<!--                                }-->
+<!--                            })-->
+<!--                            .catch(error => {-->
 
-                                console.error('Error sending data:', error);
-                                // 에러 발생 시 처리할 로직
-                            });
+<!--                                console.error('Error sending data:', error);-->
+<!--                                // 에러 발생 시 처리할 로직-->
+<!--                            });-->
                             // Your code to handle the submission of data goes here
                                 // You can access the added data using the dataArr array
                             // console.log("Submitted Data:", dataArr);

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.util.List;
@@ -69,13 +71,21 @@ public class MovieController {
     }
 
     @PostMapping(value = "/api/admin/movie/create")
-    public String adminCreateMovie(Model model, @RequestBody CreateMovieAndParticipantDto createMovieAndParticipantDto) {
-        CreateMovieDto createMovieDto = createMovieAndParticipantDto.getCreateMovieDto();
-        List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
-        System.out.println("controller"+ createMovieDto.getMovieGenre());
-        movieService.craeteMovie(createMovieDto, createParticipantDtoList);
+    public RedirectView adminCreateMovie(Model model, @RequestParam("image") MultipartFile image, @RequestParam("createMovieAndParticipantDto") String createMovieAndParticipantDto) {
+        CreateMovieAndParticipantDto dto = null;
+        try {
+            dto = objectMapper.readValue(createMovieAndParticipantDto, CreateMovieAndParticipantDto.class);
+            // createMovieAndParticipantDto를 처리하는 로직을 구현합니다.
+            // ...
+        } catch (JsonProcessingException e) {
+            // JSON 파싱 오류 처리
+            e.printStackTrace();
+        }
+        movieService.craeteMovie(image, dto);
+        System.out.println("controller end1");
         model.addAttribute("success", "true");
-        return "adminmovie";
+        System.out.println("controller end2");
+        return new RedirectView("/admin/movie");
     }
 
 
