@@ -26,7 +26,7 @@ public class Ticket extends BaseTimeEntity {
     @Id
     private String ticketNumber;
 
-
+    @Enumerated(EnumType.STRING)
     private TicketingStatus ticketingStatus;
 
 
@@ -50,7 +50,7 @@ public class Ticket extends BaseTimeEntity {
 
         return Ticket.builder()
                 .ticketNumber(vo.getScheduleNumber() + vo.getSeats().get(0)) //티켓번호는 상영일정번호+좌석(첫 좌석= 인덱스 0 )번호
-                .ticketingStatus(TicketingStatus.Y)
+                .ticketingStatus(TicketingStatus.YES)
                 .standardPrice(vo.getStandardPrice())
                 .member(member)
                 .scheduleSeats(scheduleSeats)
@@ -62,11 +62,15 @@ public class Ticket extends BaseTimeEntity {
 
         return Ticket.builder()
                 .ticketNumber(vo.getScheduleNumber() + vo.getSeats().get(0)) //티켓번호는 상영일정번호+좌석(첫 좌석= 인덱스 0 )번호
-                .ticketingStatus(TicketingStatus.Y)
+                .ticketingStatus(TicketingStatus.YES)
                 .standardPrice(vo.getStandardPrice())
                 .nonMember(nonmember)
                 .scheduleSeats(scheduleSeats)
                 .movieName(movieName)
                 .build();
+    }
+
+    public void changeStatusWhenCancel(){
+        this.ticketingStatus=TicketingStatus.NO;
     }
 }
