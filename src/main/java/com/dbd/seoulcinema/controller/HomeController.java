@@ -58,7 +58,7 @@ public class HomeController {
             movies.add(movieList.get(i));
         }
         model.addAttribute("movies", movies);
-        return "adminhome";
+        return "admin/adminhome";
     }
 
 }
