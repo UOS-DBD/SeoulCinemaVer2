@@ -19,7 +19,8 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
             + "where t.ticketNumber = ss.ticket.ticketNumber "
             + "and ss.scheduleNumber = s.scheduleNumber "
             + "and s.movie.movieName = m.movieName "
-            + "and t.member.clientId = :clientId")
+            + "and t.member.clientId = :clientId "
+            + "and t.ticketingStatus = 'YES'")
     List<ViewTicketsListDto> findTicketListByMember(@Param("clientId") String clientId); //--> cross join 발생함! 추후 수정 예정
 
 
@@ -28,7 +29,8 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
             + "where t.ticketNumber = ss.ticket.ticketNumber "
             + "and ss.scheduleNumber = s.scheduleNumber "
             + "and s.movie.movieName = m.movieName "
-            + "and t.nonMember.phoneNumber = :clientId")
+            + "and t.nonMember.phoneNumber = :clientId "
+            + "and t.ticketingStatus = 'YES'")
     List<ViewTicketsListDto> findTicketListByNonMember(@Param("clientId") String clientId); //--> cross join 발생함! 추후 수정 예정
 
     @Query("select distinct new com.dbd.seoulcinema.dao.ViewSpecificTicketDao(m.movieImage, m.movieName, s.screeningStartTime, " +

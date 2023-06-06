@@ -16,4 +16,8 @@ public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, Sche
             + "and s.seatNumber.seatNumber in (:seats)")
     List<ScheduleSeat> findAllByScheduleNumberAndSeats(@Param("scheduleNumber") String scheduleNumber,
                                                        @Param("seats") List<Long> seats);
+
+    @Query("select s from ScheduleSeat s "
+            + "where s.ticket.ticketNumber = :ticketNumber")
+    List<ScheduleSeat> findAllByTicketNumber(@Param("ticketNumber") String ticketNumber);
 }

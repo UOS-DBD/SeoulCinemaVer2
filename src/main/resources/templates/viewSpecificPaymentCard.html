@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:정보="http://www.w3.org/1999/xhtml">
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -14,7 +14,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
 
     <!--    &lt;!&ndash;        테스트용&ndash;&gt;-->
-    <!--    <link href="../static/css/styles.css" rel="stylesheet"/>-->
+<!--        <link href="../static/css/styles.css" rel="stylesheet"/>-->
     <!--        배포용-->
     <link th:href="@{/css/styles.css}" rel="stylesheet"/>
 
@@ -69,21 +69,43 @@
                     <img src="/static/img/1.png" alt="이미지나올곳">
                     <div class="card-body">
 
-                        <label>영화 이름: <span th:text="${ticketInfo.movieName}"></span></label>
+                        <label>영화 이름: <span th:text="${paymentInfo.movieName}"></span></label>
                         <br>
-                        <label>영화 시작시간: <span th:text="${ticketInfo.screeningStartTime}"></span></label>
+                        <label>티켓번호: <span th:text="${paymentInfo.ticketNumber}"></span></label>
                         <br>
-                        <label>영화 종료시간: <span th:text="${ticketInfo.screeningEndTime}"></span></label>
+                        <label>영화 시작시간: <span th:text="${paymentInfo.screeningStartTime}"></span></label>
                         <br>
-                        <label>상영관: <span th:text="${ticketInfo.theaterFloor}">관</span></label>
+                        <label>영화 종료시간: <span th:text="${paymentInfo.screeningEndTime}"></span></label>
                         <br>
-                        <label>좌석 번호: <span th:text="${ticketInfo.seats}"></span></label>
+                        <label>상영관 위치: <span th:text="${paymentInfo.theaterFloor}"></span>관</label>
+                        <br>
+                        <label>표준 가격: <span th:text="${paymentInfo.standardPrice}"></span></label>
+                        <br>
+                        <label>결제 가격: <span th:text="${paymentInfo.totalPrice}"></span></label>
+                        <br>
+                        <label>좌석 번호: <span th:text="${paymentInfo.seatLocation}"></span></label>
+                        <br>
+                        <label> 결제 할인 정보 : </label>
+                        <tr th:each="discount : ${discounts}">
+                            <label> 포인트 <span th:text="${paymentInfo.paymentPoint}"></span></label>
+                            <br>
+                            <td th:text="${discount.getDiscountType().getDesc() + discount.getDiscountType().getAmount()}"></td>
+                            <br>
+                        </tr>
+<!--                        <label th:each="discount : ${discounts}"-->
+<!--                               th:text="${discount.getDiscountType().getDesc() + discount.getDiscountType().getAmount()}"><br></label>-->
+<!--                        <table>-->
+<!--                            <th>결제 할인 정보</th>-->
+<!--                            <tr th:each="discount : ${discounts}">-->
+<!--                                <td th:text="${discount.getDiscountType().getDesc() + discount.getDiscountType().getAmount()}"></td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
                     </div>
                 </div>
-                <form th:action="@{/api/tickets}" th:method="delete">
-                    <input type="hidden" name="_method" value="delete">
-                    <button class="w-100 btn btn-primary btn-lg" type="submit">티켓 예매 취소하기</button>
-                </form>
+                <!--        <form th:action="@{/api/tickets}" th:method="delete">-->
+                <!--          <input type="hidden" name="_method" value="delete">-->
+                <!--          <button class="w-100 btn btn-primary btn-lg" type="submit">티켓 예매 취소하기</button>-->
+                <!--        </form>-->
             </div>
 
         </div>

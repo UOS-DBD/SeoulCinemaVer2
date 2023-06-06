@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.util.UUID;
 import javax.persistence.*;
 
+import com.dbd.seoulcinema.domain.enumeration.PaymentStatus;
 import com.dbd.seoulcinema.domain.enumeration.PaymentType;
 import com.dbd.seoulcinema.global.utils.PaymentTypeConverter;
 import com.dbd.seoulcinema.vo.CreateTicketFinalVo;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "PAYMENT")
@@ -41,7 +43,13 @@ public class Payment {
     @Convert(converter = PaymentTypeConverter.class)
     private PaymentType paymentType;
 
-    public static Payment makePayment(CreateTicketFinalVo vo, Ticket ticket, PaymentType paymentType) {
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+
+    @ColumnDefault("0")
+    private Integer paymentPoint;
+
+    public static Payment makePaymentCard(CreateTicketFinalVo vo, Ticket ticket, PaymentType paymentType) {
         return Payment.builder()
                 .paymentNumber(UUID.randomUUID().toString())
                 .paymentPrice(vo.getTotalPrice())
@@ -50,6 +58,27 @@ public class Payment {
                 .bankName(vo.getBankName())
                 .paymentApproveNumber(UUID.randomUUID().toString())
                 .paymentType(paymentType)
+                .paymentStatus(PaymentStatus.YES)
+                .paymentPoint(vo.getPoint())
+                .bankName(null)
                 .build();
+    }
+
+    public static Payment makePayment(CreateTicketFinalVo vo, Ticket ticket, PaymentType paymentType) {
+        return Payment.builder()
+                .paymentNumber(UUID.randomUUID().toString())
+                .paymentPrice(vo.getTotalPrice())
+                .ticket(ticket)
+                .paymentDate(LocalDate.now())
+                .bankName(vo.getBankName())
+                .paymentType(paymentType)
+                .paymentStatus(PaymentStatus.YES)
+                .paymentPoint(vo.getPoint())
+                .bankName(vo.getBankName())
+                .build();
+    }
+
+    public void changeStatusWhenCancel(){
+        this.paymentStatus=PaymentStatus.NO;
     }
 }
