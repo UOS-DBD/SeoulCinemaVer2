@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Seoul-Cinema</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+
+    <!--        테스트용-->
+    <!--        <link href="../static/css/styles.css" rel="stylesheet" />-->
+    <!--        배포용-->
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <link href="../static/css/movielist.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        width: 100%;
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .btn-bd-primary {
+        --bd-violet-bg: #712cf9;
+        --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+        --bs-btn-font-weight: 600;
+        --bs-btn-color: var(--bs-white);
+        --bs-btn-bg: var(--bd-violet-bg);
+        --bs-btn-border-color: var(--bd-violet-bg);
+        --bs-btn-hover-color: var(--bs-white);
+        --bs-btn-hover-bg: #6528e0;
+        --bs-btn-hover-border-color: #6528e0;
+        --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+        --bs-btn-active-color: var(--bs-btn-hover-color);
+        --bs-btn-active-bg: #5a23c8;
+        --bs-btn-active-border-color: #5a23c8;
+      }
+      .bd-mode-toggle {
+        z-index: 1500;
+      }
+      .text-body-secondary{
+        font-weight: bold;
+      }
+      .container1 {
+      margin-bottom: 20px;
+    }
+
+    .data-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .data-item input {
+      margin-right: 10px;
+    }
+
+    .data-item button {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="#!">Seoul Cinema</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link" href="#!">영화</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">예매</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">이벤트</a></li>
+            </ul>
+            <a class="d-flex">
+                <button class="btn btn-outline-dark" type="submit">
+                    로그인
+                </button>
+            </a>
+        </div>
+    </div>
+</nav>
+<!-- Header-->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Seoul Cinema</h1>
+            <p class="lead fw-normal text-white-50 mb-0">데이터베이스 설계 수업</p>
+        </div>
+    </div>
+</header>
+<!-- Section-->
+<section class="py-5">
+    <div class="col">
+        <div>
+                <img class="card-img-top" id="movieImage" alt="..." />
+                <div>
+                    <input class="text-body-emphasis" id="movieName" PLACEHOLDER="영화이름"></input>
+                </div>
+                <div>
+                    <input class="fs-5 col-md-8" id="movieIntroduction" PLACEHOLDER="영화소개"></input>
+                </div>
+                <hr class="col-3 col-md-2 mb-5">
+
+
+            <div class="row g-5">
+                <div class="col-md-6">
+                    <h2 class="text-body-emphasis">영화 정보</h2>
+                    <!--                <p>Ready to beyond the starter template? Check out these open source projects that you can quickly duplicate to a new GitHub repository.</p>-->
+                    <ul class="list-unstyled ps-0">
+                        <li>
+
+                            <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/icons-font" rel="noopener" target="_blank">-->
+                            <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+                            <!--                            Bootstrap npm starter-->
+                            <!--                        </a>-->
+                        </li>
+                        <li>
+                            <div>
+                                <input class="text-body-emphasis" id="movieGenre" PLACEHOLDER="영화장르"></input>
+                            </div>
+                            <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/parcel" rel="noopener" target="_blank">-->
+                            <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+                            <!--                            Bootstrap Parcel starter-->
+                            <!--                        </a>-->
+                        </li>
+                        <li>
+                            <div>
+                                <input class="text-body-emphasis" id="movieGrade" PLACEHOLDER="연령가"></input>
+                            </div>
+                            <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/vite" rel="noopener" target="_blank">-->
+                            <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+                            <!--                            Bootstrap Vite starter-->
+                            <!--                        </a>-->
+                        </li>
+                        <li>
+                            <div>
+                                <input class="text-body-emphasis" id="runningTime" PLACEHOLDER="상영시간"></input>
+                            </div>
+                            <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
+                            <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+                            <!--                            Bootstrap Webpack starter-->
+                            <!--                        </a>-->
+                        </li>
+                        <li>
+                            <div>
+                                <input class="text-body-emphasis" id="screeningStatus" PLACEHOLDER="상영여부 "></input>
+                            </div>
+                            <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
+                            <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
+                            <!--                            Bootstrap Webpack starter-->
+                            <!--                        </a>-->
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="container1">
+                        <div class="data-item">
+                            <select id="participantType">
+                                <option value="DIRECTOR">감독</option>
+                                <option value="ACTOR">배우</option>
+                                <option value="DISTRIBUTOR">배급사</option>
+                            </select>
+                            <input type="text" placeholder="이름" id="participantName" />
+                            <button onclick="addData()">Add</button>
+                        </div>
+                    </div>
+                    <div id="added-data"></div>
+                    <button onclick="submitData()">Submit</button>
+
+                    <script>
+                          // Array to store the added data
+                          var dataArr = [];
+
+                          // Function to add data
+                          function addData() {
+                            var participantT = document.getElementById("participantType");
+                            var participantN = document.getElementById("participantName");
+                            var partType = participantT.value;
+                            var partName = participantN.value.trim();
+
+                            if (partName !== "") {
+                              dataArr.push([partType, partName]);
+                              participantName.value = "";
+                              displayAddedData();
+                            }
+                          }
+
+                          // Function to display the added data
+                          function displayAddedData() {
+                            var addedDataDiv = document.getElementById("added-data");
+                            addedDataDiv.innerHTML = "";
+
+                            dataArr.forEach(function(data, index) {
+                              var dataItem = document.createElement("div");
+                              dataItem.classList.add("data-item");
+                              dataItem.innerHTML = `
+                                            <input type="text" value="${data[0]}" readonly />
+                                            <input type="text" value="${data[1]}" readonly />
+                                            <button onclick="deleteData(${index})">Delete</button>
+                                        `;
+
+                              addedDataDiv.appendChild(dataItem);
+                            });
+                          }
+
+                          // Function to delete data
+                          function deleteData(index) {
+                            dataArr.splice(index, 1);
+                            displayAddedData();
+                          }
+
+                          // Function to submit all the added data
+                          function submitData() {
+
+                          var movieName= document.getElementById("movieName").value;
+                          var runningTime= document.getElementById("runningTime").value;
+                          var movieGenre= document.getElementById("movieGenre").value;
+                          var movieGrade= document.getElementById("movieGrade").value;
+                          var movieIntroduction= document.getElementById("movieIntroduction").value;
+                          var movieImage= document.getElementById("movieName").value;
+                          var screeningStatus= document.getElementById("screeningStatus").value;
+
+                          var createMovieDto = {
+                                movieName: movieName,
+                                runningTime: runningTime,
+                                movieGenre: movieGenre,
+                                movieGrade: movieGrade,
+                                movieIntroduction: movieIntroduction,
+                                movieImage: movieImage,
+                                screeningStatus: screeningStatus
+                          }
+
+                          var createParticipantDto = [];
+
+                          dataArr.forEach(function(data, index) {
+                              var dto = {
+                                participantType: data[0],
+                                participantName: data[1]
+                              };
+
+                              createParticipantDto.push(dto);
+                           });
+
+                          var createMovieAndParticipantDto = {
+                                createMovieDto: JSON.stringify(createMovieDto),
+                                createParticipantDto: JSON.stringify(createParticipantDto)
+                            };
+
+
+                            // 데이터 전송
+                            fetch('/api/admin/movie/create', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(createMovieAndParticipantDto)
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    console.log('Data sent successfully');
+                                    // 데이터 전송 성공 후 처리할 로직
+                                } else {
+                                    throw new Error('Error sending data');
+                                }
+                            })
+                            .catch(error => {
+                                console.log(createMovieAndParticipantDto);
+                                console.error('Error sending data:', error);
+                                // 에러 발생 시 처리할 로직
+                            });
+                            // Your code to handle the submission of data goes here
+                            // You can access the added data using the dataArr array
+                            // console.log("Submitted Data:", dataArr);
+                          }
+                        </script>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+</body>
+</html>
