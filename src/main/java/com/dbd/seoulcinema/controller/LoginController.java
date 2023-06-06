@@ -3,7 +3,6 @@ package com.dbd.seoulcinema.controller;
 import com.dbd.seoulcinema.dto.CreateAdminDto;
 import com.dbd.seoulcinema.dto.CreateMemberDto;
 import com.dbd.seoulcinema.dto.LoginDto;
-import com.dbd.seoulcinema.global.exception.DuplicateIdException;
 import com.dbd.seoulcinema.global.exception.LoginFailedException;
 import com.dbd.seoulcinema.service.LoginService;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.security.auth.login.FailedLoginException;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import static com.dbd.seoulcinema.global.exception.ErrorCode.DUPLICATE_ID_ERROR;
 import static com.dbd.seoulcinema.global.exception.ErrorCode.LOGIN_FAILED;
 
 @Controller

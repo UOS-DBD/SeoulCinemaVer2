@@ -54,7 +54,7 @@ public class MovieService {
     public void craeteMovie(MultipartFile image, CreateMovieAndParticipantDto createMovieAndParticipantDto)  {
         String fileName = image.getOriginalFilename();
         Path imagePath = Path.of("src/main/resources/static/img/" + fileName); // 이미지를 저장할 경로
-
+        System.out.println("IMAGE START");
         try {
             // 이미지 파일을 지정된 경로로 복사합니다.
             InputStream inputStream = image.getInputStream();
@@ -64,7 +64,7 @@ public class MovieService {
             e.printStackTrace();
             // 파일 복사 실패 처리
         }
-
+        System.out.println("IMAGE END");
         CreateMovieDto createMovieDto = createMovieAndParticipantDto.getCreateMovieDto();
         List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
 
@@ -97,5 +97,19 @@ public class MovieService {
             participantMovieRepositorty.flush();
         }
         System.out.println("service end");
+    }
+
+    @Transactional
+    public boolean deleteMovie(Long movieNumber) {
+        Optional<Movie> movie = movieRepository.findById(movieNumber);
+        if(movie.isEmpty()){
+            return false;
+        }
+        else{
+            participantMovieRepositorty.deleteByMovieNumber(movie.get());
+
+            movieRepository.delete(movie.get());
+            return true;
+        }
     }
 }
