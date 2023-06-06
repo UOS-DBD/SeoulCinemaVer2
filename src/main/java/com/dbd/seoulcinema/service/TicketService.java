@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -59,14 +60,25 @@ public class TicketService {
         //티켓에 좌석 번호 출력을 위한 메소드(ex) A10/ A11)
         String seatInfo = Seat.getSeatLocation(seats);
 
-        return new ViewSpecificTicketDto(ticketInfoById,seatInfo);
+        return new ViewSpecificTicketDto(ticketInfoById, seatInfo);
 
     }
 
-    public Integer calculateTotalPrice(Integer seatCount, DiscountType discountType, Integer point) {
+    public Integer calculateTotalPriceCard(Integer seatCount, DiscountType discountType, Integer point) {
 
-        return 12000 * seatCount - discountType.getAmount() - point;
+
+            return 12000 * seatCount - discountType.getAmount() - point;
+
     }
+
+    public Integer calculateTotalPriceAccount(Integer seatCount,Integer point) {
+
+
+        return 12000 * seatCount - point;
+
+    }
+
+
 
     @Transactional
     public String makeTicketsAndPayment(CreateTicketFinalVo vo, String clientId, PaymentType paymentType) {
@@ -76,7 +88,7 @@ public class TicketService {
 
         //고객이 회원인지 비회원인지 판단하는 로직 for 10프로 포인트 적립
         if (isMember) {
-            memberRepository.findById(clientId).get().accumulateAndUsePoint(vo.getPoint(),vo.getTotalPrice());
+            memberRepository.findById(clientId).get().accumulateAndUsePoint(vo.getPoint(), vo.getTotalPrice());
         }
 
         //티켓 엔티티에 영화 이름을 삽입하기 위함
@@ -98,36 +110,55 @@ public class TicketService {
 
         ticketRepository.flush();
 
-        //상영 일정 좌석 외래키에 생성된 티켓 번호를 삽입
+        //상영 일정 좌석 외래키에 생성된 티켓 번호를 삽입, 결제 여부 변경(Y로)..
         for (ScheduleSeat scheduleSeat : ticket.getScheduleSeats()) {
-            scheduleSeat.setTicketWhenPayment(ticket);
+            scheduleSeat.setTicketAndStatusWhenPayment(ticket);
         }
 
         //결제 엔티티 생성
-        Payment payment = Payment.makePayment(vo, ticket, paymentType);
+        Payment payment = null;
+        if (paymentType == PaymentType.CARD) {
+            payment = Payment.makePaymentCard(vo, ticket, paymentType);
+        } else {
+            payment = Payment.makePayment(vo, ticket, paymentType);
+        }
         paymentRepository.save(payment);
         paymentRepository.flush();
 
-        System.out.println("break point~~~~~~~~~~~~~~~~~~~");
-        //결제 할인 엔티티 생성
-        if(vo.getPoint()!=0){
+        //결제 할인 엔티티 생성(discount, paymentDiscount 엔티티 생성)
+//        if (vo.getPoint() != 0) {
+//
+//            Discount findDiscount = discountRepository.findPointDiscountByDiscountType(DiscountType.POINTDISCOUNT);
+//
+//            paymentDiscountRepository.save(PaymentDiscount.builder()
+//                    .paymentNumber(payment)
+//                    .discountNumber(findDiscount)
+//                    .build());
+//        }
+        System.out.println("진행~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println(vo.getDiscountType().getDesc());
+        Discount findDiscount = discountRepository.findPointDiscountByDiscountType(vo.getDiscountType());
 
-            Discount findDiscount = discountRepository.findDiscountByDiscountType();
-
-            System.out.println("break point2~~~~~~~~~~~~~~~~~~~");
-            System.out.println(findDiscount.getDiscountType().getDesc());
-            System.out.println(payment.getPaymentNumber());
-            System.out.println(findDiscount.getDiscountNumber());
-
-            PaymentDiscount paymentDiscount = PaymentDiscount.builder()
+        paymentDiscountRepository.save(PaymentDiscount.builder()
                 .paymentNumber(payment)
                 .discountNumber(findDiscount)
-                .build();
+                .build());
 
-            System.out.println(paymentDiscount.getPaymentNumber().getPaymentNumber());
-            System.out.println(paymentDiscount.getDiscountNumber().getDiscountNumber());
-            paymentDiscountRepository.save(paymentDiscount);
-        }
         return "success";
+    }
+
+    @Transactional
+    public void cancelTicket(String ticketNumber) {
+
+        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findAllByTicketNumber(ticketNumber);
+        //연관된 상영일정 좌석 삭제
+        scheduleSeats.forEach(scheduleSeat -> {
+            scheduleSeatRepository.delete(scheduleSeat);
+        });
+
+        Optional<Ticket> ticket = ticketRepository.findById(ticketNumber);
+        Optional<Payment> payment = paymentRepository.findPaymentByTicketNumber(ticketNumber);
+        ticket.get().changeStatusWhenCancel();
+
     }
 }
