@@ -3,6 +3,7 @@ package com.dbd.seoulcinema.service;
 import com.dbd.seoulcinema.domain.ScheduleSeatId;
 import com.dbd.seoulcinema.domain.entity.ScheduleSeat;
 import com.dbd.seoulcinema.domain.entity.Seat;
+import com.dbd.seoulcinema.domain.enumeration.PaymentStatus;
 import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.dto.ViewSchedulesFormDto;
 import com.dbd.seoulcinema.repository.ScheduleRepository;
@@ -86,13 +87,12 @@ public class ScheduleService {
     @Transactional
     @Scheduled(cron = "0/30 * * ? * *")
     public void deleteScheduleSeatLock(){
-        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findAll();
+        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findAllByPaymentStatus(PaymentStatus.NO);
         for (ScheduleSeat scheduleSeat : scheduleSeats) {
             LocalDateTime createdDate = scheduleSeat.getCreatedDate();
             Duration elapsed = Duration.between(createdDate, LocalDateTime.now());
             Duration fiveMinutes = Duration.ofMinutes(5);
-            System.out.println("elapsed = " + elapsed);
-            System.out.println("fiveMinutes = " + fiveMinutes);
+
             if (elapsed.compareTo(fiveMinutes) >= 0) {
                 scheduleSeatRepository.delete(scheduleSeat);
             }

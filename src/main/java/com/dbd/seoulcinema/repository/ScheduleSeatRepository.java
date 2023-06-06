@@ -3,6 +3,7 @@ package com.dbd.seoulcinema.repository;
 import com.dbd.seoulcinema.domain.ScheduleSeatId;
 import com.dbd.seoulcinema.domain.entity.Schedule;
 import com.dbd.seoulcinema.domain.entity.ScheduleSeat;
+import com.dbd.seoulcinema.domain.enumeration.PaymentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,5 @@ public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, Sche
     List<ScheduleSeat> findAllByScheduleNumberAndSeats(@Param("scheduleNumber") String scheduleNumber,
                                                        @Param("seats") List<Long> seats);
 
+    List<ScheduleSeat> findAllByPaymentStatus(PaymentStatus paymentStatus);
 }
