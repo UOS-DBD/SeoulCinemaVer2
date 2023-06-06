@@ -43,8 +43,8 @@ public class Payment {
     @Convert(converter = PaymentTypeConverter.class)
     private PaymentType paymentType;
 
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus;
+//    @Enumerated(EnumType.STRING)
+//    private PaymentStatus paymentStatus;
 
     @ColumnDefault("0")
     private Integer paymentPoint;
@@ -58,7 +58,7 @@ public class Payment {
                 .bankName(vo.getBankName())
                 .paymentApproveNumber(UUID.randomUUID().toString())
                 .paymentType(paymentType)
-                .paymentStatus(PaymentStatus.YES)
+               // .paymentStatus(PaymentStatus.YES)
                 .paymentPoint(vo.getPoint())
                 .bankName(null)
                 .build();
@@ -72,13 +72,13 @@ public class Payment {
                 .paymentDate(LocalDate.now())
                 .bankName(vo.getBankName())
                 .paymentType(paymentType)
-                .paymentStatus(PaymentStatus.YES)
+               // .paymentStatus(PaymentStatus.YES)
                 .paymentPoint(vo.getPoint())
                 .bankName(vo.getBankName())
                 .build();
     }
 
-    public void changeStatusWhenCancel(){
-        this.paymentStatus=PaymentStatus.NO;
-    }
+//    public void changeStatusWhenCancel(){
+//        this.paymentStatus=PaymentStatus.NO;
+//    }
 }

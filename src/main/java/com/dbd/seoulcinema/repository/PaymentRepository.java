@@ -14,14 +14,16 @@ import java.util.Optional;
 public interface PaymentRepository extends JpaRepository<Payment, String> {
 
 
-    @Query("select distinct new com.dbd.seoulcinema.dto.ViewPaymentListDto(p.paymentNumber, t.movieName, p.paymentPrice, p.paymentDate, p.paymentStatus) "
+    @Query("select distinct new com.dbd.seoulcinema.dto.ViewPaymentListDto(p.paymentNumber, t.movieName, p.paymentPrice, p.paymentDate, t.ticketingStatus) "
             + "from Payment p, Ticket t "
             + "where p.ticket.ticketNumber = t.ticketNumber "
             + "and t.member.clientId = :clientId")
     List<ViewPaymentListDto> findPaymentsByMember(@Param("clientId") String clientId);
 
 
-    @Query("select p from Payment p where p.ticket.ticketNumber = :ticketNumber and p.paymentStatus = 'YES'")
+    @Query("select p from Payment p, Ticket t where p.ticket.ticketNumber = :ticketNumber "
+        + "and p.ticket.ticketNumber = t.ticketNumber "
+        + "and t.ticketingStatus = 'YES'")
     Optional<Payment> findPaymentByTicketNumber(@Param("ticketNumber") String ticketNumber);
 
 
