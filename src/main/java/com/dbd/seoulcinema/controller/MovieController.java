@@ -50,14 +50,14 @@ public class MovieController {
         List<Movie> movieList = movieService.getAllMovies();
 
         model.addAttribute("movies", movieList);
-        return "adminmovie";
+        return "admin/adminmovie";
     }
 
     @GetMapping(value = "/admin/movie/detail")
     public String adminMovieDetail(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
         List<MovieDetailDto> movieDetail = movieService.getMovieDetail(movieNumber);
         model.addAttribute("movie", movieDetail);
-        return "adminmoviedetail";
+        return "admin/adminmoviedetail";
     }
 
     @GetMapping(value = "/admin/movie/create")
@@ -65,7 +65,7 @@ public class MovieController {
 //        model.addAttribute("movie", new CreateMovieDto());
 //        List<CreateParticipantDto> createParticipantDtoList = new ArrayList<>();
 //        model.addAttribute("participant", createParticipantDtoList);
-        return "adminmoviecreate";
+        return "admin/adminmoviecreate";
     }
 
     @PostMapping(value = "/api/admin/movie/create")
@@ -75,7 +75,7 @@ public class MovieController {
         System.out.println("controller"+ createMovieDto.getMovieGenre());
         movieService.craeteMovie(createMovieDto, createParticipantDtoList);
         model.addAttribute("success", "true");
-        return "adminmovie";
+        return "admin/adminmovie";
     }
 
 

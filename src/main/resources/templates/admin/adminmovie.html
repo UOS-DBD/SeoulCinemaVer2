@@ -17,7 +17,7 @@
     <!--        <link href="../static/css/styles.css" rel="stylesheet" />-->
     <!--        배포용-->
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
-    <link href="../static/css/movielist.css" rel="stylesheet">
+    <link href="../../static/css/movielist.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -164,7 +164,7 @@
                 <div class="col"  th:each = "movie : ${movies}">
                     <div class="card shadow-sm" th:onclick="|location.href='@{/admin/movie/detail(movieNumber=${movie.movieNumber})}'|">
                         <!--                        <img class="card-img-top" src="../static/assets/img/범죄도시3.png" alt="..." />-->
-                        <img class="card-img-top" th:src = "@{/}+${movie.movieImage}" alt="..." />
+                        <img class="card-img-top" th:src = "@{/} + ${movie.movieImage}" alt="..." />
                         <!--                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" th:src = "@{${movie.movieImage}}"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
                         <!--                        <img class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" th:src = "@{${movie.movieImage}}"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></img>-->
                         <div class="card-body">
