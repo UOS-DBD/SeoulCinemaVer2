@@ -14,9 +14,9 @@
     <!-- Core theme CSS (includes Bootstrap)-->
 
 <!--    &lt;!&ndash;        테스트용&ndash;&gt;-->
-    <link href="../static/css/styles.css" rel="stylesheet"/>
+<!--    <link href="../static/css/styles.css" rel="stylesheet"/>-->
     <!--        배포용-->
-<!--      <link th:href="@{/css/styles.css}" rel="stylesheet" />-->
+      <link th:href="@{/css/styles.css}" rel="stylesheet" />
 
 </head>
 <body>
@@ -86,8 +86,15 @@
                         <div>
                             <label >유효기간</label>
                         </div>
-                        <input type="text" id="cardNumber10" name="cardNumber1" class="formcontrol"
-                               placeholder="카드 유효기간을 입력하세요" style ="width:220px" readonly>
+                        <input type="text" id="cardNumber10" class="formcontrol"
+                               placeholder="카드 유효기간을 입력하세요(MM/YY)" style ="width:220px">
+                    </div>
+                    <div>
+                        <div>
+                            <label >비밀번호</label>
+                        </div>
+                        <input type="password" id="cardNumber11" class="formcontrol"
+                               placeholder="카드 비밀번호 앞 2자리를 입력 하세요" style ="width:220px">
                     </div>
                     <div>
                         <div class="my-3">
