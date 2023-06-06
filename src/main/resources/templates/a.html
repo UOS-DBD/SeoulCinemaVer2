@@ -1,15 +1,84 @@
-<ul th:each i rowize>
-    <div th:each j colisze>
-    <li>th:if seatbooked[row * rowsize + col]==booked</li>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add and Delete Data</title>
+    <style>
+    .container {
+      margin-bottom: 20px;
+    }
+
+    .data-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .data-item input {
+      margin-right: 10px;
+    }
+
+    .data-item button {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<h1>Add and Delete Data</h1>
+<div class="container">
+    <div class="data-item">
+        <input type="text" placeholder="Enter data" id="data-input" />
+        <button onclick="addData()">Add</button>
     </div>
-    줄바꿈
-    <ul>
+</div>
+<div id="added-data"></div>
+<button onclick="submitData()">Submit</button>
 
+<script>
+  // Array to store the added data
+  var dataArr = [];
 
-        <div class="grid">
-            <div class="grid">
-                <div th:each="row : ${#numbers.sequence(0, 19)}">
-                    <div th:each="col : ${#numbers.sequence(0, 14)}" class="grid-item"></div>
-                </div>
-            </div>
-        </div>
+  // Function to add data
+  function addData() {
+    var dataInput = document.getElementById("data-input");
+    var data = dataInput.value.trim();
+
+    if (data !== "") {
+      dataArr.push(data);
+      dataInput.value = "";
+      displayAddedData();
+    }
+  }
+
+  // Function to display the added data
+  function displayAddedData() {
+    var addedDataDiv = document.getElementById("added-data");
+    addedDataDiv.innerHTML = "";
+
+    dataArr.forEach(function(data, index) {
+      var dataItem = document.createElement("div");
+      dataItem.classList.add("data-item");
+      dataItem.innerHTML = `
+                    <input type="text" value="${data}" readonly />
+                    <button onclick="deleteData(${index})">Delete</button>
+                `;
+
+      addedDataDiv.appendChild(dataItem);
+    });
+  }
+
+  // Function to delete data
+  function deleteData(index) {
+    dataArr.splice(index, 1);
+    displayAddedData();
+  }
+
+  // Function to submit all the added data
+  function submitData() {
+    // Your code to handle the submission of data goes here
+    // You can access the added data using the dataArr array
+    console.log("Submitted Data:", dataArr);
+  }
+</script>
+</body>
+</html>

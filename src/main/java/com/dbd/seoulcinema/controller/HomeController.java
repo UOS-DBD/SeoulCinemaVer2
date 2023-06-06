@@ -47,7 +47,17 @@ public class HomeController {
 
     @GetMapping("/admin/home")
     public String adminHome(Model model){
+        List<Movie> movieList = movieService.getAllMovies();
 
+        int len = movieList.size();
+
+        List<Movie> movies = new ArrayList<>();
+
+        //가장 마지막에 등록된 영화 (최신영화) 4개를 선별
+        for(int i=len-1; i>len-5; i--){
+            movies.add(movieList.get(i));
+        }
+        model.addAttribute("movies", movies);
         return "adminhome";
     }
 
