@@ -36,7 +36,6 @@ public class Movie {
     @Convert(converter = MovieGenreConverter.class)
     private MovieGenre movieGenre;
 
-
     @Convert(converter = MovieGradeConverter.class)
     private MovieGrade movieGrade;
 

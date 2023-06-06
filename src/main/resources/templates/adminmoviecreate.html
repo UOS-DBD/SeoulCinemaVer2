@@ -139,7 +139,7 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Seoul Cinema</h1>
+            <h1 class="display-4 fw-bolder">Seoul Cinema 관리자 페이지</h1>
             <p class="lead fw-normal text-white-50 mb-0">데이터베이스 설계 수업</p>
         </div>
     </div>
@@ -148,7 +148,7 @@
 <section class="py-5">
     <div class="col">
         <div>
-                <img class="card-img-top" id="movieImage" alt="..." />
+                <input class="card-img-top" id="movieImage" alt="..."></input>
                 <div>
                     <input class="text-body-emphasis" id="movieName" PLACEHOLDER="영화이름"></input>
                 </div>
@@ -172,7 +172,17 @@
                         </li>
                         <li>
                             <div>
-                                <input class="text-body-emphasis" id="movieGenre" PLACEHOLDER="영화장르"></input>
+<!--                                <input class="text-body-emphasis" id="movieGenre" PLACEHOLDER="영화장르"></input>-->
+                                <select  id="movieGenre">
+                                    <option value="none" selected disabled>영화장르</option>
+                                    <option value="ACTION">액션</option>
+                                    <option value="MELO">멜로</option>
+                                    <option value="DRAMA">드라마</option>
+                                    <option value="COMEDY">코미디</option>
+                                    <option value="MARTIAL_ARTS">무협</option>
+                                    <option value="SF">SF</option>
+                                    <option value="EROTIC">에로틱</option>
+                                </select>
                             </div>
                             <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/parcel" rel="noopener" target="_blank">-->
                             <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
@@ -181,7 +191,14 @@
                         </li>
                         <li>
                             <div>
-                                <input class="text-body-emphasis" id="movieGrade" PLACEHOLDER="연령가"></input>
+<!--                                <input class="text-body-emphasis" id="movieGrade" PLACEHOLDER="연령가"></input>-->
+                                <select  id="movieGrade">
+                                    <option value="none" selected disabled>연령가</option>
+                                    <option value="ALL">일반</option>
+                                    <option value="TWELVE">12세</option>
+                                    <option value="FIFTEEN">15세</option>
+                                    <option value="ADULT">18세</option>
+                                </select>
                             </div>
                             <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/vite" rel="noopener" target="_blank">-->
                             <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
@@ -199,7 +216,12 @@
                         </li>
                         <li>
                             <div>
-                                <input class="text-body-emphasis" id="screeningStatus" PLACEHOLDER="상영여부 "></input>
+<!--                                <input class="text-body-emphasis" id="screeningStatus" PLACEHOLDER="상영여부 "></input>-->
+                                <select  id="screeningStatus">
+                                    <option value="none" selected disabled>상영여부</option>
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
+                                </select>
                             </div>
                             <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
                             <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
@@ -288,20 +310,15 @@
                                 screeningStatus: screeningStatus
                           }
 
-                          var createParticipantDto = [];
-
-                          dataArr.forEach(function(data, index) {
-                              var dto = {
+                          var createParticipantDto = dataArr.map(function(data) {
+                              return {
                                 participantType: data[0],
                                 participantName: data[1]
                               };
-
-                              createParticipantDto.push(dto);
-                           });
-
+                            });
                           var createMovieAndParticipantDto = {
-                                createMovieDto: JSON.stringify(createMovieDto),
-                                createParticipantDto: JSON.stringify(createParticipantDto)
+                                createMovieDto: createMovieDto,
+                                createParticipantDto: createParticipantDto
                             };
 
 
@@ -316,18 +333,21 @@
                             .then(response => {
                                 if (response.ok) {
                                     console.log('Data sent successfully');
+                                    console.log(createMovieDto);
+                                    console.log(createParticipantDto);
+                                    console.log(createMovieAndParticipantDto);
                                     // 데이터 전송 성공 후 처리할 로직
                                 } else {
                                     throw new Error('Error sending data');
                                 }
                             })
                             .catch(error => {
-                                console.log(createMovieAndParticipantDto);
+
                                 console.error('Error sending data:', error);
                                 // 에러 발생 시 처리할 로직
                             });
                             // Your code to handle the submission of data goes here
-                            // You can access the added data using the dataArr array
+                                // You can access the added data using the dataArr array
                             // console.log("Submitted Data:", dataArr);
                           }
                         </script>
