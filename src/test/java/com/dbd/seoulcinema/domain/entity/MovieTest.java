@@ -98,7 +98,7 @@ class MovieTest {
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
 
-        em.flush();
-        em.clear();
+            em.flush();
+            em.clear();
     }
 }

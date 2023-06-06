@@ -36,7 +36,7 @@ public class MemberService {
         String birth = createMemberDto.getBirth();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(birth, formatter);
-        memberRepository.save(createMemberDto.toEntitiy(createMemberDto, localDate));
+        memberRepository.save(createMemberDto.toEntity(createMemberDto, localDate));
 
     }
 
