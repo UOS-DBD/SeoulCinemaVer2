@@ -32,7 +32,7 @@ class TicketTest {
         Member member = em.find(Member.class, "mim501");
         em.persist(Ticket.builder()
                 .ticketNumber("202306010111")
-                .ticketingStatus(TicketingStatus.Y)
+                .ticketingStatus(TicketingStatus.YES)
                 .standardPrice(10000)
                 .member(member)
                 .movieName("범죄도시3")

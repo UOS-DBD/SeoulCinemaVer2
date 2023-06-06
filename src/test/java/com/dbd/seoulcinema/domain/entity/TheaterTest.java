@@ -1,5 +1,6 @@
 package com.dbd.seoulcinema.domain.entity;
 
+import com.dbd.seoulcinema.domain.enumeration.DiscountType;
 import com.dbd.seoulcinema.domain.enumeration.TicketingStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,15 +37,15 @@ class TheaterTest {
     }
 
     @Test
-    void  selectSeat(){
+    void  selectSeat() {
 
-        Member member = em.find(Member.class, "mim501");
-
-        em.persist(Ticket.builder()
-                .ticketingStatus(TicketingStatus.Y)
-                .standardPrice(20000)
-                .member(member)
+        em.persist(Discount.builder()
+                .discountType(DiscountType.ETC)
+                .discountPrice(0)
                 .build());
+
         em.flush();
     }
+
+
 }
