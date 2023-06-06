@@ -17,7 +17,7 @@
     <!--        <link href="../static/css/styles.css" rel="stylesheet" />-->
     <!--        배포용-->
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
-    <link href="../static/css/movielist.css" rel="stylesheet">
+    <link href="../../static/css/movielist.css" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -130,7 +130,7 @@
 <section class="py-5">
     <div class="col">
         <div th:with="movie=${movie[0]}">
-            <img class="card-img-top" th:src = "@{/}+${movie.movieImage}" alt="..." />
+            <img class="card-img-top" th:src = "@{/static}+${movie.movieImage}" alt="..." />
             <h1 class="text-body-emphasis" th:text="${'영화이름: '+movie.movieName}">movieName</h1>
             <p class="fs-5 col-md-8" th:text="${'영화소개: '+movie.movieIntroduction}">movieIntroduction</p>
             <hr class="col-3 col-md-2 mb-5">
