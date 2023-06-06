@@ -32,7 +32,7 @@ public class SeatService {
 
         ScheduleSeat scheduleSeat = ScheduleSeat.builder()
                 .seatNumber(seat)
-                .paymentStatus(PaymentStatus.N)
+                .paymentStatus(PaymentStatus.NO)
                 .scheduleNumber(schedule)
                 .ticket(null)
                 .build();
