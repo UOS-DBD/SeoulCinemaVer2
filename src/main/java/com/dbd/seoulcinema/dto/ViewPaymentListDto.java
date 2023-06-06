@@ -22,5 +22,5 @@ public class ViewPaymentListDto {
 
     private LocalDate screeningDate;
 
-    private PaymentStatus paymentStatus;
+    private TicketingStatus paymentStatus;
 }
