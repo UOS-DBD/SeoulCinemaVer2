@@ -20,7 +20,4 @@ public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, Sche
     List<ScheduleSeat> findAllByScheduleNumberAndSeats(@Param("scheduleNumber") String scheduleNumber,
                                                        @Param("seats") List<Long> seats);
 
-    @Modifying
-    @Query("delete from ScheduleSeat ss where ss.paymentStatus = 1 and ss.createdDate >= :fiveMinutesAgo")
-    void deleteOldRecords(@Param("fiveMinutesAgo") LocalDateTime fiveMinutesAgo);
 }

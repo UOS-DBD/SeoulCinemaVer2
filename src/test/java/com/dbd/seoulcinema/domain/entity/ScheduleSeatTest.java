@@ -29,13 +29,13 @@ class ScheduleSeatTest {
         em.persist(ScheduleSeat.builder()
                 .scheduleNumber(schedule)
                 .seatNumber(seat1)
-                .paymentStatus(PaymentStatus.Y)
+                .paymentStatus(PaymentStatus.YES)
                 .ticket(null)
                 .build());
         em.persist(ScheduleSeat.builder()
                 .scheduleNumber(schedule)
                 .seatNumber(seat2)
-                .paymentStatus(PaymentStatus.Y)
+                .paymentStatus(PaymentStatus.YES)
                 .ticket(null)
                 .build());
     }
