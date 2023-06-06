@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateParticipantDto {
     private String participantName;
-    private String participantType; // enum
+    private ParticipantType participantType; // enum
 }

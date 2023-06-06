@@ -1,40 +1,45 @@
 package com.dbd.seoulcinema.dto;
 
+import com.dbd.seoulcinema.domain.enumeration.MovieGenre;
+import com.dbd.seoulcinema.domain.enumeration.MovieGrade;
+import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.beans.ConstructorProperties;
 
 @Data
 @NoArgsConstructor
+@Getter
 public class CreateMovieDto {
     @JsonProperty("movieName")
     private String movieName;
     @JsonProperty("runningTime")
     private String runningTime;
     @JsonProperty("movieGenre")
-    private String movieGenre; // enum
+    private MovieGenre movieGenre; // enum
     @JsonProperty("movieGrade")
-    private String movieGrade; // enum
+    private MovieGrade movieGrade; // enum
     @JsonProperty("movieIntroduction")
     private String movieIntroduction;
     @JsonProperty("movieImage")
     private String movieImage;
     @JsonProperty("screeningStatus")
-    private String screeningStatus; // enum
+    private ScreeningStatus screeningStatus; // enum
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     private CreateMovieDto(
             @JsonProperty("movieName") String movieName,
             @JsonProperty("runningTime") String runningTime,
-            @JsonProperty("movieGenre") String movieGenre,
-            @JsonProperty("movieGrade") String movieGrade,
+            @JsonProperty("movieGenre") MovieGenre movieGenre,
+            @JsonProperty("movieGrade") MovieGrade movieGrade,
             @JsonProperty("movieIntroduction") String movieIntroduction,
             @JsonProperty("movieImage") String movieImage,
-            @JsonProperty("screeningStatus") String screeningStatus) {
+            @JsonProperty("screeningStatus") ScreeningStatus screeningStatus) {
         this.movieName = movieName;
         this.runningTime = runningTime;
         this.movieGenre = movieGenre;
