@@ -39,46 +39,28 @@ public class MovieService {
             return null;
         }
         else{
-            System.out.println(movieDetail.get(0).getMovieGrade().toString());
             return movieDetail;
         }
     }
 
     @Transactional
     public void craeteMovie(CreateMovieDto createMovieDto, List<CreateParticipantDto> createParticipantDtoList) {
-//        Optional<MovieGenre> findMovieGenre = EnumSet.allOf(MovieGenre.class)
-//                .stream()
-//                .filter(f -> f.toString().equals(createMovieDto.getMovieGenre()))
-//                .findAny();
-        System.out.println("service"+ createMovieDto.getMovieGenre());
-        System.out.println("service"+ createMovieDto.getMovieGenre().getClass().getName());
-//        Optional<MovieGrade> findMovieGrade = EnumSet.allOf(MovieGrade.class)
-//                .stream()
-//                .filter(f -> f.toString().equals(createMovieDto.getMovieGrade()))
-//                .findAny();
 
 
         Movie movie = Movie.builder()
                 .movieName(createMovieDto.getMovieName())
                 .runningTime(createMovieDto.getRunningTime())
-                .movieGenre(MovieGenre.SF)
+                .movieGenre(createMovieDto.getMovieGenre())
                 .movieGrade(createMovieDto.getMovieGrade())
                 .movieIntroduction(createMovieDto.getMovieIntroduction())
                 .movieImage("") // 이미지 어떻게 넣을지
                 .screeningStatus(createMovieDto.getScreeningStatus()).build();
-        System.out.println(movie.getMovieGenre().toString());
-        System.out.println(movie.getMovieGenre().getDesc());
-        System.out.println(movie.getMovieGenre().getCode());
         movieRepository.save(movie);
         movieRepository.flush();
 
 
         for(int i = 0 ; i < createParticipantDtoList.size() ; i++){
             CreateParticipantDto createParticipantDto = createParticipantDtoList.get(i);
-//            Optional<ParticipantType> findParticipantType = EnumSet.allOf(ParticipantType.class)
-//                    .stream()
-//                    .filter(f -> f.toString().equals(createParticipantDto.getParticipantType()))
-//                    .findAny();
 
             Participant participant = Participant.builder()
                     .participantType(createParticipantDto.getParticipantType())
