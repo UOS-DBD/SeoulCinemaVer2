@@ -3,14 +3,20 @@ package com.dbd.seoulcinema.service;
 import com.dbd.seoulcinema.domain.ScheduleSeatId;
 import com.dbd.seoulcinema.domain.entity.ScheduleSeat;
 import com.dbd.seoulcinema.domain.entity.Seat;
+import com.dbd.seoulcinema.domain.enumeration.PaymentStatus;
 import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.dto.ViewSchedulesFormDto;
 import com.dbd.seoulcinema.repository.ScheduleRepository;
 import com.dbd.seoulcinema.repository.ScheduleSeatRepository;
 import com.dbd.seoulcinema.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +40,7 @@ public class ScheduleService {
     }
 
     public ViewSchedulesFormDto getScheduleForm(MovieAndSchedulesDto movieAndSchedulesDto){
-        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(movieAndSchedulesDto.getScheduleNumber());
+        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(scheduleRepository.findById(movieAndSchedulesDto.getScheduleNumber()).get());
         return ViewSchedulesFormDto.builder()
                 .movieNumber(movieAndSchedulesDto.getMovieNumber())
                 .movieName(movieAndSchedulesDto.getMovieName())
@@ -51,7 +57,7 @@ public class ScheduleService {
     public List<ViewSchedulesFormDto> getSchedulesForm(List<MovieAndSchedulesDto> movieAndSchedulesDtos){
         List<ViewSchedulesFormDto> schedulesFormDto = new ArrayList<>();
         for (MovieAndSchedulesDto dto : movieAndSchedulesDtos) {
-            List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(dto.getScheduleNumber());
+            List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(scheduleRepository.findById(dto.getScheduleNumber()).get());
             Long remainingSeat = dto.getSeatQuantity() - scheduleSeats.size();
             ViewSchedulesFormDto viewDto = ViewSchedulesFormDto.builder()
                     .movieNumber(dto.getMovieNumber())
@@ -76,6 +82,21 @@ public class ScheduleService {
 
     public boolean isSeatBooked(Long seatNumber, String scheduleNumber) {
         return scheduleSeatRepository.existsById(new ScheduleSeatId(seatNumber, scheduleNumber));
+    }
+
+    @Transactional
+    @Scheduled(cron = "0/30 * * ? * *")
+    public void deleteScheduleSeatLock(){
+        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findAllByPaymentStatus(PaymentStatus.NO);
+        for (ScheduleSeat scheduleSeat : scheduleSeats) {
+            LocalDateTime createdDate = scheduleSeat.getCreatedDate();
+            Duration elapsed = Duration.between(createdDate, LocalDateTime.now());
+            Duration fiveMinutes = Duration.ofMinutes(5);
+
+            if (elapsed.compareTo(fiveMinutes) >= 0) {
+                scheduleSeatRepository.delete(scheduleSeat);
+            }
+        }
     }
 
 }
