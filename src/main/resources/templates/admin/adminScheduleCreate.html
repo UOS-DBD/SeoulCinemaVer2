@@ -21,8 +21,18 @@
     </div> <br/>
 
     <div class="form-group">
-        <label for="time">시작시간을 선택해주세요: <br/></label> </br>
-        <input type="time" name="time" id="time" class="form-control"/>
+        <label for="screeningDate">상영할 날짜를 선택해주세요: <br/></label> </br>
+        <input type="date" name="screeningDate" id="screeningDate" class="form-control" th:value="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+    </div> <br/>
+
+    <div class="form-group">
+        <label for="screeningStartTime">시작시간을 선택해주세요: <br/></label> </br>
+        <input type="time" name="screeningStartTime" id="screeningStartTime" class="form-control"/>
+    </div> <br/>
+
+    <div class="form-group">
+        <label for="screeningSession">상영회차를 선택해주세요 <br/></label> </br>
+        <input type="text" name="screeningSession" id="screeningSession" class="form-control"/>
     </div> <br/>
 
     <div class="btn-right">

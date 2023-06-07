@@ -15,6 +15,9 @@ public class TheaterService {
     public List<Theater> getAllTheaters(){
         return theaterRepository.findAll();
     }
+    public Theater getTheater(String theaterNumber){
+        return theaterRepository.findById(theaterNumber).get();
+    }
 
 
 }

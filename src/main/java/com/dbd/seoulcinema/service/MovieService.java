@@ -34,6 +34,10 @@ public class MovieService {
 
     public List<Movie> getOnScreenMovies(ScreeningStatus screeningStatus){return movieRepository.findAllByScreeningStatus(screeningStatus);}
 
+    public Movie getMovie(Long movieNumber){
+        return movieRepository.findById(movieNumber).get();
+    }
+
     @Transactional
     public List<MovieDetailDto> getMovieDetail(Long movieNumber) {
         List<MovieDetailDto> movieDetail = movieRepository.findMovieDetail(movieNumber);

@@ -1,6 +1,7 @@
 package com.dbd.seoulcinema.service;
 
 import com.dbd.seoulcinema.domain.ScheduleSeatId;
+import com.dbd.seoulcinema.domain.entity.Schedule;
 import com.dbd.seoulcinema.domain.entity.ScheduleSeat;
 import com.dbd.seoulcinema.domain.entity.Seat;
 import com.dbd.seoulcinema.domain.enumeration.PaymentStatus;
@@ -37,6 +38,17 @@ public class ScheduleService {
 
     public List<MovieAndSchedulesDto> getMovieSchedules(Long movieNumber, LocalDate screeningDate){
         return scheduleRepository.findMovieSchedules(movieNumber, screeningDate);
+    }
+
+    public List<MovieAndSchedulesDto> getAllMovieSchedules(){
+        return scheduleRepository.findAllMovieSchedules();
+    }
+
+    public void deleteSchedule(String scheduleNumber){
+        scheduleRepository.deleteById(scheduleNumber);
+    }
+    public Schedule getScheduleEntity(String scheduleNumber){
+        return scheduleRepository.findById(scheduleNumber).get();
     }
 
     public ViewSchedulesFormDto getScheduleForm(MovieAndSchedulesDto movieAndSchedulesDto){
