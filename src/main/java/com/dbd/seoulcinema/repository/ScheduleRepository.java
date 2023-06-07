@@ -33,6 +33,12 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
             "WHERE m.movieNumber = :movieNumber AND s.screeningDate = :screeningDate")
     List<MovieAndSchedulesDto> findMovieSchedules(@Param("movieNumber") Long movieNumber, @Param("screeningDate") LocalDate screeningDate);
 
+    @Query("SELECT new com.dbd.seoulcinema.dto.MovieAndSchedulesDto(m.movieNumber, m.movieName," +
+            " s.scheduleNumber, s.screeningStartTime, s.screeningEndTime, s.screeningDate," +
+            " t.theaterNumber, t.theaterFloor, t.seatQuantity)" +
+            "FROM Schedule s JOIN s.movie m JOIN s.theater t ")
+    List<MovieAndSchedulesDto> findAllMovieSchedules();
+
     @Query("select m.movieName from Movie m, Schedule s "
             + "where m.movieNumber = s.movie.movieNumber "
             + "and s.scheduleNumber = :scheduleNumber")

@@ -1,9 +1,11 @@
 package com.dbd.seoulcinema.controller;
 
 import com.dbd.seoulcinema.domain.entity.Movie;
+import com.dbd.seoulcinema.domain.entity.Schedule;
 import com.dbd.seoulcinema.domain.entity.Theater;
 import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import com.dbd.seoulcinema.dto.CreateAdminDto;
+import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.dto.ScreeningTimeDto;
 import com.dbd.seoulcinema.service.AdminService;
 import com.dbd.seoulcinema.service.MovieService;
@@ -12,10 +14,7 @@ import com.dbd.seoulcinema.service.TheaterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDateTime;
@@ -82,6 +81,19 @@ public class AdminController {
 
         return "redirect:/admin/home";
     }
+
+    @GetMapping("admin/schedule/delete")
+    public String viewScheduleDeleteForm(Model model){
+        List<MovieAndSchedulesDto> allMovieSchedules = scheduleService.getAllMovieSchedules();
+        model.addAttribute("schedules", allMovieSchedules);
+        return "admin/adminScheduleDelete";
+    }
+    @PostMapping("/api/admin/schedule/delete/{scheduleNumber}")
+    public String processScheduleDelete(@PathVariable String scheduleNumber){
+        scheduleService.deleteSchedule(scheduleNumber);
+        return "redirect:/admin/home";
+    }
+
 
 
     //스케쥴 관리 끝

@@ -89,11 +89,8 @@ public class ScheduleController {
         if(movieNumber == null){ // 입력한 날짜에 상영하는 영화들과 일정 보여주기
 
             List<MovieAndSchedulesDto> movieAndSchedules = scheduleService.getMovieAndSchedules(screeningDate);
-            System.out.println(movieAndSchedules.size());
             List<ViewSchedulesFormDto> schedulesForm = scheduleService.getSchedulesForm(movieAndSchedules);
             //schedulesForm: 영화이름 + 몇관 몇층 + 스케쥴 + 총 좌석 + 잔여좌석 + 영화번호,스케쥴번호
-            System.out.println(schedulesForm.size());
-
             redirectAttributes.addFlashAttribute("schedulesForm", schedulesForm);
 
         }else{ //입력한 영화와 날짜에 상영하는 일정 보여주기
