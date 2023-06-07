@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import com.dbd.seoulcinema.dto.ScreeningTimeDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,4 +55,13 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "THEATER_NUMBER")
     private Theater theater;
+
+    public void setContents(Movie movie, Theater theater, ScreeningTimeDto dto){
+        this.movie = movie;
+        this.theater = theater;
+        this.screeningDate = dto.getScreeningDate();
+        this.screeningStartTime = dto.getScreeningStartTime();
+        this.screeningEndTime = dto.getScreeningEndTime();
+        this.screeningSession = dto.getScreeningSession();
+    }
 }
