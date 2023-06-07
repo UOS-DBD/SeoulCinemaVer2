@@ -4,8 +4,10 @@ import com.dbd.seoulcinema.domain.entity.Movie;
 import com.dbd.seoulcinema.domain.entity.Theater;
 import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import com.dbd.seoulcinema.dto.CreateAdminDto;
+import com.dbd.seoulcinema.dto.ScreeningTimeDto;
 import com.dbd.seoulcinema.service.AdminService;
 import com.dbd.seoulcinema.service.MovieService;
+import com.dbd.seoulcinema.service.ScheduleService;
 import com.dbd.seoulcinema.service.TheaterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -24,6 +27,7 @@ public class AdminController {
     private final AdminService adminService;
     private final MovieService movieService;
     private final TheaterService theaterService;
+    private final ScheduleService scheduleService;
 
     @PostMapping("/api/admin")
     public RedirectView createMember(@ModelAttribute("signup") CreateAdminDto createAdminDto, Model model){
@@ -60,15 +64,22 @@ public class AdminController {
 
         model.addAttribute("movies", movieList);
         model.addAttribute("theaters", theaterList);
-        model.addAttribute("time", "");
+        model.addAttribute("screeningStartTime", "");
+        model.addAttribute("screeningDate", "");
+        model.addAttribute("screeningSession", "");
         return "admin/adminScheduleCreate";
     }
     @PostMapping("/api/admin/schedule/create")
     public String processScheduleCreate(@RequestParam Long movieNumber,
                                         @RequestParam String theaterNumber,
-                                        @RequestParam String time){
-
+                                        @RequestParam String screeningDate,
+                                        @RequestParam String screeningStartTime,
+                                        @RequestParam String screeningSession){
         //TODO: 스케쥴 만들어서 저장
+        String runningTime = movieService.getMovie(movieNumber).getRunningTime();
+        ScreeningTimeDto screeningTimeDto = adminService.makeScheduleDto(screeningDate, runningTime, screeningStartTime, screeningSession, theaterNumber);
+        adminService.createSchedule(movieNumber, theaterNumber, screeningTimeDto);
+
         return "redirect:/admin/home";
     }
 
