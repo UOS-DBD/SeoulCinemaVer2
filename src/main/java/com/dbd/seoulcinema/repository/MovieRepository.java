@@ -24,4 +24,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             "ON pm.participantNumber = p.participantNumber " +
             "WHERE m.movieNumber = :movieNumber")
     public List<MovieDetailDto> findMovieDetail(@Param("movieNumber") Long movieNumber);
+
+    public List<Movie> findAllByScreeningStatus(ScreeningStatus screeningStatus);
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/api/admin/schedule/create}" method="post">
+    <div class="form-group">
+        <label for="movie">상영일정을 등록할 영화를 선택해주세요</label>
+        <select name="movieNumber" id="movie" class="form-control">
+            <option th:each="movie : ${movies}" th:value="${movie.movieNumber}" th:text="${movie.movieName}"></option>
+        </select>
+    </div> <br/>
+
+    <div class="form-group">
+        <label for="movie">상영할 상영관을 선택해주세요</label>
+        <select name="theaterNumber" id="theater" class="form-control">
+            <option th:each="theater : ${theaters}" th:value="${theater.theaterNumber}" th:text="${theater.theaterNumber}"></option>
+        </select>
+    </div> <br/>
+
+    <div class="form-group">
+        <label for="time">시작시간을 선택해주세요: <br/></label> </br>
+        <input type="time" name="time" id="time" class="form-control"/>
+    </div> <br/>
+
+    <div class="btn-right">
+        <button type="submit" class="btn btn-primary" onclick="showAlert()">등록하기</button>
+    </div>
+</form>
+</body>
+</html>
+
+<script>
+    function showAlert() {
+        alert("상영일정 등록이 완료됐습니다!");
+    }
+</script>

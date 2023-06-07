@@ -62,7 +62,7 @@ public class LoginController {
     public String adminLogin(Model model){
         model.addAttribute("formData", new LoginDto());
         model.addAttribute("signup", new CreateAdminDto());
-        return "adminlogin";
+        return "admin/adminlogin";
     }
 
     @PostMapping(value = "/api/admin/auth/login")
