@@ -1,6 +1,10 @@
 package com.dbd.seoulcinema.controller;
 
 import com.dbd.seoulcinema.domain.entity.Movie;
+import com.dbd.seoulcinema.domain.enumeration.MovieGenre;
+import com.dbd.seoulcinema.domain.enumeration.MovieGrade;
+import com.dbd.seoulcinema.domain.enumeration.ParticipantType;
+import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import com.dbd.seoulcinema.dto.*;
 import com.dbd.seoulcinema.service.MovieService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -74,9 +79,9 @@ public class MovieController {
         } catch (JsonProcessingException e) {
             // JSON 파싱 오류 처리
             e.printStackTrace();
-        }System.out.println("CONTROLLER START");
+        }
         movieService.craeteMovie(image, dto);
-        System.out.println("CONTROLLER END");
+
         model.addAttribute("success", "true");
         System.out.println("REDIRECTING");
         return "admin/adminmovie";
@@ -96,5 +101,38 @@ public class MovieController {
         }
     }
 
+    @GetMapping(value = "/admin/movie/update")
+    public String adminMovieUpdatePage(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
+        List<MovieDetailDto> movieDetail = movieService.getMovieDetail(movieNumber);
+        System.out.println("길이2: "+movieDetail.size());
+        List<MovieGenre> movieGenres = Arrays.asList(MovieGenre.values());
+        List<MovieGrade> movieGrades = Arrays.asList(MovieGrade.values());
+        List<ScreeningStatus> screeningStatuses = Arrays.asList(ScreeningStatus.values());
+        List<ParticipantType> participantTypes = Arrays.asList(ParticipantType.values());
 
+        model.addAttribute("movie", movieDetail);
+        model.addAttribute("movieGenre", movieGenres);
+        model.addAttribute("movieGrade", movieGrades);
+        model.addAttribute("screeningStatus", screeningStatuses);
+        model.addAttribute("participantType", participantTypes);
+        return "admin/adminmovieupdate";
+    }
+
+    @PutMapping(value = "/api/admin/movie/update")
+    public String adminMovieUpdate(Model model, @RequestParam("image") MultipartFile image, @RequestParam("createMovieAndParticipantDto") String createMovieAndParticipantDto,
+                                   @RequestParam("movieNumber") Long movieNumber) {
+        CreateMovieAndParticipantDto dto = null;
+        try {
+            dto = objectMapper.readValue(createMovieAndParticipantDto, CreateMovieAndParticipantDto.class);
+            // createMovieAndParticipantDto를 처리하는 로직을 구현합니다.
+            // ...
+        } catch (JsonProcessingException e) {
+            // JSON 파싱 오류 처리
+            e.printStackTrace();
+        }
+        if(movieService.updateMovie(image, dto, movieNumber)){
+            model.addAttribute("success", "true");
+        }
+        return "admin/adminmoviedetail?movieNumber="+movieNumber;
+    }
 }

@@ -128,7 +128,7 @@
 </header>
 <!-- Section-->
 <section class="py-5">
-    <button >수정</button>
+    <button type="button" class="updatemovie" th:onclick="|location.href='@{/admin/movie/update}'|">수정</button>
     <button onclick="deleteMovie()">삭제</button>
     <script>
     function deleteMovie() {

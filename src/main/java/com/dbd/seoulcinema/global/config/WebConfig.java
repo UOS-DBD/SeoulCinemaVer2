@@ -15,6 +15,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/home", "/", "/login", "/css/**", "*.ico", "/error",
                         "/admin/**", "/schedules", "/viewSchedulesForm", "/api/schedules",
                         "/api/auth/login",
-                        "/api/**");
+                        "/api/**", "/assets/**");
     }
 }

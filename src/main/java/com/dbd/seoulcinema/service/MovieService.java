@@ -11,6 +11,8 @@ import com.dbd.seoulcinema.dto.CreateMovieAndParticipantDto;
 import com.dbd.seoulcinema.dto.CreateMovieDto;
 import com.dbd.seoulcinema.dto.CreateParticipantDto;
 import com.dbd.seoulcinema.dto.MovieDetailDto;
+import com.dbd.seoulcinema.global.utils.MovieGenreConverter;
+import com.dbd.seoulcinema.global.utils.MovieGradeConverter;
 import com.dbd.seoulcinema.repository.MovieRepository;
 import com.dbd.seoulcinema.repository.ParticipantMovieRepositorty;
 import com.dbd.seoulcinema.repository.ParticipantRepository;
@@ -19,6 +21,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Column;
+import javax.persistence.Convert;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -42,6 +46,7 @@ public class MovieService {
     @Transactional
     public List<MovieDetailDto> getMovieDetail(Long movieNumber) {
         List<MovieDetailDto> movieDetail = movieRepository.findMovieDetail(movieNumber);
+        System.out.println("길이1: "+movieDetail.size());
         if(movieDetail.isEmpty()){
             return null;
         }
@@ -110,6 +115,26 @@ public class MovieService {
 
             movieRepository.delete(movie.get());
             return true;
+        }
+    }
+
+    @Transactional
+    public boolean updateMovie(MultipartFile image, CreateMovieAndParticipantDto createMovieAndParticipantDto, Long movieNumber) {
+        Optional<Movie> movie = movieRepository.findById(movieNumber);
+        CreateMovieDto createMovieDto = createMovieAndParticipantDto.getCreateMovieDto();
+        List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
+        if (movie.isEmpty()) {
+            return false;
+        } else {
+            movie.get().update(createMovieDto.getMovieName(),
+                    createMovieDto.getRunningTime(),
+                    createMovieDto.getMovieGenre(),
+                    createMovieDto.getMovieGrade(),
+                    createMovieDto.getMovieIntroduction(),
+                    createMovieDto.getMovieImage(),
+                    createMovieDto.getScreeningStatus());
+            return true;
+            // 관계자 업데이트?
         }
     }
 }
