@@ -133,6 +133,6 @@ public class MovieController {
         if(movieService.updateMovie(image, dto, movieNumber)){
             model.addAttribute("success", "true");
         }
-        return "admin/adminmoviedetail?movieNumber="+movieNumber;
+        return "/admin/movie/detail?movieNumber="+movieNumber;
     }
 }

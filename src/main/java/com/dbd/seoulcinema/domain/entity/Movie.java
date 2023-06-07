@@ -32,7 +32,6 @@ public class Movie {
     @Column(length = 5)
     private String runningTime;
 
-
     @Convert(converter = MovieGenreConverter.class)
     private MovieGenre movieGenre;
 
