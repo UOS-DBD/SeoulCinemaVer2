@@ -55,6 +55,9 @@ public class TicketController {
 
         String userId = (String) httpSession.getAttribute(Constants.USER_ID_SESSION);
         Long memberPoint = memberService.getMemberPoint(userId);
+        boolean loggedIn = (httpSession.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute(Constants.MEMBER_POINT,memberPoint);
 
         if (paymentType.equals("CARD")) {
@@ -107,6 +110,10 @@ public class TicketController {
 
         model.addAttribute("totalPrice", totalPrice);
         httpSession.setAttribute("createTicketFinalVo", createTicketFinalVo);
+
+        boolean loggedIn = (httpSession.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
 
         return "paymentFinal";
     }

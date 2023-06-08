@@ -8,10 +8,7 @@ import com.dbd.seoulcinema.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpSession;
@@ -25,9 +22,13 @@ public class LoginController {
     private final LoginService loginService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model){
+    public String login(Model model, HttpSession session){
         model.addAttribute("formData", new LoginDto());
         model.addAttribute("signup", new CreateMemberDto());
+
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         return "login";
     }
 
@@ -50,11 +51,11 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/api/auth/logout")
+    @GetMapping("/api/auth/logout")
     public String logout(Model model, HttpSession session){
         loginService.logout(session);
         model.addAttribute("success", "true");
-        return "home";
+        return "redirect:/home";
     }
 
     // admin

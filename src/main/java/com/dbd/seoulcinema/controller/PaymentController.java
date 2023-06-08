@@ -40,6 +40,10 @@ public class PaymentController {
 
         httpSession.setAttribute("scheduleSeatVo", scheduleSeatVo);
 
+        boolean loggedIn = (httpSession.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
+
         return "paymentRadio";
     }
 
@@ -49,6 +53,10 @@ public class PaymentController {
         String clientId = (String) httpSession.getAttribute(Constants.USER_ID_SESSION);
         List<ViewPaymentListDto> payments = paymentService.viewpaymentList(clientId);
 
+        boolean loggedIn = (httpSession.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
+
         model.addAttribute("payments", payments);
 
         return "viewPaymentList";
@@ -56,10 +64,12 @@ public class PaymentController {
 
 
     @GetMapping("/payments/detail/{paymentNumber}")
-    public String viewSpecificPayment(@PathVariable("paymentNumber") String paymentNumber, Model model) {
+    public String viewSpecificPayment(@PathVariable("paymentNumber") String paymentNumber, Model model, HttpSession session) {
 
         ViewSpecificPaymentDto dto = paymentService.viewSpecificPayment(paymentNumber);
+        boolean loggedIn = (session.getAttribute("userId") != null);
 
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("paymentInfo", dto);
         model.addAttribute("discounts", dto.getDiscounts());
         if (dto.getBankName() == null) {

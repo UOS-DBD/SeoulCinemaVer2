@@ -105,13 +105,14 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link" href="#!">영화</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">예매</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">이벤트</a></li>
+                <li class="nav-item"><a class="nav-link" href="/movie">영화</a></li>
+                <li class="nav-item"><a class="nav-link" href="/schedules">예매</a></li>
+                <li class="nav-item"><a class="nav-link" href="/events">이벤트</a></li>
             </ul>
             <a class="d-flex">
                 <button class="btn btn-outline-dark" type="submit">
-                    로그인
+                    <span th:unless="${loggedIn}" class="not-logged-in"><a href="/login">로그인</a></span>
+                    <span th:if="${loggedIn}" class="logged-in"><a href="/api/auth/logout">로그아웃</a></span>
                 </button>
             </a>
         </div>
@@ -128,32 +129,6 @@
 </header>
 <!-- Section-->
 <section class="py-5">
-
-<!--        <div class="container px-4 px-lg-5 mt-5">-->
-<!--            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">-->
-<!--                <div class="layout">-->
-<!--                    <table>-->
-<!--                        <thead>-->
-<!--                        <tr>-->
-<!--                            <th>포스터</th>-->
-<!--                            <th>제목</th>-->
-<!--                            <th>상영시간</th>-->
-<!--                            <th>장르</th>-->
-<!--                            <th>이용연령가</th>-->
-<!--                        </tr>-->
-<!--                        </thead>-->
-<!--                        <tbody>-->
-<!--                        <tr th:each = "movie : ${movies}">-->
-<!--                            <img class="card-img-top" th:src = "@{${movie.movieImage}}" alt="..." />-->
-<!--                            <td th:text="${movie.movieName}">영화제목</td>-->
-<!--                            <td th:text="${movie.runningTime}">상영시간</td>-->
-<!--                            <td th:text="${movie.movieGenre}">장르</td>-->
-<!--                            <td th:text="${movie.movieGrade}">이용연령가</td>-->
-<!--                        </tr>-->
-<!--                        </tbody>-->
-<!--                    </table>-->
-<!--                </div>-->
-
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
