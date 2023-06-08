@@ -19,9 +19,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
             "p.participantNumber, p.participantName, p.participantType) " +
             "FROM Movie m " +
             "INNER JOIN ParticipantMovie pm " +
-            "ON m.movieNumber = pm.movieNumber " +
+            "ON m.movieNumber = pm.movieNumber.movieNumber " +
             "INNER JOIN Participant p " +
-            "ON pm.participantNumber = p.participantNumber " +
+            "ON pm.participantNumber.participantNumber = p.participantNumber " +
             "WHERE m.movieNumber = :movieNumber")
     public List<MovieDetailDto> findMovieDetail(@Param("movieNumber") Long movieNumber);
 
