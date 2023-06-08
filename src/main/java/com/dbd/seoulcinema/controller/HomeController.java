@@ -1,6 +1,7 @@
 package com.dbd.seoulcinema.controller;
 
 import com.dbd.seoulcinema.domain.entity.Movie;
+import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import com.dbd.seoulcinema.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +29,9 @@ public class HomeController {
         "movieImage": "http://~~~"
     }
  */
-    @GetMapping("/home")
+    @GetMapping(value ={ "/home", "/"})
     public String home(Model model){
-        List<Movie> movieList = movieService.getAllMovies();
+        List<Movie> movieList = movieService.getOnScreenMovies(ScreeningStatus.Y);
 
         int len = movieList.size();
 
