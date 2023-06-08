@@ -32,7 +32,6 @@ public class Movie {
     @Column(length = 5)
     private String runningTime;
 
-
     @Convert(converter = MovieGenreConverter.class)
     private MovieGenre movieGenre;
 
@@ -47,4 +46,14 @@ public class Movie {
 
     @Column(length = 2)
     private ScreeningStatus screeningStatus;
+
+    public void update(String movieName, String runningTime, MovieGenre movieGenre, MovieGrade movieGrade, String movieIntroduction, String movieImage, ScreeningStatus screeningStatus) {
+        this.movieName = movieName;
+        this.runningTime = runningTime;
+        this.movieGenre = movieGenre;
+        this.movieGrade = movieGrade;
+        this.movieIntroduction = movieIntroduction;
+        this.movieImage = movieImage;
+        this.screeningStatus =screeningStatus;
+    }
 }

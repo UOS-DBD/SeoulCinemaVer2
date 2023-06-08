@@ -14,7 +14,6 @@ import java.beans.ConstructorProperties;
 
 @Data
 @NoArgsConstructor
-@Getter
 public class CreateMovieDto {
     @JsonProperty("movieName")
     private String movieName;

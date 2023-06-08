@@ -174,11 +174,14 @@
 <!-- Section-->
 <section class="py-5">
     <div class="col">
-        <div>
-<!--                <input class="card-img-top" id="movieImage" alt="..."></input>-->
+        <div th:with="movie1=${movie[0]}">
+            <!--                <input class="card-img-top" id="movieImage" alt="..."></input>-->
             <input type="file" class="real-upload" id="movieImage" accept="image/*" required multiple>
             <div class="upload">이미지 업로드</div>
-            <ul class="image-preview"></ul>
+            <ul class="image-preview" id="im    age-preview">
+                <li><img class="card-img-top" th:src = "@{/}+${movie1.movieImage}" alt="..." /></li>
+                <li>></li>
+            </ul>
             <script>
                 function getImageFiles(e) {
                   const uploadFiles = [];
@@ -228,13 +231,13 @@
 
                 realUpload.addEventListener('change', getImageFiles);
               </script>
-                <div>
-                    <input class="text-body-emphasis" id="movieName" PLACEHOLDER="영화이름"></input>
-                </div>
-                <div>
-                    <input class="fs-5 col-md-8" id="movieIntroduction" PLACEHOLDER="영화소개"></input>
-                </div>
-                <hr class="col-3 col-md-2 mb-5">
+            <div>
+                <input th:value="${movie1.movieName}" class="text-body-emphasis" id="movieName" placeholder="" th:placeholder="${movie1.movieName}"></input>
+            </div>
+            <div>
+                <input th:value="${movie1.movieIntroduction}" class="fs-5 col-md-8" id="movieIntroduction" placeholder="" th:placeholder="${movie1.movieIntroduction}"></input>
+            </div>
+            <hr class="col-3 col-md-2 mb-5">
 
 
             <div class="row g-5">
@@ -251,17 +254,20 @@
                         </li>
                         <li>
                             <div>
-<!--                                <input class="text-body-emphasis" id="movieGenre" PLACEHOLDER="영화장르"></input>-->
-                                <select  id="movieGenre">
-                                    <option value="none" selected disabled>영화장르</option>
-                                    <option value="ACTION">액션</option>
-                                    <option value="MELO">멜로</option>
-                                    <option value="DRAMA">드라마</option>
-                                    <option value="COMEDY">코미디</option>
-                                    <option value="MARTIAL_ARTS">무협</option>
-                                    <option value="SF">SF</option>
-                                    <option value="EROTIC">에로틱</option>
+                                <!--                                <input class="text-body-emphasis" id="movieGenre" PLACEHOLDER="영화장르"></input>-->
+                                <select id="movieGenre">
+                                    <option th:each="option : ${movieGenre}" th:value="${option}" th:selected="${option == movie1.movieGenre}" th:text="${option}"></option>
                                 </select>
+                                <!--                                    <select  id="movieGenre">-->
+                                <!--                                        <option value="none" selected disabled>영화장르</option>-->
+                                <!--                                        <option value="ACTION">액션</option>-->
+                                <!--                                        <option value="MELO">멜로</option>-->
+                                <!--                                        <option value="DRAMA">드라마</option>-->
+                                <!--                                        <option value="COMEDY">코미디</option>-->
+                                <!--                                        <option value="MARTIAL_ARTS">무협</option>-->
+                                <!--                                        <option value="SF">SF</option>-->
+                                <!--                                        <option value="EROTIC">에로틱</option>-->
+                                <!--                                    </select>-->
                             </div>
                             <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/parcel" rel="noopener" target="_blank">-->
                             <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
@@ -270,14 +276,17 @@
                         </li>
                         <li>
                             <div>
-<!--                                <input class="text-body-emphasis" id="movieGrade" PLACEHOLDER="연령가"></input>-->
-                                <select  id="movieGrade">
-                                    <option value="none" selected disabled>연령가</option>
-                                    <option value="ALL">일반</option>
-                                    <option value="TWELVE">12세</option>
-                                    <option value="FIFTEEN">15세</option>
-                                    <option value="ADULT">18세</option>
+                                <!--                                <input class="text-body-emphasis" id="movieGrade" PLACEHOLDER="연령가"></input>-->
+                                <select id="movieGrade">
+                                    <option th:each="option : ${movieGrade}" th:value="${option}" th:selected="${option == movie1.movieGrade}" th:text="${option}"></option>
                                 </select>
+                                <!--                                    <select  id="movieGrade">-->
+                                <!--                                        <option value="none" selected disabled>연령가</option>-->
+                                <!--                                        <option value="ALL">일반</option>-->
+                                <!--                                        <option value="TWELVE">12세</option>-->
+                                <!--                                        <option value="FIFTEEN">15세</option>-->
+                                <!--                                        <option value="ADULT">18세</option>-->
+                                <!--                                    </select>-->
                             </div>
                             <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/vite" rel="noopener" target="_blank">-->
                             <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
@@ -286,7 +295,7 @@
                         </li>
                         <li>
                             <div>
-                                <input class="text-body-emphasis" id="runningTime" PLACEHOLDER="상영시간"></input>
+                                <input th:value="${movie1.runningTime}" class="text-body-emphasis" id="runningTime" placeholder="" th:placeholder="${movie1.runningTime}"></input>
                             </div>
                             <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
                             <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
@@ -295,12 +304,15 @@
                         </li>
                         <li>
                             <div>
-<!--                                <input class="text-body-emphasis" id="screeningStatus" PLACEHOLDER="상영여부 "></input>-->
-                                <select  id="screeningStatus">
-                                    <option value="none" selected disabled>상영여부</option>
-                                    <option value="Y">Y</option>
-                                    <option value="N">N</option>
+                                <!--                                <input class="text-body-emphasis" id="screeningStatus" PLACEHOLDER="상영여부 "></input>-->
+                                <select id="screeningStatus">
+                                    <option th:each="option : ${screeningStatus}" th:value="${option}" th:selected="${option == movie1.screeningStatus}" th:text="${option}"></option>
                                 </select>
+                                <!--                                    <select  id="screeningStatus">-->
+                                <!--                                        <option value="none" selected disabled>상영여부</option>-->
+                                <!--                                        <option value="Y">Y</option>-->
+                                <!--                                        <option value="N">N</option>-->
+                                <!--                                    </select>-->
                             </div>
                             <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
                             <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
@@ -326,9 +338,33 @@
                     <div id="added-data"></div>
                     <button onclick="submitData()">Submit</button>
 
-                    <script>
+                    <script th:inline="javascript">
                           // Array to store the added data
-                          var dataArr = [];
+                            console.log(/*[[${movie}]]*/);
+
+                          var dataArr = [
+                          /*[# th:each="participant : ${movie}"]*/
+                            [
+                                /*[[${participant.participantType}]]*/,
+                                /*[[${participant.participantName}]]*/
+                            ],
+                        /*[/]*/
+                          ];
+
+                          var addedDataDiv = document.getElementById("added-data");
+                            addedDataDiv.innerHTML = "";
+
+                          dataArr.forEach(function(data, index) {
+                              var dataItem = document.createElement("div");
+                              dataItem.classList.add("data-item");
+                              dataItem.innerHTML = `
+                                            <input type="text" value="${data[0]}" readonly />
+                                            <input type="text" value="${data[1]}" readonly />
+                                            <button onclick="deleteData(${index})">Delete</button>
+                                        `;
+
+                              addedDataDiv.appendChild(dataItem);
+                            });
 
                           // Function to add data
                           function addData() {
@@ -370,17 +406,42 @@
 
                           // Function to submit all the added data
                           function submitData() {
-                            var movieImageFile = document.getElementById('movieImage');
-                            console.log("file");
-                            console.log(movieImageFile.files[0]);
-                            console.log("name");
-                            console.log(movieImageFile.files[0].name);
+                          // 현재 페이지의 URL 가져오기
+                            var currentUrl = window.location.href;
+
+                            // URL에서 파라미터 부분만 추출하기
+                            var paramsString = currentUrl.split('?')[1];
+
+                            // 추출된 파라미터를 key-value 형태로 변환하기
+                            var params = {};
+                            if (paramsString) {
+                              var paramArray = paramsString.split('&');
+                              for (var i = 0; i < paramArray.length; i++) {
+                                var param = paramArray[i].split('=');
+                                var key = decodeURIComponent(param[0]);
+                                var value = decodeURIComponent(param[1] || '');
+                                params[key] = value;
+                              }
+                            }
+
+                            // 특정 파라미터 값 가져오기
+                            var movieNumber1 = params['movieNumber'];
+
+
+                          var movieImageFile = document.getElementById('movieImage');
+
                           var movieName= document.getElementById("movieName").value;
                           var runningTime= document.getElementById("runningTime").value;
                           var movieGenre= document.getElementById("movieGenre").value;
                           var movieGrade= document.getElementById("movieGrade").value;
                           var movieIntroduction= document.getElementById("movieIntroduction").value;
-                          var movieImage= "assets/img/"+movieImageFile.files[0].name;
+                          var movieImage= "";
+                          if(movieImageFile == null){
+                            movieImage= null;
+                          }
+                          else{
+                            movieImage= "assets/img/"+movieImageFile.files[0].name;
+                          }
                           var screeningStatus= document.getElementById("screeningStatus").value;
 
                           var createMovieDto = {
@@ -409,9 +470,10 @@
                             var formData = new FormData();
                                 formData.append('image', movieImageFile.files[0]); // 'file'은 Spring 컨트롤러에서 받을 때 사용할 파라미터 이름입니다.
                             formData.append('createMovieAndParticipantDto', createMovieAndParticipantDto); // 'stringData'는 Spring 컨트롤러에서 받을 때 사용할 파라미터 이름입니다.
+                            formData.append('movieNumber', movieNumber1);
 
                             var xhr = new XMLHttpRequest();
-                              xhr.open('POST', '/api/admin/movie/create', true); // '/your-endpoint'는 실제 Spring 컨트롤러의 엔드포인트 URL로 변경해야 합니다.
+                              xhr.open('PUT', '/api/admin/movie/update', true); // '/your-endpoint'는 실제 Spring 컨트롤러의 엔드포인트 URL로 변경해야 합니다.
 
                               xhr.onload = function () {
                                 if (xhr.status === 200) {
@@ -419,39 +481,14 @@
                                   // 성공적으로 업로드되었을 때 수행할 작업 추가
                                 } else {
                                   console.log('Upload failed');
+                            console.log(movieImageFile.files[0]);
+                            console.log(createMovieAndParticipantDto);
                                   // 업로드 실패 시 수행할 작업 추가
                                 }
                               };
 
                               xhr.send(formData);
 
-                            // 데이터 전송
-<!--                            fetch('/api/admin/movie/create', {-->
-<!--                                method: 'POST',-->
-<!--                                headers: {-->
-<!--                                    'Content-Type': 'application/json'-->
-<!--                                },-->
-<!--                                body: JSON.stringify(createMovieAndParticipantDto)-->
-<!--                            })-->
-<!--                            .then(response => {-->
-<!--                                if (response.ok) {-->
-<!--                                    console.log('Data sent successfully');-->
-<!--                                    console.log(createMovieDto);-->
-<!--                                    console.log(createParticipantDto);-->
-<!--                                    console.log(createMovieAndParticipantDto);-->
-<!--                                    // 데이터 전송 성공 후 처리할 로직-->
-<!--                                } else {-->
-<!--                                    throw new Error('Error sending data');-->
-<!--                                }-->
-<!--                            })-->
-<!--                            .catch(error => {-->
-
-<!--                                console.error('Error sending data:', error);-->
-<!--                                // 에러 발생 시 처리할 로직-->
-<!--                            });-->
-                            // Your code to handle the submission of data goes here
-                                // You can access the added data using the dataArr array
-                            // console.log("Submitted Data:", dataArr);
                           }
                         </script>
                 </div>
