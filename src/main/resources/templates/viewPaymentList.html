@@ -87,7 +87,7 @@
     </thead>
     <tbody>
     <tr th:each="ViewPaymentListDto : ${payments}">
-      <td ><a href="item.html"
+      <td ><a
              th:href="@{/api/payments/detail/{paymentNumber}(paymentNumber=${ViewPaymentListDto.getPaymentNumber()})}"
              th:text="${ViewPaymentListDto.getPaymentNumber()}"></a></td>
       <td style="padding: 20px" th:text="${ViewPaymentListDto.getScreeningDate()}"/>

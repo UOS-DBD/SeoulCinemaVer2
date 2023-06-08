@@ -24,7 +24,7 @@ public interface TicketRepository extends JpaRepository<Ticket, String> {
     List<ViewTicketsListDto> findTicketListByMember(@Param("clientId") String clientId); //--> cross join 발생함! 추후 수정 예정
 
 
-    @Query("select new com.dbd.seoulcinema.dto.ViewTicketsListDto(t.ticketNumber, m.movieName, s.screeningStartTime, s.screeningEndTime) "
+    @Query("select distinct new com.dbd.seoulcinema.dto.ViewTicketsListDto(t.ticketNumber, m.movieName, s.screeningStartTime, s.screeningEndTime) "
             + "from Ticket t, ScheduleSeat ss, Schedule s, Movie m "
             + "where t.ticketNumber = ss.ticket.ticketNumber "
             + "and ss.scheduleNumber = s.scheduleNumber "

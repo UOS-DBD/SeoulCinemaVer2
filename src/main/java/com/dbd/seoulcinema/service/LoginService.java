@@ -53,7 +53,7 @@ public class LoginService {
         else{
             // 로그인 성공
             if(admin.get().getPassword().equals(loginDto.getPassword())){
-                session.setAttribute("userId", loginDto.getId());
+                session.setAttribute("adminId", loginDto.getId());
                 return loginDto.getId();
             }
             else{ // 비밀번호 틀림

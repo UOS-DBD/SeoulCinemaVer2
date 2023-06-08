@@ -8,7 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateParticipantDto {
+public class ViewParticipantListDto {
+
+    private Long participantNumber;
+
     private String participantName;
-    private ParticipantType participantType; // enum
+
+    private ParticipantType participantType;
 }

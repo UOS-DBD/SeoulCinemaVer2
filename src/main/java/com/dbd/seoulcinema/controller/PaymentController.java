@@ -6,7 +6,6 @@ import com.dbd.seoulcinema.dto.ViewSpecificPaymentDto;
 import com.dbd.seoulcinema.global.constants.Constants;
 import com.dbd.seoulcinema.service.PaymentService;
 import com.dbd.seoulcinema.vo.ScheduleSeatVo;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api")
@@ -30,19 +30,14 @@ public class PaymentController {
     //결제 타입을 고를 떄 호출하는 api
     @GetMapping("/payments/radio")
     public String viewPaymentRadio(HttpSession httpSession, Model model) {
-
-
-//       String scheduleNumber = "20230601011";
-//        List<Long> seats = new ArrayList<>(Arrays.asList(9L, 10L)); // 좌석 선택하는 api 완료된 후 @ModelAttribute 사용해서 코드 수정할 것
         List<ScheduleSeat> selectedSeats = (List<ScheduleSeat>) httpSession.getAttribute(
-            "selectedSeats");
-        model.addAttribute(Constants.STANDARD_PRICE, 12000 *selectedSeats.size()); // 할인전 표준 금액 렌더링
+                "selectedSeats");
+        model.addAttribute(Constants.STANDARD_PRICE, 12000 * selectedSeats.size()); // 할인전 표준 금액 렌더링
         List<Long> seats = selectedSeats.stream().map(s -> s.getSeatNumber().getSeatNumber())
-           .collect(Collectors.toList());
+                .collect(Collectors.toList());
         ScheduleSeatVo scheduleSeatVo = new ScheduleSeatVo(
-            selectedSeats.get(0).getScheduleNumber().getScheduleNumber(), seats);
-//        ScheduleSeatVo scheduleSeatVo = new ScheduleSeatVo(scheduleNumber, seats);
-        httpSession.setAttribute(Constants.USER_ID_SESSION, "mim501");
+                selectedSeats.get(0).getScheduleNumber().getScheduleNumber(), seats);
+
         httpSession.setAttribute("scheduleSeatVo", scheduleSeatVo);
 
         return "paymentRadio";
@@ -61,13 +56,13 @@ public class PaymentController {
 
 
     @GetMapping("/payments/detail/{paymentNumber}")
-    public String viewSpecificPayment(@PathVariable("paymentNumber") String paymentNumber, HttpSession httpSession, Model model) {
+    public String viewSpecificPayment(@PathVariable("paymentNumber") String paymentNumber, Model model) {
 
         ViewSpecificPaymentDto dto = paymentService.viewSpecificPayment(paymentNumber);
 
         model.addAttribute("paymentInfo", dto);
         model.addAttribute("discounts", dto.getDiscounts());
-        if (dto.getBankName().isBlank()) {
+        if (dto.getBankName() == null) {
             return "viewSpecificPaymentCard";
         }else{
             return "viewSpecificPaymentAccount";

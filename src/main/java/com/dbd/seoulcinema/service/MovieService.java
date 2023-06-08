@@ -19,9 +19,16 @@ import com.dbd.seoulcinema.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,36 +43,61 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    public List<Movie> getOnScreenMovies(ScreeningStatus screeningStatus){return movieRepository.findAllByScreeningStatus(screeningStatus);}
+
+    public Movie getMovie(Long movieNumber){
+        return movieRepository.findById(movieNumber).get();
+    }
+
     @Transactional
     public List<MovieDetailDto> getMovieDetail(Long movieNumber) {
         List<MovieDetailDto> movieDetail = movieRepository.findMovieDetail(movieNumber);
+        System.out.println("길이1: "+movieDetail.size());
         if(movieDetail.isEmpty()){
             return null;
         }
         else{
-            System.out.println(movieDetail.get(0).getMovieGrade().toString());
             return movieDetail;
         }
     }
 
     @Transactional
-    public void craeteMovie(CreateMovieAndParticipantDto createMovieAndParticipantDto) {
+    public void craeteMovie(MultipartFile image, CreateMovieAndParticipantDto createMovieAndParticipantDto)  {
+        String fileName = image.getOriginalFilename();
+        Path imagePath = Path.of("src/main/resources/static/img/" + fileName); // 이미지를 저장할 경로
+        System.out.println("IMAGE START");
+        try {
+            // 이미지 파일을 지정된 경로로 복사합니다.
+            InputStream inputStream = image.getInputStream();
+            Files.copy(inputStream, imagePath, StandardCopyOption.REPLACE_EXISTING);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // 파일 복사 실패 처리
+        }
+        System.out.println("IMAGE END");
+        CreateMovieDto createMovieDto = createMovieAndParticipantDto.getCreateMovieDto();
+        List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
+
         Movie movie = Movie.builder()
-                .movieName(createMovieAndParticipantDto.getCreateMovieDto().getMovieName())
-                .runningTime(createMovieAndParticipantDto.getCreateMovieDto().getRunningTime())
-                .movieGenre(MovieGenre.valueOf(createMovieAndParticipantDto.getCreateMovieDto().getMovieGenre()))
-                .movieGrade(MovieGrade.valueOf(createMovieAndParticipantDto.getCreateMovieDto().getMovieGrade()))
-                .movieIntroduction(createMovieAndParticipantDto.getCreateMovieDto().getMovieIntroduction())
-                .movieImage("") // 이미지 어떻게 넣을지
-                .screeningStatus(ScreeningStatus.valueOf(createMovieAndParticipantDto.getCreateMovieDto().getScreeningStatus())).build();
+                .movieName(createMovieDto.getMovieName())
+                .runningTime(createMovieDto.getRunningTime())
+                .movieGenre(createMovieDto.getMovieGenre())
+                .movieGrade(createMovieDto.getMovieGrade())
+                .movieIntroduction(createMovieDto.getMovieIntroduction())
+                .movieImage(createMovieDto.getMovieImage()) // 이미지 어떻게 넣을지
+                .screeningStatus(createMovieDto.getScreeningStatus())
+                .build();
         movieRepository.save(movie);
         movieRepository.flush();
 
-        List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
+
         for(int i = 0 ; i < createParticipantDtoList.size() ; i++){
+            CreateParticipantDto createParticipantDto = createParticipantDtoList.get(i);
+
             Participant participant = Participant.builder()
-                    .participantType(ParticipantType.valueOf(createParticipantDtoList.get(i).getParticipantType()))
-                    .participantName(createParticipantDtoList.get(i).getParticipantName())
+                    .participantType(createParticipantDto.getParticipantType())
+                    .participantName(createParticipantDto.getParticipantName())
                     .build();
             participantRepository.save(participant);
             participantRepository.flush();
@@ -75,6 +107,40 @@ public class MovieService {
                     .participantNumber(participant).build());
             participantMovieRepositorty.flush();
         }
+        System.out.println("service end");
     }
 
+    @Transactional
+    public boolean deleteMovie(Long movieNumber) {
+        Optional<Movie> movie = movieRepository.findById(movieNumber);
+        if(movie.isEmpty()){
+            return false;
+        }
+        else{
+            participantMovieRepositorty.deleteByMovieNumber(movie.get());
+
+            movieRepository.delete(movie.get());
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean updateMovie(MultipartFile image, CreateMovieAndParticipantDto createMovieAndParticipantDto, Long movieNumber) {
+        Optional<Movie> movie = movieRepository.findById(movieNumber);
+        CreateMovieDto createMovieDto = createMovieAndParticipantDto.getCreateMovieDto();
+        List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
+        if (movie.isEmpty()) {
+            return false;
+        } else {
+            movie.get().update(createMovieDto.getMovieName(),
+                    createMovieDto.getRunningTime(),
+                    createMovieDto.getMovieGenre(),
+                    createMovieDto.getMovieGrade(),
+                    createMovieDto.getMovieIntroduction(),
+                    createMovieDto.getMovieImage(),
+                    createMovieDto.getScreeningStatus());
+            return true;
+            // 관계자 업데이트?
+        }
+    }
 }

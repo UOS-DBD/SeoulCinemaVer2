@@ -20,13 +20,14 @@ class ParticipantTest {
     @Test
     void injectParticipantData(){
         em.persist(Participant.builder()
-                .participantNumber(1L)
                 .participantName("마동석")
-                .participantType(ParticipantType.ACTOR));
+                .participantType(ParticipantType.ACTOR)
+                .build());
+
         em.persist(Participant.builder()
-                .participantNumber(2L)
                 .participantName("윤계상")
-                .participantType(ParticipantType.ACTOR));
+                .participantType(ParticipantType.ACTOR)
+                .build());
         em.flush();
         em.clear();
     }

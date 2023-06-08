@@ -41,10 +41,10 @@ public class TicketController {
     }
 
     @GetMapping("/tickets/{ticketNumber}")
-    public String viewSpecificTicket(@PathVariable("ticketNumber") String ticketNumber, HttpSession httpSession, Model model) {
+    public String viewSpecificTicket(@PathVariable("ticketNumber") String ticketNumber, Model model) {
 
         ViewSpecificTicketDto dto = ticketService.viewSpecificTicket(ticketNumber);
-        httpSession.setAttribute("ticketNumber", ticketNumber); //예매 취소할때 사용될 티켓 넘버 세션에 저장
+        model.addAttribute("ticketNumber", ticketNumber); //예매 취소할때 사용될 티켓 넘버 세션에 저장
         model.addAttribute("ticketInfo", dto);
 
         return "viewSpecificTicket";
@@ -112,10 +112,8 @@ public class TicketController {
     }
 
     //티켓 예매 취소할 때 사용하는 api
-    @DeleteMapping("/tickets")
-    public String cancelTicket(HttpSession httpSession) {
-
-        String ticketNumber = (String) httpSession.getAttribute("ticketNumber");
+    @PostMapping("/tickets/{ticketNumber}")
+    public String cancelTicket(@PathVariable String ticketNumber) {
         ticketService.cancelTicket(ticketNumber);
         return "home";
     }
