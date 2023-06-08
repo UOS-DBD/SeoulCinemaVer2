@@ -16,8 +16,6 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .excludePathPatterns("/home", "/", "/login", "/css/**", "*.ico", "/error",
                         "/admin/**", "/schedules", "/viewSchedulesForm", "/api/schedules",
-                        "/api/auth/login",
-                        "/api/**", "/assets/**");
                         "/api/auth/login", "/api/admin/**");
 
         registry.addInterceptor(new AdminLoginCheckInterceptor())
