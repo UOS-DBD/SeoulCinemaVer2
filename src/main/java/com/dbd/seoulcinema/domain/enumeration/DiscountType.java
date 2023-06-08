@@ -9,7 +9,7 @@ public enum DiscountType implements CommonDescCode {
     SAMSUNG("삼성카드 결제", 2000, "02"),
     TOSS("토스 결제", 3000, "03"),
     SHINHAN("신한카드 결제", 3500,"04"),
-    SKT("SKT", 1000,"04"),
+    SKT("SKT", 1000,"05"),
     KT("KT", 1000,"06"),
     POINTDISCOUNT("포인트차감", 0,"07"),
     BC("BC카드 결제",0,"08"),

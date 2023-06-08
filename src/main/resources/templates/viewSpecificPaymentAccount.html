@@ -72,7 +72,7 @@
           <!--                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>-->
 
           <!--                    </svg>-->
-          <img src="/static/img/1.png" alt="이미지나올곳">
+          <img th:src="@{/}+${paymentInfo.movieImg}" alt="..."/>
           <div class="card-body">
 
             <label>영화 이름: <span th:text="${paymentInfo.movieName}"></span></label>
@@ -128,3 +128,9 @@
 <script th:src="@{js/scripts.js}"></script>
 </body>
 </html>
+
+<style>
+  .for-margin{
+    margin-right : 10px;
+  }
+</style>
