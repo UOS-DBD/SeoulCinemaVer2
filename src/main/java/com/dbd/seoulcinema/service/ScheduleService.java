@@ -104,8 +104,6 @@ public class ScheduleService {
             LocalDateTime createdDate = scheduleSeat.getCreatedDate();
             Duration elapsed = Duration.between(createdDate, LocalDateTime.now());
             Duration fiveMinutes = Duration.ofMinutes(5);
-            System.out.println("elapsed = " + elapsed);
-            System.out.println("fiveMinutes = " + fiveMinutes);
             if (elapsed.compareTo(fiveMinutes) >= 0) {
                 scheduleSeatRepository.delete(scheduleSeat);
             }

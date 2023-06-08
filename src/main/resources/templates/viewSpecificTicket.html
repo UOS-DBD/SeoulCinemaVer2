@@ -33,13 +33,17 @@
                 <li class="nav-item"><a class="nav-link" href="/events">이벤트</a></li>
             </ul>
             <a class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
+                <button class="btn btn-outline-dark for-margin" type="submit">
                     <span th:unless="${loggedIn}" class="not-logged-in"><a href="/login">로그인</a></span>
                     <span th:if="${loggedIn}" class="logged-in"><a href="/api/auth/logout">로그아웃</a></span>
                 </button>
-                <button class="btn btn-outline-dark" type="submit" th:if="${loggedIn}">
+                <button class="btn btn-outline-dark for-margin" type="submit" th:if="${loggedIn}">
+                    <span th:if="${loggedIn}" class="logged-in"><a href="/api/tickets">내 티켓조회</a></span>
+                </button>
+                <button class="btn btn-outline-dark for-margin" type="submit" th:if="${loggedIn}">
                     <span th:if="${loggedIn}" class="logged-in"><a href="/api/payments">내 결제내역</a></span>
                 </button>
+
             </a>
         </div>
     </div>
@@ -68,7 +72,7 @@
                     <!--                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>-->
 
                     <!--                    </svg>-->
-                    <img src="/static/img/1.png" alt="이미지나올곳">
+                    <img th:src="@{/}+${ticketInfo.movieImg}" alt="..."/>
                     <div class="card-body">
 
                         <label>영화 이름: <span th:text="${ticketInfo.movieName}"></span></label>
