@@ -22,25 +22,26 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long seatNumber;
 
-
+    @Column(columnDefinition = "CHAR(1)", nullable = false)
     private String rowNumber;
 
-
+    @Column(columnDefinition = "CHAR(2)", nullable = false)
     private String colNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "THEATER_NUMBER")
+    @JoinColumn(name = "THEATER_NUMBER", nullable = false)
     private Theater theater;
 
-    public static String getSeatLocation(List<Seat> seats){
+    public static String getSeatLocation(List<Seat> seats) {
         String location = "";
 
-        for(int i=0;i<seats.size();i++){
+        for (int i = 0; i < seats.size(); i++) {
 
-            location+=seats.get(i).rowNumber+seats.get(i).colNumber;
+            location += seats.get(i).rowNumber + seats.get(i).colNumber;
 
-            if(!(i==seats.size()-1))
-                location+="/ ";
+            if (!(i == seats.size() - 1)) {
+                location += "/ ";
+            }
         }
         return location;
     }

@@ -41,22 +41,23 @@ public class Schedule {
     @Column(columnDefinition = "DATE")
     private LocalDateTime screeningEndTime;
 
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE", nullable = false)
     private LocalDate screeningDate;
 
 
+    @Column(columnDefinition = "NUMBER(2,0)", nullable = false)
     @ColumnDefault("0")
     private Integer screeningSession;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MOVIE_NUMBER")
+    @JoinColumn(name = "MOVIE_NUMBER", nullable = false)
     private Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "THEATER_NUMBER")
+    @JoinColumn(name = "THEATER_NUMBER", nullable = false)
     private Theater theater;
 
-    public void setContents(Movie movie, Theater theater, ScreeningTimeDto dto){
+    public void setContents(Movie movie, Theater theater, ScreeningTimeDto dto) {
         this.movie = movie;
         this.theater = theater;
         this.screeningDate = dto.getScreeningDate();

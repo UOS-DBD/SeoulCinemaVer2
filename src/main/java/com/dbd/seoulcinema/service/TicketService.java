@@ -135,7 +135,7 @@ public class TicketService {
 //                    .discountNumber(findDiscount)
 //                    .build());
 //        }
-        System.out.println("진행~~~~~~~~~~~~~~~~~~~~~~~~");
+
         System.out.println(vo.getDiscountType().getDesc());
         Discount findDiscount = discountRepository.findPointDiscountByDiscountType(vo.getDiscountType());
 

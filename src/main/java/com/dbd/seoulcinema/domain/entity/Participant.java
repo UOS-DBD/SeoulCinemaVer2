@@ -23,15 +23,16 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long participantNumber;
 
-    @Column(length = 16)
+    @Column(length = 16, nullable = false)
     private String participantName;
 
 
     @Convert(converter = ParticipantTypeConverter.class)
+    @Column(columnDefinition = "CHAR(11)", nullable = false)
     private ParticipantType participantType;
 
-    public void update(CreateParticipantDto dto){
-        this.participantName=dto.getParticipantName();
-        this.participantType=dto.getParticipantType();
+    public void update(CreateParticipantDto dto) {
+        this.participantName = dto.getParticipantName();
+        this.participantType = dto.getParticipantType();
     }
 }
