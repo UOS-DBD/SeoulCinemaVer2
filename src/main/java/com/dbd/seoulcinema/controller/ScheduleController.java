@@ -32,16 +32,23 @@ public class ScheduleController {
 
 
     @GetMapping("/schedules")
-    public String showSchedulesForm(Model model){
+    public String showSchedulesForm(Model model, HttpSession session){
         List<Movie> movies = movieService.getAllMovies();
         model.addAttribute("movies", movies);
         model.addAttribute("date", "");
+
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         //TODO: 이 페이지에서 영화 장르, 등급 띄워주기
         return "schedule";
     }
 
     @GetMapping("/viewSchedulesForm")
-    public String selectMovieAndScheduleForm(Model model, @ModelAttribute("schedulesForm")List<ViewSchedulesFormDto> viewSchedulesFormDtos){
+    public String selectMovieAndScheduleForm(Model model, HttpSession session, @ModelAttribute("schedulesForm")List<ViewSchedulesFormDto> viewSchedulesFormDtos){
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("viewSchedulesForms", viewSchedulesFormDtos);
         return "viewSchedulesForm";
     }
@@ -64,10 +71,15 @@ public class ScheduleController {
                 scheduleSeats.add(seatService.makeSeatFormat(seat));
             }
         }
+
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("scheduleSeats", scheduleSeats);
 
         model.addAttribute("scheduleForm", scheduleForm);
         model.addAttribute("seats", seats);
+
         session.setAttribute("scheduleNumber", scheduleNumber);
 
         /*

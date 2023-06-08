@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -30,18 +31,22 @@ public class MovieController {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping(value = "/movie")
-    public String movieList(Model model){
+    public String movieList(Model model, HttpSession session){
         List<Movie> movieList = movieService.getAllMovies();
+        boolean loggedIn = (session.getAttribute("userId") != null);
 
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("movies", movieList);
         return "movie";
     }
 
     @GetMapping(value = "/movie/detail")
-    public String movieDetail(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
-        System.out.println("moviedetail start");
+    public String movieDetail(Model model, HttpSession session, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
         List<MovieDetailDto> movieDetail = movieService.getMovieDetail(movieNumber);
-        System.out.println("moviedetail end");
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
+
         model.addAttribute("movie", movieDetail);
         return "moviedetail";
     }

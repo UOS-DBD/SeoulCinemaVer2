@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class HomeController {
     }
  */
     @GetMapping(value ={ "/home", "/"})
-    public String home(Model model){
+    public String home(Model model, HttpSession session){
         List<Movie> movieList = movieService.getOnScreenMovies(ScreeningStatus.Y);
 
         int len = movieList.size();
@@ -41,7 +42,9 @@ public class HomeController {
         for(int i=len-1; i>len-5; i--){
             movies.add(movieList.get(i));
         }
+        boolean loggedIn = (session.getAttribute("userId") != null);
 
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("movies", movies);
         return "home";
     }
