@@ -31,7 +31,7 @@ public class ScheduleSeat extends BaseTimeEntity {
     @JoinColumn(name = "SCHEDULE_NUMBER",columnDefinition = "VARCHAR2(10 CHAR)")
     private Schedule scheduleNumber;
 
-    @Column(columnDefinition = "CHAR(3)", nullable = false)
+    @Column(length = 3, nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
 
