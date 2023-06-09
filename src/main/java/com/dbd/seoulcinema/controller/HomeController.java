@@ -32,7 +32,7 @@ public class HomeController {
  */
     @GetMapping(value ={ "/home", "/"})
     public String home(Model model, HttpSession session){
-        List<Movie> movieList = movieService.getOnScreenMovies(ScreeningStatus.Y);
+        List<Movie> movieList = movieService.getAllMovies();
 
         int len = movieList.size();
 

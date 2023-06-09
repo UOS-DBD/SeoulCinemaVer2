@@ -44,7 +44,7 @@
         <label for="movie">영화를 선택하지 않고 제출하셔도 됩니다.</label>
         <select name="movieNumber" id="movie" class="form-control">
             <option value="" selected="selected">-- 영화를 선택해주세요 --</option>
-            <option th:each="movie : ${movies}" th:value="${movie.movieNumber}" th:text="${movie.movieName}"></option>
+            <option th:each="movie : ${movies}" th:value="${movie.movieNumber}" th:text="${movie.movieName +' (' +movie.movieGrade.getDesc()} + ') '"></option>
         </select>
     </div> <br/>
 
