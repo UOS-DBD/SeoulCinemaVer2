@@ -99,7 +99,7 @@ public class MovieController {
 
         model.addAttribute("success", "true");
         System.out.println("REDIRECTING");
-        return "admin/adminmovie";
+        return "redirect:/admin/movie";
     }
 
     @GetMapping(value = "/api/admin/movie/delete")
