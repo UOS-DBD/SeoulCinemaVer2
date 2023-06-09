@@ -57,6 +57,13 @@ public class LoginController {
         return "redirect:/home";
     }
 
+    @GetMapping("/api/admin/auth/logout")
+    public String adminLogout(Model model, HttpSession session){
+        loginService.logout(session);
+        model.addAttribute("success", "true");
+        return "redirect:/admin/home";
+    }
+
     // admin
     @RequestMapping(value = "/admin/login", method = RequestMethod.GET)
     public String adminLogin(Model model){

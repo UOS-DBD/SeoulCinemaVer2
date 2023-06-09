@@ -35,7 +35,7 @@
             <a class="d-flex">
                 <button class="btn btn-outline-dark" type="submit">
                     <span th:unless="${loggedIn}" class="not-logged-in"><a href="/admin/login">로그인</a></span>
-                    <span th:if="${loggedIn}" class="logged-in"><a href="/api/auth/logout">로그아웃</a></span>
+                    <span th:if="${loggedIn}" class="logged-in"><a href="/api/admin/auth/logout">로그아웃</a></span>
                 </button>
 
             </a>
