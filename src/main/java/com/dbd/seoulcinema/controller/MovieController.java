@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -101,17 +102,18 @@ public class MovieController {
         return "admin/adminmovie";
     }
 
-    @DeleteMapping(value = "/api/admin/movie/delete")
-    public String adminDeleteMovie(Model model, @RequestBody DeleteMovieDto deleteMovieDto){
-        Long movieNumber = Long.parseLong(deleteMovieDto.getMovieNumber());
+    @GetMapping(value = "/api/admin/movie/delete")
+    public String adminDeleteMovie(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
 
         if(movieService.deleteMovie(movieNumber)){
             model.addAttribute("success", "true");
-            return "redirect:/admin/adminmovie";
+            System.out.println("delete success");
+            return "redirect:/admin/movie";
         }
         else{
             model.addAttribute("success", "false");
-            return "/admin/movie/detail?movieNumber="+movieNumber;
+            System.out.println("delete failed");
+            return "redirect:/admin/movie/detail?movieNumber="+movieNumber;
         }
     }
 

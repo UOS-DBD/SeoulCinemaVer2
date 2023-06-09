@@ -85,9 +85,15 @@ public class AdminController {
     }
 
     @PostMapping("/api/admin/schedule/delete/{scheduleNumber}")
-    public String processScheduleDelete(@PathVariable String scheduleNumber){
-        scheduleService.deleteSchedule(scheduleNumber);
-        return "redirect:/admin/home";
+    public String processScheduleDelete(@PathVariable String scheduleNumber, RedirectAttributes redirectAttributes){
+        if(scheduleService.deleteSchedule(scheduleNumber)){
+            redirectAttributes.addFlashAttribute("deleteSuccess", "true");
+            return "redirect:/admin/home";
+        }
+        else{
+            redirectAttributes.addFlashAttribute("deleteSuccess", "false");
+            return "redirect:/admin/schedule/delete";
+        }
     }
 
     @GetMapping("admin/schedule/modify")

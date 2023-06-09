@@ -1,0 +1,12 @@
+<form action="#" th:action="@{/upload}" method="post" enctype="multipart/form-data">
+    <label for="pictureFile">Choose a picture file:</label>
+    <input type="file" id="pictureFile" name="pictureFile" accept="image/*">
+    <br>
+    <label for="variable1">Variable 1:</label>
+    <input type="text" id="variable1" name="variable1">
+    <br>
+    <label for="variable2">Variable 2:</label>
+    <input type="text" id="variable2" name="variable2">
+    <br>
+    <button type="submit">Upload</button>
+</form>

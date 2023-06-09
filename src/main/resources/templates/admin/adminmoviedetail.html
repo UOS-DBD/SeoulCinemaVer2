@@ -133,7 +133,7 @@
 <section class="py-5">
     <div th:with="movieNumber=${movie[0]}">
         <button type="button" class="updatemovie" th:onclick="|location.href='@{/admin/movie/update(movieNumber=${movieNumber.movieNumber})}'|">수정</button>
-        <button onclick="deleteMovie()">삭제</button>
+        <button type="button" class="updatemovie" th:onclick="|location.href='@{/api/admin/movie/delete(movieNumber=${movieNumber.movieNumber})}'|">삭제</button>
     </div>
     <script>
     function deleteMovie() {
@@ -159,7 +159,7 @@
                 var movieNumber1 = params['movieNumber'];
 
                 fetch('/api/admin/movie/delete', {
-                  method: 'DELETE',
+                  method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
                   },
@@ -173,17 +173,33 @@
                       console.log('영화 삭제 성공');
                       console.log(movieNumber1);
                       // 필요한 경우 페이지 리로드 또는 다른 동작 수행
-                    } else {
+
+                      return fetch('/admin/movie', {
+                          method: 'get'
+                        });
+                    }
+                     else {
                       // 요청이 실패했을 때의 동작
                       console.log(movieNumber1);
                       console.error('영화 삭제 실패');
                     }
                   })
+                  .then(response => {
+                        if (response.ok) {
+                          // 성공
+                          console.log("랜더링 성공");
+                        }
+                        else{
+                            console.log("랜더링 실패");
+                        }
+                      })
                   .catch(error => {
                     // 에러 처리
                     console.log(movieNumber1);
                     console.error('네트워크 오류:', error);
                   });
+
+
           }
     </script>
     <div class="col">
