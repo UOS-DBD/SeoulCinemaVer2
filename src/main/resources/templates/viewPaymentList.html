@@ -93,7 +93,7 @@
     </thead>
     <tbody>
     <tr th:each="ViewPaymentListDto : ${payments}">
-      <td ><a
+      <td ><a th:if="${ViewPaymentListDto.paymentStatus.toString().equals('YES')}"
              th:href="@{/api/payments/detail/{paymentNumber}(paymentNumber=${ViewPaymentListDto.getPaymentNumber()})}"
              th:text="${ViewPaymentListDto.getPaymentNumber()}"></a></td>
       <td style="padding: 20px" th:text="${ViewPaymentListDto.getScreeningDate()}"/>

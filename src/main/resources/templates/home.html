@@ -58,6 +58,7 @@
                         <div class="card shadow-sm" th:onclick="|location.href='@{/movie/detail(movieNumber=${movie.movieNumber})}'|">
                         <!-- Product image-->
 <!--                        <img class="card-img-top" th:src="@{/assets/img/범죄도시3.png}" alt="..." />-->
+                            <div class="badge bg-dark text-white position-absolute" style="top: 0.7rem; right: 0.7rem" th:if="${movie.screeningStatus.toString().equals('Y')}">상영중</div>
                             <img class="card-img-top" th:src = "@{${movie.movieImage}}" alt="..." />
                         <!-- Product details-->
                             <div class="card-body p-4">
