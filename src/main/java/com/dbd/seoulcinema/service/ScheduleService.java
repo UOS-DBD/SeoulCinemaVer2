@@ -54,7 +54,7 @@ public class ScheduleService {
         }
         else{
             List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(schedule.get());
-            if(schedule.isEmpty()){
+            if(scheduleSeats.isEmpty()){
                 scheduleRepository.deleteById(scheduleNumber);
                 return true;
             }
