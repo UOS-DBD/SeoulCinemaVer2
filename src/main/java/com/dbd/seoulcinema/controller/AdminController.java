@@ -84,18 +84,6 @@ public class AdminController {
         return "admin/adminScheduleCreate";
     }
 
-
-
-    @GetMapping("admin/schedule/delete")
-    public String viewScheduleDeleteForm(Model model, HttpSession session){
-        boolean loggedIn = (session.getAttribute("adminId") != null);
-
-        model.addAttribute("loggedIn", loggedIn);
-        List<MovieAndSchedulesDto> allMovieSchedules = scheduleService.getAllMovieSchedules();
-        model.addAttribute("schedules", allMovieSchedules);
-        return "admin/adminScheduleDelete";
-    }
-
     @PostMapping("/api/admin/schedule/delete/{scheduleNumber}")
     public String processScheduleDelete(@PathVariable String scheduleNumber){
         scheduleService.deleteSchedule(scheduleNumber);
@@ -111,18 +99,7 @@ public class AdminController {
         model.addAttribute("schedules", allMovieSchedules);
         return "admin/adminScheduleModify";
     }
-    @GetMapping("/admin/schedule/create")
-    public String viewScheduleCreateForm(Model model){ //상영관리 등록 페이지로
-        List<Movie> movieList = movieService.getOnScreenMovies(ScreeningStatus.Y);
-        List<Theater> theaterList = theaterService.getAllTheaters();
 
-        model.addAttribute("movies", movieList);
-        model.addAttribute("theaters", theaterList);
-        model.addAttribute("screeningStartTime", "");
-        model.addAttribute("screeningDate", "");
-        model.addAttribute("screeningSession", "");
-        return "admin/adminScheduleCreate";
-    }
 
     @PostMapping("/api/admin/schedule/create")
     public String processScheduleCreate(@RequestParam Long movieNumber,
@@ -138,20 +115,17 @@ public class AdminController {
         return "redirect:/admin/home";
     }
 
+
     @GetMapping("admin/schedule/delete")
-    public String viewScheduleDeleteForm(Model model){
+    public String viewScheduleDeleteForm(Model model, HttpSession session){
+        boolean loggedIn = (session.getAttribute("adminId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         List<MovieAndSchedulesDto> allMovieSchedules = scheduleService.getAllMovieSchedules();
         model.addAttribute("schedules", allMovieSchedules);
         return "admin/adminScheduleDelete";
     }
 
-
-    @GetMapping("admin/schedule/modify")
-    public String viewScheduleModifyForm(Model model){
-        List<MovieAndSchedulesDto> allMovieSchedules = scheduleService.getAllMovieSchedules();
-        model.addAttribute("schedules", allMovieSchedules);
-        return "admin/adminScheduleModify";
-    }
 
     @PostMapping("api/admin/schedule/modify/{scheduleNumber}")
     public String processScheduleModify(@PathVariable String scheduleNumber,
@@ -167,28 +141,6 @@ public class AdminController {
         return "redirect:/admin/specificSchedule/modify";
     }
 
-    @GetMapping("admin/specificSchedule/modify")
-    public String viewSpecificModifyForm(Model model,
-                                         @ModelAttribute("schedulesForm") MovieAndSchedulesDto dto,
-                                         @ModelAttribute("movies") List<Movie> movies,
-                                         @ModelAttribute("theaters") List<Theater> theaters){
-        Integer screeningSession = scheduleService.getScheduleEntity(dto.getScheduleNumber()).getScreeningSession();
-        model.addAttribute("schedulesForm", dto);
-        model.addAttribute("movies", movies);
-        model.addAttribute("theaters", theaters);
-        model.addAttribute("screeningSession", screeningSession);
-
-        return "/admin/adminSpecificScheduleModify";
-    }
-
-
-
-    //스케쥴 관리 끝
-
-    @GetMapping("/admin/discount-management")
-    public String viewDiscountManagementForm(){
-        return "admin/adminDiscountManagement";
-    }
     @GetMapping("admin/specificSchedule/modify")
     public String viewSpecificModifyForm(Model model,
                                          @ModelAttribute("schedulesForm") MovieAndSchedulesDto dto,
