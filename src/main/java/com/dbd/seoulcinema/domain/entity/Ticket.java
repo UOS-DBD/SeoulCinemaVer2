@@ -31,7 +31,7 @@ public class Ticket extends BaseTimeEntity {
     private String ticketNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "CHAR(3)", nullable = false)
+    @Column(length = 3, nullable = false)
     private TicketingStatus ticketingStatus;
 
     @Column(length = 10, nullable = false)
