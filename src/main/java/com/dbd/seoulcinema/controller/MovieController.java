@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -60,17 +62,24 @@ public class MovieController {
     }
 
     @GetMapping(value = "/admin/movie/detail")
-    public String adminMovieDetail(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
+    public String adminMovieDetail(@RequestParam(value = "movieNumber", required = true) Long movieNumber, Model model, HttpSession session) {
+        boolean loggedIn = (session.getAttribute("adminId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         List<MovieDetailDto> movieDetail = movieService.getMovieDetail(movieNumber);
         model.addAttribute("movie", movieDetail);
+        System.out.println("넘어가라 "+movieDetail.get(0).getMovieNumber());
         return "admin/adminmoviedetail";
     }
 
     @GetMapping(value = "/admin/movie/create")
-    public String adminCreateMoviePage(Model model){ // 페이지 랜더링
+    public String adminCreateMoviePage(Model model, HttpSession session){ // 페이지 랜더링
 //        model.addAttribute("movie", new CreateMovieDto());
 //        List<CreateParticipantDto> createParticipantDtoList = new ArrayList<>();
 //        model.addAttribute("participant", createParticipantDtoList);
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         return "admin/adminmoviecreate";
     }
 
@@ -98,7 +107,7 @@ public class MovieController {
 
         if(movieService.deleteMovie(movieNumber)){
             model.addAttribute("success", "true");
-            return "admin/adminmovie";
+            return "redirect:/admin/adminmovie";
         }
         else{
             model.addAttribute("success", "false");
@@ -107,7 +116,10 @@ public class MovieController {
     }
 
     @GetMapping(value = "/admin/movie/update")
-    public String adminMovieUpdatePage(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
+    public String adminMovieUpdatePage(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber, HttpSession session){
+        boolean loggedIn = (session.getAttribute("adminId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         List<MovieDetailDto> movieDetail = movieService.getMovieDetail(movieNumber);
         System.out.println("길이2: "+movieDetail.size());
         List<MovieGenre> movieGenres = Arrays.asList(MovieGenre.values());
@@ -123,8 +135,10 @@ public class MovieController {
         return "admin/adminmovieupdate";
     }
 
-    @PutMapping(value = "/api/admin/movie/update")
-    public String adminMovieUpdate(Model model, @RequestParam("image") MultipartFile image, @RequestParam("createMovieAndParticipantDto") String createMovieAndParticipantDto,
+    @PostMapping(value = "/api/admin/movie/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String adminMovieUpdate(Model model,
+                                   @RequestPart("image") MultipartFile image,
+                                   @RequestParam("createMovieAndParticipantDto") String createMovieAndParticipantDto,
                                    @RequestParam("movieNumber") Long movieNumber) {
         CreateMovieAndParticipantDto dto = null;
         try {
@@ -138,6 +152,6 @@ public class MovieController {
         if(movieService.updateMovie(image, dto, movieNumber)){
             model.addAttribute("success", "true");
         }
-        return "/admin/movie/detail?movieNumber="+movieNumber;
+        return "redirect:/movie/detail?movieNumber="+movieNumber;
     }
 }

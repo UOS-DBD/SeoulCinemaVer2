@@ -34,7 +34,6 @@ public class LoginController {
 
     @PostMapping(value = "/api/auth/login")
     public RedirectView loginCheck(@ModelAttribute("formData") @Valid LoginDto loginDto, HttpSession session, Model model){
-        System.out.println("this is logincheck");
         String userId = loginService.login(loginDto, session);
 
         if(userId != null){ // 로그인 성공

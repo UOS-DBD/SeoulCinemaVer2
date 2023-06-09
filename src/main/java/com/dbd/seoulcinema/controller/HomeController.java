@@ -50,7 +50,10 @@ public class HomeController {
     }
 
     @GetMapping("/admin/home")
-    public String adminHome(Model model){
+    public String adminHome(Model model, HttpSession session){
+        boolean loggedIn = (session.getAttribute("adminId") != null);
+        model.addAttribute("loggedIn", loggedIn);
+
         List<Movie> movieList = movieService.getAllMovies();
 
         int len = movieList.size();
