@@ -15,7 +15,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "MOVIE")
+@Table(name = "MOVIE" //, indexes = {
+    //@Index(name = "idx_movie_pk", columnList = "movieNumber ASC"),
+    //@Index(name = "idx_movie_name", columnList = "movieName ASC"),
+    //@Index(name = "idx_movie_screening_status", columnList = "screeningStatus ASC")}
+    )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
