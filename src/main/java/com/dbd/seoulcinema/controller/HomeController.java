@@ -1,6 +1,7 @@
 package com.dbd.seoulcinema.controller;
 
 import com.dbd.seoulcinema.domain.entity.Movie;
+import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import com.dbd.seoulcinema.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +30,9 @@ public class HomeController {
         "movieImage": "http://~~~"
     }
  */
-    @GetMapping("/home")
+    @GetMapping(value ={ "/home", "/"})
     public String home(Model model){
-        List<Movie> movieList = movieService.getAllMovies();
+        List<Movie> movieList = movieService.getOnScreenMovies(ScreeningStatus.Y);
 
         int len = movieList.size();
 
@@ -46,7 +48,10 @@ public class HomeController {
     }
 
     @GetMapping("/admin/home")
-    public String adminHome(Model model){
+    public String adminHome(Model model, HttpSession session){
+        boolean loggedIn = (session.getAttribute("adminId") != null);
+        model.addAttribute("loggedIn", loggedIn);
+
         List<Movie> movieList = movieService.getAllMovies();
 
         int len = movieList.size();

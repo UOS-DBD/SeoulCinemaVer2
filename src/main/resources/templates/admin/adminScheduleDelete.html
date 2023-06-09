@@ -48,78 +48,41 @@
         </div>
     </div>
 </header>
-<div class="button-container">
-    <a href="/admin/schedule/create" class="button">상영일정 등록</a>
-    <a href="/admin/schedule/modify" class="button">상영일정 수정</a>
-    <a href="/admin/schedule/delete" class="button">상영일정 삭제</a>
-</div>
-</body>
+<table>
+    <thead>
+    <tr>
+        <th>영화제목</th>
+        <th>상영일</th>
+        <th>상영시작시간</th>
+        <th>상영종료시간</th>
+        <th>관</th>
+        <th>층</th>
+        <th>총좌석</th>
+        <th>선택</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="schedule : ${schedules}">
+        <td th:text="${schedule.movieName}" />
+        <td th:text="${schedule.screeningDate}" />
+        <td th:text="${schedule.screeningStartTime}" />
+        <td th:text="${schedule.screeningEndTime}" />
+        <td th:text="${schedule.theaterNumber}" />
+        <td th:text="${schedule.theaterFloor}" />
+        <td th:text="${schedule.seatQuantity}" />
+        <td>
+            <form th:action="@{/api/admin/schedule/delete/{scheduleNumber}(scheduleNumber=${schedule.scheduleNumber})}" method="post" onclick="showAlert()">
+                <input type="submit" th:value="삭제"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
 
-<style>
-    body {
-        background-color: #f1f1f1;
+<script>
+    function showAlert() {
+        alert("상영일정 삭제가 완료됐습니다!");
     }
-
-    .navbar {
-        background-color: #f8f9fa;
-    }
-
-    .navbar-brand {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .nav-link {
-        font-size: 18px;
-        color: #000;
-    }
-
-    .button-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        margin-top: 50px;
-    }
-
-    .button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 200px;
-        height: 200px;
-        margin: 20px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #fff;
-        background-color: #337ab7;
-        border-radius: 10px;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-        background-color: #23527c;
-    }
-
-    .header {
-        background-color: #343a40;
-        padding: 40px 0;
-        text-align: center;
-    }
-
-    .header h1 {
-        font-size: 48px;
-        font-weight: bold;
-        color: #fff;
-        margin-bottom: 20px;
-    }
-
-    .header p {
-        font-size: 24px;
-        color: #fff;
-        opacity: 0.7;
-    }
-</style>
+</script>

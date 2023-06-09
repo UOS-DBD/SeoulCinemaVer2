@@ -48,78 +48,45 @@
         </div>
     </div>
 </header>
-<div class="button-container">
-    <a href="/admin/schedule/create" class="button">상영일정 등록</a>
-    <a href="/admin/schedule/modify" class="button">상영일정 수정</a>
-    <a href="/admin/schedule/delete" class="button">상영일정 삭제</a>
-</div>
-</body>
+<form th:action="@{/api/admin/schedule/create}" method="post">
+    <div class="form-group">
+        <label for="movie">상영일정을 등록할 영화를 선택해주세요</label>
+        <select name="movieNumber" id="movie" class="form-control">
+            <option th:each="movie : ${movies}" th:value="${movie.movieNumber}" th:text="${movie.movieName}"></option>
+        </select>
+    </div> <br/>
+
+    <div class="form-group">
+        <label for="movie">상영할 상영관을 선택해주세요</label>
+        <select name="theaterNumber" id="theater" class="form-control">
+            <option th:each="theater : ${theaters}" th:value="${theater.theaterNumber}" th:text="${theater.theaterNumber}"></option>
+        </select>
+    </div> <br/>
+
+    <div class="form-group">
+        <label for="screeningDate">상영할 날짜를 선택해주세요: <br/></label> </br>
+        <input type="date" name="screeningDate" id="screeningDate" class="form-control" th:value="${#dates.format(#dates.createNow(),'yyyy-MM-dd')}" th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" />
+    </div> <br/>
+
+    <div class="form-group">
+        <label for="screeningStartTime">시작시간을 선택해주세요: <br/></label> </br>
+        <input type="time" name="screeningStartTime" id="screeningStartTime" class="form-control"/>
+    </div> <br/>
+
+    <div class="form-group">
+        <label for="screeningSession">상영회차를 선택해주세요 <br/></label> </br>
+        <input type="text" name="screeningSession" id="screeningSession" class="form-control"/>
+    </div> <br/>
+
+    <div class="btn-right">
+        <button type="submit" class="btn btn-primary" onclick="showAlert()">등록하기</button>
+    </div>
+</form>
 </body>
 </html>
 
-<style>
-    body {
-        background-color: #f1f1f1;
+<script>
+    function showAlert() {
+        alert("상영일정 등록이 완료됐습니다!");
     }
-
-    .navbar {
-        background-color: #f8f9fa;
-    }
-
-    .navbar-brand {
-        font-size: 24px;
-        font-weight: bold;
-    }
-
-    .nav-link {
-        font-size: 18px;
-        color: #000;
-    }
-
-    .button-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        margin-top: 50px;
-    }
-
-    .button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 200px;
-        height: 200px;
-        margin: 20px;
-        font-size: 18px;
-        font-weight: bold;
-        color: #fff;
-        background-color: #337ab7;
-        border-radius: 10px;
-        text-decoration: none;
-        transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-        background-color: #23527c;
-    }
-
-    .header {
-        background-color: #343a40;
-        padding: 40px 0;
-        text-align: center;
-    }
-
-    .header h1 {
-        font-size: 48px;
-        font-weight: bold;
-        color: #fff;
-        margin-bottom: 20px;
-    }
-
-    .header p {
-        font-size: 24px;
-        color: #fff;
-        opacity: 0.7;
-    }
-</style>
+</script>

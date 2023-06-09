@@ -6,6 +6,7 @@ import com.dbd.seoulcinema.domain.enumeration.ParticipantType;
 import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class MovieDetailDto {
     private Long movieNumber;//
     private String movieName;//

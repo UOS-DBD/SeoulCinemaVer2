@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>Seoul-Cinema</title>
+  <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" th:href="@{/assets/favicon.ico}" />
+  <!-- Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <!-- Core theme CSS (includes Bootstrap)-->
+
+  <!--        테스트용-->
+  <!--    <link href="../static/css/styles.css" rel="stylesheet" />-->
+  <!--        배포용-->
+  <link th:href="@{/css/styles.css}" rel="stylesheet" />
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="#!">Seoul Cinema</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item"><a class="nav-link" href="/admin/movie-management">영화관리</a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin/participant-management">관계자관리</a></li>
+        <li class="nav-item"><a class="nav-link" href="/admin/schedule-management">상영일정관리</a></li>
+        <!--                <li class="nav-item"><a class="nav-link" href="/admin/discount-management">할인관리</a></li>-->
+      </ul>
+      <a class="d-flex">
+        <button class="btn btn-outline-dark" type="submit">
+          <span th:unless="${loggedIn}" class="not-logged-in"><a href="/admin/login">로그인</a></span>
+          <span th:if="${loggedIn}" class="logged-in"><a href="/api/auth/logout">로그아웃</a></span>
+        </button>
+
+      </a>
+    </div>
+  </div>
+</nav>
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">Seoul Cinema 관리자 페이지</h1>
+      <p class="lead fw-normal text-white-50 mb-0">데이터베이스 설계 수업</p>
+    </div>
+  </div>
+</header>
+<table>
+  <thead>
+  <tr>
+    <th>영화제목</th>
+    <th>상영일</th>
+    <th>상영시작시간</th>
+    <th>상영종료시간</th>
+    <th>관</th>
+    <th>층</th>
+    <th>총좌석</th>
+    <th>수정</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="schedule : ${schedules}">
+    <td th:text="${schedule.movieName}" />
+    <td th:text="${schedule.screeningDate}" />
+    <td th:text="${schedule.screeningStartTime}" />
+    <td th:text="${schedule.screeningEndTime}" />
+    <td th:text="${schedule.theaterNumber}" />
+    <td th:text="${schedule.theaterFloor}" />
+    <td th:text="${schedule.seatQuantity}" />
+    <td>
+      <form th:action="@{/api/admin/schedule/modify/{scheduleNumber}(scheduleNumber=${schedule.scheduleNumber})}" method="post">
+        <input type="submit" th:value="수정하기"/>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
