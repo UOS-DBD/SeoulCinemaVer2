@@ -13,6 +13,8 @@ public class CreateTicketVo {
 
     private String cardNumber4;
 
+    private String cardNumber10;
+
     private String discountType;
 
     private Integer point;

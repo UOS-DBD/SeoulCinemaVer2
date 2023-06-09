@@ -107,7 +107,7 @@ public class AdminController {
                                         @RequestParam String screeningDate,
                                         @RequestParam String screeningStartTime,
                                         @RequestParam String screeningSession){
-        //TODO: 스케쥴 만들어서 저장
+
         String runningTime = movieService.getMovie(movieNumber).getRunningTime();
         ScreeningTimeDto screeningTimeDto = adminService.makeScheduleDto(screeningDate, runningTime, screeningStartTime, screeningSession, theaterNumber);
         adminService.createSchedule(movieNumber, theaterNumber, screeningTimeDto);

@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum MovieGrade implements CommonDescCode {
 
-    ALL("일반", "01"),
+    ALL("전체", "01"),
     TWELVE("12세", "02"),
     FIFTEEN("15세", "03"),
     ADULT("18세", "04");
