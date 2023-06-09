@@ -1,6 +1,10 @@
 package com.dbd.seoulcinema.service;
 
 import com.dbd.seoulcinema.domain.entity.Participant;
+import com.dbd.seoulcinema.domain.entity.ParticipantMovie;
+import com.dbd.seoulcinema.dto.CreateParticipantDto;
+import com.dbd.seoulcinema.dto.ViewParticipantListDto;
+import com.dbd.seoulcinema.repository.ParticipantMovieRepositorty;
 import com.dbd.seoulcinema.dto.CreateParticipantDto;
 import com.dbd.seoulcinema.dto.ViewParticipantListDto;
 import com.dbd.seoulcinema.repository.ParticipantRepository;
@@ -17,6 +21,7 @@ public class ParticipantService {
 
 
     private final ParticipantRepository participantRepository;
+    private final ParticipantMovieRepositorty participantMovieRepository;
 
     @Transactional
     public void createParticipant(CreateParticipantDto dto){
@@ -50,8 +55,15 @@ public class ParticipantService {
     }
 
     @Transactional
-    public void deleteParticipant(Long participantNumber){
+    public boolean deleteParticipant(Long participantNumber){
         Participant participant = participantRepository.findById(participantNumber).get();
-        participantRepository.delete(participant);
+        List<ParticipantMovie> participantMovies = participantMovieRepository.findByParticipantNumber(participant);
+        if(participantMovies.isEmpty()){ // 삭제 불가
+            participantRepository.delete(participant);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
