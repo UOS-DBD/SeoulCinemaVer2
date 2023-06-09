@@ -101,18 +101,21 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Seoul Cinema</a>
+        <a class="navbar-brand" href="/admin/home">Seoul Cinema</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link" href="#!">영화</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">예매</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">이벤트</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin/movie-management">영화관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin/participant-management">관계자관리</a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin/schedule-management">상영일정관리</a></li>
+                <!--                <li class="nav-item"><a class="nav-link" href="/admin/discount-management">할인관리</a></li>-->
             </ul>
             <a class="d-flex">
                 <button class="btn btn-outline-dark" type="submit">
-                    로그인
+                    <span th:unless="${loggedIn}" class="not-logged-in"><a href="/admin/login">로그인</a></span>
+                    <span th:if="${loggedIn}" class="logged-in"><a href="/api/admin/auth/logout">로그아웃</a></span>
                 </button>
+
             </a>
         </div>
     </div>
@@ -121,15 +124,17 @@
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">Seoul Cinema</h1>
+            <h1 class="display-4 fw-bolder">Seoul Cinema 관리자 페이지</h1>
             <p class="lead fw-normal text-white-50 mb-0">데이터베이스 설계 수업</p>
         </div>
     </div>
 </header>
 <!-- Section-->
 <section class="py-5">
-    <button type="button" class="updatemovie" th:onclick="|location.href='@{/admin/movie/update}'|">수정</button>
-    <button onclick="deleteMovie()">삭제</button>
+    <div th:with="movieNumber=${movie[0]}">
+        <button type="button" class="updatemovie" th:onclick="|location.href='@{/admin/movie/update(movieNumber=${movieNumber.movieNumber})}'|">수정</button>
+        <button type="button" class="updatemovie" th:onclick="|location.href='@{/api/admin/movie/delete(movieNumber=${movieNumber.movieNumber})}'|">삭제</button>
+    </div>
     <script>
     function deleteMovie() {
                 // 현재 페이지의 URL 가져오기
@@ -154,7 +159,7 @@
                 var movieNumber1 = params['movieNumber'];
 
                 fetch('/api/admin/movie/delete', {
-                  method: 'DELETE',
+                  method: 'POST',
                   headers: {
                     'Content-Type': 'application/json'
                   },
@@ -168,29 +173,45 @@
                       console.log('영화 삭제 성공');
                       console.log(movieNumber1);
                       // 필요한 경우 페이지 리로드 또는 다른 동작 수행
-                    } else {
+
+                      return fetch('/admin/movie', {
+                          method: 'get'
+                        });
+                    }
+                     else {
                       // 요청이 실패했을 때의 동작
                       console.log(movieNumber1);
                       console.error('영화 삭제 실패');
                     }
                   })
+                  .then(response => {
+                        if (response.ok) {
+                          // 성공
+                          console.log("랜더링 성공");
+                        }
+                        else{
+                            console.log("랜더링 실패");
+                        }
+                      })
                   .catch(error => {
                     // 에러 처리
                     console.log(movieNumber1);
                     console.error('네트워크 오류:', error);
                   });
+
+
           }
     </script>
     <div class="col">
-        <div th:with="movie=${movie[0]}">
-            <img class="card-img-top" th:src = "@{/static}+${movie.movieImage}" alt="..." />
-            <h1 class="text-body-emphasis" th:text="${'영화이름: '+movie.movieName}">movieName</h1>
-            <p class="fs-5 col-md-8" th:text="${'영화소개: '+movie.movieIntroduction}">movieIntroduction</p>
+        <div th:with="movie1=${movie[0]}">
+            <img class="card-img-top" th:src = "@{/}+${movie1.movieImage}" alt="..." />
+            <h1 class="text-body-emphasis" th:text="${'영화이름: '+movie1.movieName}">movieName</h1>
+            <p class="fs-5 col-md-8" th:text="${'영화소개: '+movie1.movieIntroduction}">movieIntroduction</p>
             <hr class="col-3 col-md-2 mb-5">
         </div>
 
         <div class="row g-5">
-            <div class="col-md-6" th:with="movie=${movie[0]}">
+            <div class="col-md-6" th:with="movie2=${movie[0]}">
                 <h2 class="text-body-emphasis">영화 정보</h2>
                 <!--                <p>Ready to beyond the starter template? Check out these open source projects that you can quickly duplicate to a new GitHub repository.</p>-->
                 <ul class="list-unstyled ps-0">
@@ -202,28 +223,28 @@
                         <!--                        </a>-->
                     </li>
                     <li>
-                        <p th:text="${'영화장르: '+movie.movieGenre}">영화 장르</p>
+                        <p th:text="${'영화장르: '+movie2.movieGenre}">영화 장르</p>
                         <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/parcel" rel="noopener" target="_blank">-->
                         <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
                         <!--                            Bootstrap Parcel starter-->
                         <!--                        </a>-->
                     </li>
                     <li>
-                        <p th:text="${'연령가: '+movie.movieGrade}">연령가</p>
+                        <p th:text="${'연령가: '+movie2.movieGrade}">연령가</p>
                         <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/vite" rel="noopener" target="_blank">-->
                         <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
                         <!--                            Bootstrap Vite starter-->
                         <!--                        </a>-->
                     </li>
                     <li>
-                        <p th:text="${'상영시간: '+movie.runningTime}">상영 시간</p>
+                        <p th:text="${'상영시간: '+movie2.runningTime}">상영 시간</p>
                         <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
                         <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
                         <!--                            Bootstrap Webpack starter-->
                         <!--                        </a>-->
                     </li>
                     <li>
-                        <p th:text="${'상영여부: '+movie.screeningStatus}">상영 여부</p>
+                        <p th:text="${'상영여부: '+movie2.screeningStatus}">상영 여부</p>
                         <!--                        <a class="icon-link mb-1" href="https://github.com/twbs/examples/tree/main/webpack" rel="noopener" target="_blank">-->
                         <!--                            <svg class="bi" width="16" height="16"><use xlink:href="#arrow-right-circle"/></svg>-->
                         <!--                            Bootstrap Webpack starter-->

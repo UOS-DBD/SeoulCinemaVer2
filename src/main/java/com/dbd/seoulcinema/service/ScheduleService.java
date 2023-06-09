@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -44,8 +45,23 @@ public class ScheduleService {
         return scheduleRepository.findAllMovieSchedules();
     }
 
-    public void deleteSchedule(String scheduleNumber){
-        scheduleRepository.deleteById(scheduleNumber);
+    @Transactional
+    public boolean deleteSchedule(String scheduleNumber){
+        Optional<Schedule> schedule = scheduleRepository.findById(scheduleNumber);
+
+        if (schedule.isEmpty()){
+            return false;
+        }
+        else{
+            List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleNumber(schedule.get());
+            if(schedule.isEmpty()){
+                scheduleRepository.deleteById(scheduleNumber);
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
     public Schedule getScheduleEntity(String scheduleNumber){
         return scheduleRepository.findById(scheduleNumber).get();
@@ -104,7 +120,6 @@ public class ScheduleService {
             LocalDateTime createdDate = scheduleSeat.getCreatedDate();
             Duration elapsed = Duration.between(createdDate, LocalDateTime.now());
             Duration fiveMinutes = Duration.ofMinutes(5);
-
             if (elapsed.compareTo(fiveMinutes) >= 0) {
                 scheduleSeatRepository.delete(scheduleSeat);
             }

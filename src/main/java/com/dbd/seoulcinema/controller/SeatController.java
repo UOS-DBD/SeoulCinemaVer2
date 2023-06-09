@@ -26,11 +26,12 @@ public class SeatController {
         List<ScheduleSeat> selectedSeatList = new ArrayList<>();
 
         String scheduleNumber = (String) session.getAttribute("scheduleNumber");
+        String theaterNumber = (String) session.getAttribute("theaterNumber");
 
         //selectedSeat 저장 후 id 리스트에 삽입
         //스케쥴넘버, 싯넘버 필요
         for (String selectedSeat : selectedSeats) {
-            ScheduleSeat scheduleSeat = seatService.saveSelectedSeat(selectedSeat, scheduleNumber);
+            ScheduleSeat scheduleSeat = seatService.saveSelectedSeat(selectedSeat, scheduleNumber, theaterNumber);
             selectedSeatList.add(scheduleSeat);
         }
 

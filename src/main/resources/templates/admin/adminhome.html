@@ -23,18 +23,19 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">Seoul Cinema</a>
+        <a class="navbar-brand" href="/admin/home">Seoul Cinema</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link" href="/admin/movie-management">영화관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin/participant-management">관계자관리</a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin/schedule-management">상영일정관리</a></li>
-                <li class="nav-item"><a class="nav-link" href="/admin/discount-management">할인관리</a></li>
+<!--                <li class="nav-item"><a class="nav-link" href="/admin/discount-management">할인관리</a></li>-->
             </ul>
             <a class="d-flex">
                 <button class="btn btn-outline-dark" type="submit">
-                    로그인
+                    <span th:unless="${loggedIn}" class="not-logged-in"><a href="/admin/login">로그인</a></span>
+                    <span th:if="${loggedIn}" class="logged-in"><a href="/api/admin/auth/logout">로그아웃</a></span>
                 </button>
             </a>
         </div>
@@ -54,7 +55,7 @@
     <a href="/admin/movie-management" class="button">영화 관리</a>
     <a href="/admin/participant-management" class="button">관계자 관리</a>
     <a href="/admin/schedule-management" class="button">상영일정 관리</a>
-    <a href="/admin/discount-management" class="button">할인 관리</a>
+<!--    <a href="/admin/discount-management" class="button">할인 관리</a>-->
 </div>
 </body>
 
@@ -77,10 +78,7 @@
         background-color: #f8f9fa;
     }
 
-    .navbar-brand {
-        font-size: 24px;
-        font-weight: bold;
-    }
+
 
     .nav-link {
         font-size: 18px;

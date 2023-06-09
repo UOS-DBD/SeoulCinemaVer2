@@ -3,6 +3,7 @@ package com.dbd.seoulcinema.controller;
 import com.dbd.seoulcinema.domain.entity.Movie;
 import com.dbd.seoulcinema.domain.entity.Schedule;
 import com.dbd.seoulcinema.domain.entity.Seat;
+import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.dto.ViewSchedulesFormDto;
 import com.dbd.seoulcinema.service.MovieService;
@@ -32,16 +33,22 @@ public class ScheduleController {
 
 
     @GetMapping("/schedules")
-    public String showSchedulesForm(Model model){
-        List<Movie> movies = movieService.getAllMovies();
+    public String showSchedulesForm(Model model, HttpSession session){
+        List<Movie> movies = movieService.getOnScreenMovies(ScreeningStatus.Y);
         model.addAttribute("movies", movies);
         model.addAttribute("date", "");
-        //TODO: 이 페이지에서 영화 장르, 등급 띄워주기
+
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         return "schedule";
     }
 
     @GetMapping("/viewSchedulesForm")
-    public String selectMovieAndScheduleForm(Model model, @ModelAttribute("schedulesForm")List<ViewSchedulesFormDto> viewSchedulesFormDtos){
+    public String selectMovieAndScheduleForm(Model model, HttpSession session, @ModelAttribute("schedulesForm")List<ViewSchedulesFormDto> viewSchedulesFormDtos){
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("viewSchedulesForms", viewSchedulesFormDtos);
         return "viewSchedulesForm";
     }
@@ -64,11 +71,17 @@ public class ScheduleController {
                 scheduleSeats.add(seatService.makeSeatFormat(seat));
             }
         }
+
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("scheduleSeats", scheduleSeats);
 
         model.addAttribute("scheduleForm", scheduleForm);
         model.addAttribute("seats", seats);
+
         session.setAttribute("scheduleNumber", scheduleNumber);
+        session.setAttribute("theaterNumber", scheduleForm.getTheaterNumber());
 
         /*
 

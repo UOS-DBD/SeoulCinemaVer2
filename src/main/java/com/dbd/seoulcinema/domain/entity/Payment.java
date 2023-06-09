@@ -23,14 +23,14 @@ public class Payment {
     @Column(length = 36)
     private String paymentNumber;
 
-
+    @Column(nullable = false)
     private Integer paymentPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TICKET_NUMBER")
+    @JoinColumn(name = "TICKET_NUMBER", nullable = false)
     private Ticket ticket;
 
-
+    @Column(nullable = false)
     private LocalDate paymentDate;
 
     @Column(length = 14)
@@ -41,44 +41,40 @@ public class Payment {
 
 
     @Convert(converter = PaymentTypeConverter.class)
+    @Column(columnDefinition = "CHAR(2)", nullable = false)
     private PaymentType paymentType;
 
-//    @Enumerated(EnumType.STRING)
-//    private PaymentStatus paymentStatus;
-
     @ColumnDefault("0")
+    @Column(nullable = false)
     private Integer paymentPoint;
 
-    public static Payment makePaymentCard(CreateTicketFinalVo vo, Ticket ticket, PaymentType paymentType) {
+    public static Payment makePaymentCard(CreateTicketFinalVo vo, Ticket ticket,
+        PaymentType paymentType) {
         return Payment.builder()
-                .paymentNumber(UUID.randomUUID().toString())
-                .paymentPrice(vo.getTotalPrice())
-                .ticket(ticket)
-                .paymentDate(LocalDate.now())
-                .bankName(vo.getBankName())
-                .paymentApproveNumber(UUID.randomUUID().toString())
-                .paymentType(paymentType)
-               // .paymentStatus(PaymentStatus.YES)
-                .paymentPoint(vo.getPoint())
-                .bankName(null)
-                .build();
+            .paymentNumber(UUID.randomUUID().toString())
+            .paymentPrice(vo.getTotalPrice())
+            .ticket(ticket)
+            .paymentDate(LocalDate.now())
+            .bankName(vo.getBankName())
+            .paymentApproveNumber(UUID.randomUUID().toString())
+            .paymentType(paymentType)
+            .paymentPoint(vo.getPoint())
+            .bankName(null)
+            .build();
     }
 
-    public static Payment makePayment(CreateTicketFinalVo vo, Ticket ticket, PaymentType paymentType) {
+    public static Payment makePayment(CreateTicketFinalVo vo, Ticket ticket,
+        PaymentType paymentType) {
         return Payment.builder()
-                .paymentNumber(UUID.randomUUID().toString())
-                .paymentPrice(vo.getTotalPrice())
-                .ticket(ticket)
-                .paymentDate(LocalDate.now())
-                .bankName(vo.getBankName())
-                .paymentType(paymentType)
-               // .paymentStatus(PaymentStatus.YES)
-                .paymentPoint(vo.getPoint())
-                .bankName(vo.getBankName())
-                .build();
+            .paymentNumber(UUID.randomUUID().toString())
+            .paymentPrice(vo.getTotalPrice())
+            .ticket(ticket)
+            .paymentDate(LocalDate.now())
+            .bankName(vo.getBankName())
+            .paymentType(paymentType)
+            .paymentPoint(vo.getPoint())
+            .bankName(vo.getBankName())
+            .build();
     }
 
-//    public void changeStatusWhenCancel(){
-//        this.paymentStatus=PaymentStatus.NO;
-//    }
 }
