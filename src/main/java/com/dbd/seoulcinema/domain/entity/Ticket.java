@@ -16,7 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "TICKET")
+@Table(name = "TICKET", indexes = {
+    @Index(name = "idx_ticket_member",columnList = "MEMBER_NUMBER ASC"),
+    @Index(name = "Idx_ticket_nonmember", columnList = "NONMEMBER_NUMBER ASC")
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder

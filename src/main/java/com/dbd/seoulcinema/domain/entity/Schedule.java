@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -24,7 +25,11 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "SCHEDULE")
+@Table(name = "SCHEDULE", indexes = {
+    @Index(name = "idx_shedule_date", columnList = "screeningDate ASC", unique = false),
+    @Index(name = "idx_schedule_time",columnList = "screeningStartTime ASC", unique = false),
+    @Index(name = "idx_schedule_movie", columnList = "MOVIE_NUMBER ASC")
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
