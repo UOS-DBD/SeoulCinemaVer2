@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -101,17 +102,18 @@ public class MovieController {
         return "admin/adminmovie";
     }
 
-    @DeleteMapping(value = "/api/admin/movie/delete")
-    public String adminDeleteMovie(Model model, @RequestBody DeleteMovieDto deleteMovieDto){
-        Long movieNumber = Long.parseLong(deleteMovieDto.getMovieNumber());
+    @GetMapping(value = "/api/admin/movie/delete")
+    public String adminDeleteMovie(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
 
         if(movieService.deleteMovie(movieNumber)){
             model.addAttribute("success", "true");
-            return "redirect:/admin/adminmovie";
+            System.out.println("delete success");
+            return "redirect:/admin/movie";
         }
         else{
             model.addAttribute("success", "false");
-            return "/admin/movie/detail?movieNumber="+movieNumber;
+            System.out.println("delete failed");
+            return "redirect:/admin/movie/detail?movieNumber="+movieNumber;
         }
     }
 
@@ -135,16 +137,15 @@ public class MovieController {
         return "admin/adminmovieupdate";
     }
 
-    @PostMapping(value = "/api/admin/movie/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String adminMovieUpdate(Model model,
-                                   @RequestPart("image") MultipartFile image,
+    @PostMapping(value = "/api/admin/movie/update")
+    public String adminMovieUpdate(Model model, @RequestParam("image") MultipartFile image,
                                    @RequestParam("createMovieAndParticipantDto") String createMovieAndParticipantDto,
                                    @RequestParam("movieNumber") Long movieNumber) {
         CreateMovieAndParticipantDto dto = null;
         try {
             dto = objectMapper.readValue(createMovieAndParticipantDto, CreateMovieAndParticipantDto.class);
             // createMovieAndParticipantDto를 처리하는 로직을 구현합니다.
-            // ...
+            // …
         } catch (JsonProcessingException e) {
             // JSON 파싱 오류 처리
             e.printStackTrace();
@@ -152,6 +153,6 @@ public class MovieController {
         if(movieService.updateMovie(image, dto, movieNumber)){
             model.addAttribute("success", "true");
         }
-        return "redirect:/movie/detail?movieNumber="+movieNumber;
+        return "redirect:/admin/movie/detail?movieNumber="+movieNumber;
     }
 }
