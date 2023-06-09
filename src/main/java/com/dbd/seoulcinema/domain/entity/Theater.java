@@ -27,7 +27,7 @@ public class Theater {
     private String theaterFloor;
 
 
-    @Column(columnDefinition = "NUMBER(3,0)", nullable = false)
+    @Column(columnDefinition = "NUMBER(3)", nullable = false)
     @ColumnDefault("0")
     private Long seatQuantity;
 

@@ -12,10 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "PARTICIPANT" //, indexes = {
-    //@Index(name = "idx_participant_pk", columnList = "participantNUmber ASC")
-//}
-)
+@Table(name = "PARTICIPANT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder

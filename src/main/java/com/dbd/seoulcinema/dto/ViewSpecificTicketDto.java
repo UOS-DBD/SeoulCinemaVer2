@@ -12,9 +12,9 @@ public class ViewSpecificTicketDto {
     private String movieImg;
 
     private String movieName;
-    private LocalDateTime screeningStartTime;
+    private String screeningStartTime;
 
-    private LocalDateTime screeningEndTime;
+    private String screeningEndTime;
 
     private LocalDate screeningDate;
 

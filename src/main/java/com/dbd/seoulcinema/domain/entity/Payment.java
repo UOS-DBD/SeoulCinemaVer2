@@ -12,7 +12,10 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "PAYMENT")
+@Table(name = "PAYMENT", indexes = {
+    @Index(name = "idx_payment_ticket", columnList = "TICKET_NUMBER ASC"),
+    @Index(name = "idx_payment_date", columnList = "paymentDate ASC", unique = false)
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
