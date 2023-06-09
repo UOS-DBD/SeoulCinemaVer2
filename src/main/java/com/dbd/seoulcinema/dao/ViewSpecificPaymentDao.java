@@ -1,5 +1,6 @@
 package com.dbd.seoulcinema.dao;
 
+import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +19,9 @@ public class ViewSpecificPaymentDao {
 
     private String ticketNumber;
 
-    private LocalDateTime screeningStartTime;
+    private String screeningStartTime;
 
-    private LocalDateTime screeningEndTime;
+    private String screeningEndTime;
 
     private LocalDate screeningDate;
 
@@ -33,4 +34,21 @@ public class ViewSpecificPaymentDao {
     private Integer paymentPoint;
 
     private String bankName;
+
+    public ViewSpecificPaymentDao(String movieImg, String movieName, String ticketNumber,
+        LocalDateTime screeningStartTime, LocalDateTime screeningEndTime, LocalDate screeningDate,
+        String theaterFloor, Integer standardPrice, Integer totalPrice, Integer paymentPoint,
+        String bankName) {
+        this.movieImg = movieImg;
+        this.movieName = movieName;
+        this.ticketNumber = ticketNumber;
+        this.screeningStartTime = screeningStartTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        this.screeningEndTime = screeningEndTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        this.screeningDate = screeningDate;
+        this.theaterFloor = theaterFloor;
+        this.standardPrice = standardPrice;
+        this.totalPrice = totalPrice;
+        this.paymentPoint = paymentPoint;
+        this.bankName = bankName;
+    }
 }

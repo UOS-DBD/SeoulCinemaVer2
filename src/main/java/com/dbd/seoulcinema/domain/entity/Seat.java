@@ -11,7 +11,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "SEAT")
+@Table(name = "SEAT", indexes = {
+    @Index(name = "idx_seat_theater", columnList = "THEATER_NUMBER ASC")
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder

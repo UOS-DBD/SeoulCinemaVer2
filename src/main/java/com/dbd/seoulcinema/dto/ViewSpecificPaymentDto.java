@@ -18,9 +18,9 @@ public class ViewSpecificPaymentDto {
 
     private String ticketNumber;
 
-    private LocalDateTime screeningStartTime;
+    private String screeningStartTime;
 
-    private LocalDateTime screeningEndTime;
+    private String screeningEndTime;
 
     private LocalDate screeningDate;
 
