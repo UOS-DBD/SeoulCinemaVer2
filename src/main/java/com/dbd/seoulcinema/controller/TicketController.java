@@ -135,6 +135,6 @@ public class TicketController {
     @PostMapping("/tickets/{ticketNumber}")
     public String cancelTicket(@PathVariable String ticketNumber) {
         ticketService.cancelTicket(ticketNumber);
-        return "/home";
+        return "redirect:/api/payments";
     }
 }

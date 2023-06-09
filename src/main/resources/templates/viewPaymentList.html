@@ -94,11 +94,14 @@
     <tbody>
     <tr th:each="ViewPaymentListDto : ${payments}">
       <td >
-        <a th:if="${ViewPaymentListDto.paymentStatus.toString().equals('YES')}"
+        <a th:block th:if="${ViewPaymentListDto.paymentStatus.toString().equals('YES')}"
              th:href="@{/api/payments/detail/{paymentNumber}(paymentNumber=${ViewPaymentListDto.getPaymentNumber()})}"
-             th:text="${ViewPaymentListDto.getPaymentNumber()}"></a>
-        <a th:unless="${ViewPaymentListDto.paymentStatus.toString().equals('NO')}"
-           th:text="${ViewPaymentListDto.getPaymentNumber()}"></a>
+           th:text="${ViewPaymentListDto.getPaymentNumber()}">
+        </a>
+        <a th:block th:if="${ViewPaymentListDto.paymentStatus.toString().equals('NO')}"
+           th:text="${ViewPaymentListDto.getPaymentNumber()}">
+
+        </a>
       </td>
       <td style="padding: 20px" th:text="${ViewPaymentListDto.getScreeningDate()}"/>
       <td style="padding: 20px" th:text="${ViewPaymentListDto.getMovieName()}"/>
