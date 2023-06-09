@@ -33,20 +33,33 @@ public class MovieController {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @GetMapping(value = "/movie")
-    public String movieList(Model model){
+    public String movieList(Model model, HttpSession session){
         List<Movie> movieList = movieService.getAllMovies();
+        boolean loggedIn = (session.getAttribute("userId") != null);
 
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("movies", movieList);
         return "movie";
     }
 
     @GetMapping(value = "/movie/detail")
-    public String movieDetail(Model model, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
+    public String movieDetail(Model model, HttpSession session, @RequestParam(value = "movieNumber", required = true) Long movieNumber){
         List<MovieDetailDto> movieDetail = movieService.getMovieDetail(movieNumber);
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
+
         model.addAttribute("movie", movieDetail);
         return "moviedetail";
     }
 
+    @GetMapping(value = "/admin/movie")
+    public String adminMovieList(Model model){
+        List<Movie> movieList = movieService.getAllMovies();
+
+        model.addAttribute("movies", movieList);
+        return "admin/adminmovie";
+    }
 
     @GetMapping(value = "/admin/movie/detail")
     public String adminMovieDetail(@RequestParam(value = "movieNumber", required = true) Long movieNumber, Model model, HttpSession session) {
@@ -98,7 +111,7 @@ public class MovieController {
         }
         else{
             model.addAttribute("success", "false");
-            return "redirect:/admin/movie/detail?movieNumber="+movieNumber;
+            return "/admin/movie/detail?movieNumber="+movieNumber;
         }
     }
 
@@ -108,6 +121,7 @@ public class MovieController {
 
         model.addAttribute("loggedIn", loggedIn);
         List<MovieDetailDto> movieDetail = movieService.getMovieDetail(movieNumber);
+        System.out.println("길이2: "+movieDetail.size());
         List<MovieGenre> movieGenres = Arrays.asList(MovieGenre.values());
         List<MovieGrade> movieGrades = Arrays.asList(MovieGrade.values());
         List<ScreeningStatus> screeningStatuses = Arrays.asList(ScreeningStatus.values());
@@ -140,5 +154,4 @@ public class MovieController {
         }
         return "redirect:/movie/detail?movieNumber="+movieNumber;
     }
-
 }

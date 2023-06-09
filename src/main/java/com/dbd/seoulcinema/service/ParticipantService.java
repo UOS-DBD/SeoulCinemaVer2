@@ -5,6 +5,8 @@ import com.dbd.seoulcinema.domain.entity.ParticipantMovie;
 import com.dbd.seoulcinema.dto.CreateParticipantDto;
 import com.dbd.seoulcinema.dto.ViewParticipantListDto;
 import com.dbd.seoulcinema.repository.ParticipantMovieRepositorty;
+import com.dbd.seoulcinema.dto.CreateParticipantDto;
+import com.dbd.seoulcinema.dto.ViewParticipantListDto;
 import com.dbd.seoulcinema.repository.ParticipantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

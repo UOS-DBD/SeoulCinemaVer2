@@ -22,9 +22,13 @@ public class LoginController {
     private final LoginService loginService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model){
+    public String login(Model model, HttpSession session){
         model.addAttribute("formData", new LoginDto());
         model.addAttribute("signup", new CreateMemberDto());
+
+        boolean loggedIn = (session.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         return "login";
     }
 
@@ -46,11 +50,11 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/api/auth/logout")
+    @GetMapping("/api/auth/logout")
     public String logout(Model model, HttpSession session){
         loginService.logout(session);
         model.addAttribute("success", "true");
-        return "home";
+        return "redirect:/home";
     }
 
     // admin
