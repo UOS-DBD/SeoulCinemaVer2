@@ -52,7 +52,6 @@ public class MovieService {
     @Transactional
     public List<MovieDetailDto> getMovieDetail(Long movieNumber) {
         List<MovieDetailDto> movieDetail = movieRepository.findMovieDetail(movieNumber);
-        System.out.println("길이1: "+movieDetail.size());
         if(movieDetail.isEmpty()){
             return null;
         }
@@ -64,8 +63,8 @@ public class MovieService {
     @Transactional
     public void craeteMovie(MultipartFile image, CreateMovieAndParticipantDto createMovieAndParticipantDto)  {
         String fileName = image.getOriginalFilename();
-        Path imagePath = Path.of("src/main/resources/static/img/" + fileName); // 이미지를 저장할 경로
-        System.out.println("IMAGE START");
+        Path imagePath = Path.of("src/main/resources/static/assets/img/" + fileName); // 이미지를 저장할 경로
+
         try {
             // 이미지 파일을 지정된 경로로 복사합니다.
             InputStream inputStream = image.getInputStream();
@@ -75,7 +74,7 @@ public class MovieService {
             e.printStackTrace();
             // 파일 복사 실패 처리
         }
-        System.out.println("IMAGE END");
+
         CreateMovieDto createMovieDto = createMovieAndParticipantDto.getCreateMovieDto();
         List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
 
@@ -107,7 +106,6 @@ public class MovieService {
                     .participantNumber(participant).build());
             participantMovieRepositorty.flush();
         }
-        System.out.println("service end");
     }
 
     @Transactional
@@ -126,6 +124,18 @@ public class MovieService {
 
     @Transactional
     public boolean updateMovie(MultipartFile image, CreateMovieAndParticipantDto createMovieAndParticipantDto, Long movieNumber) {
+        String fileName = image.getOriginalFilename();
+        Path imagePath = Path.of("src/main/resources/static/assets/img/" + fileName); // 이미지를 저장할 경로
+        try {
+            // 이미지 파일을 지정된 경로로 복사합니다.
+            InputStream inputStream = image.getInputStream();
+            Files.copy(inputStream, imagePath, StandardCopyOption.REPLACE_EXISTING);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // 파일 복사 실패 처리
+        }
+
         Optional<Movie> movie = movieRepository.findById(movieNumber);
         CreateMovieDto createMovieDto = createMovieAndParticipantDto.getCreateMovieDto();
         List<CreateParticipantDto> createParticipantDtoList = createMovieAndParticipantDto.getCreateParticipantDto();
