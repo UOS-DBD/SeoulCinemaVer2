@@ -42,9 +42,9 @@ public class ParticipantController {
     public String createParticipant(@ModelAttribute CreateParticipantDto createParticipantDto, HttpSession session, Model model){
         boolean loggedIn = (session.getAttribute("adminId") != null);
 
-        model.addAttribute("loggedIn", loggedIn);
+        model.addAttribute( "loggedIn", loggedIn);
         participantService.createParticipant(createParticipantDto);
-        return "/admin/participant-management";
+        return "redirect:/admin/participant-management";
     }
 
     @PostMapping("/admin/participants-put/{participantNumber}")
