@@ -25,7 +25,7 @@ public class Seat {
     @Column(columnDefinition = "CHAR(1)", nullable = false)
     private String rowNumber;
 
-    @Column(columnDefinition = "CHAR(2)", nullable = false)
+    @Column(length = 2, nullable = false)
     private String colNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)

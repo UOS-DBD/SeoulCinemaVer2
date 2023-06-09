@@ -26,14 +26,13 @@ public class Member {
     @Column(columnDefinition = "CHAR(11)")
     private String phoneNumber;
 
-    @Column(columnDefinition = "NUMBER(10,0)", nullable = false)
+    @Column(columnDefinition = "NUMBER(10)", nullable = false)
     @ColumnDefault("0")
     private Long point;
 
 
     @Convert(converter = ClientGradeConverter.class)
-    @Column(columnDefinition = "CHAR(6)", nullable = false)
-    //clientGrade > clientGradeCode로 변수명 수정함
+    @Column(columnDefinition = "CHAR(2)", nullable = false)
     private ClientGrade clientGrade;
 
     @Column(columnDefinition = "DATE", nullable = false)

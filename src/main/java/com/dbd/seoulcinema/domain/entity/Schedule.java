@@ -32,7 +32,7 @@ import org.hibernate.annotations.ColumnDefault;
 public class Schedule {
 
     @Id
-    @Column(length = 11)
+    @Column(length = 10)
     private String scheduleNumber;
 
     @Column(columnDefinition = "DATE")
@@ -45,8 +45,8 @@ public class Schedule {
     private LocalDate screeningDate;
 
 
-    @Column(columnDefinition = "NUMBER(2,0)", nullable = false)
-    @ColumnDefault("0")
+    @Column(columnDefinition = "NUMBER(2)")
+    @ColumnDefault("1")
     private Integer screeningSession;
 
     @ManyToOne(fetch = FetchType.LAZY)

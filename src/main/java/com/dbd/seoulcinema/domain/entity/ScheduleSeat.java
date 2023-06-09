@@ -28,7 +28,7 @@ public class ScheduleSeat extends BaseTimeEntity {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCHEDULE_NUMBER",columnDefinition = "VARCHAR2(11 CHAR)")
+    @JoinColumn(name = "SCHEDULE_NUMBER",columnDefinition = "VARCHAR2(10 CHAR)")
     private Schedule scheduleNumber;
 
     @Column(columnDefinition = "CHAR(3)", nullable = false)

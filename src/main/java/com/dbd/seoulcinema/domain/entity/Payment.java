@@ -41,8 +41,7 @@ public class Payment {
 
 
     @Convert(converter = PaymentTypeConverter.class)
-    @Column(columnDefinition = "CHAR(7)", nullable = false)
-    //paymentType > paymetTypeCode로 수정함
+    @Column(columnDefinition = "CHAR(2)", nullable = false)
     private PaymentType paymentType;
 
     @ColumnDefault("0")
