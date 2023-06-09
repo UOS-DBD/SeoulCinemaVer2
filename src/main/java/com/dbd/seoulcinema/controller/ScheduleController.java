@@ -3,6 +3,7 @@ package com.dbd.seoulcinema.controller;
 import com.dbd.seoulcinema.domain.entity.Movie;
 import com.dbd.seoulcinema.domain.entity.Schedule;
 import com.dbd.seoulcinema.domain.entity.Seat;
+import com.dbd.seoulcinema.domain.enumeration.ScreeningStatus;
 import com.dbd.seoulcinema.dto.MovieAndSchedulesDto;
 import com.dbd.seoulcinema.dto.ViewSchedulesFormDto;
 import com.dbd.seoulcinema.service.MovieService;
@@ -33,14 +34,13 @@ public class ScheduleController {
 
     @GetMapping("/schedules")
     public String showSchedulesForm(Model model, HttpSession session){
-        List<Movie> movies = movieService.getAllMovies();
+        List<Movie> movies = movieService.getOnScreenMovies(ScreeningStatus.Y);
         model.addAttribute("movies", movies);
         model.addAttribute("date", "");
 
         boolean loggedIn = (session.getAttribute("userId") != null);
 
         model.addAttribute("loggedIn", loggedIn);
-        //TODO: 이 페이지에서 영화 장르, 등급 띄워주기
         return "schedule";
     }
 
@@ -81,6 +81,7 @@ public class ScheduleController {
         model.addAttribute("seats", seats);
 
         session.setAttribute("scheduleNumber", scheduleNumber);
+        session.setAttribute("theaterNumber", scheduleForm.getTheaterNumber());
 
         /*
 

@@ -26,7 +26,8 @@ public class PaymentDiscount implements Serializable {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PAYMENT_NUMBER")
+    @JoinColumn(name = "PAYMENT_NUMBER",columnDefinition = "VARCHAR2(36)")
+    //payment 테이블과 PK 타입이 약간 다름 > 에러나면 확인필요~!
     private Payment paymentNumber;
 
     @Id

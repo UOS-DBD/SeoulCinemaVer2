@@ -35,15 +35,21 @@ public class TicketController {
 
         String clientId = (String) httpSession.getAttribute(Constants.USER_ID_SESSION);
         List<ViewTicketsListDto> tickets = ticketService.viewTicketList(clientId); // 추후 clientId로 변경해야함
+        boolean loggedIn = (httpSession.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("tickets", tickets);
 
         return "viewTicketList";
     }
 
     @GetMapping("/tickets/{ticketNumber}")
-    public String viewSpecificTicket(@PathVariable("ticketNumber") String ticketNumber, Model model) {
+    public String viewSpecificTicket(@PathVariable("ticketNumber") String ticketNumber, Model model, HttpSession httpSession) {
 
         ViewSpecificTicketDto dto = ticketService.viewSpecificTicket(ticketNumber);
+        boolean loggedIn = (httpSession.getAttribute("userId") != null);
+
+        model.addAttribute("loggedIn", loggedIn);
         model.addAttribute("ticketNumber", ticketNumber); //예매 취소할때 사용될 티켓 넘버 세션에 저장
         model.addAttribute("ticketInfo", dto);
 
@@ -51,14 +57,21 @@ public class TicketController {
     }
 
     @GetMapping("/tickets/radio")
-    public String getTicketRadio(@RequestParam("paymentType") String paymentType, HttpSession httpSession, Model model) {
+    public String getTicketRadio(@RequestParam("paymentType") String paymentType,
+                                 HttpSession httpSession, Model model) {
+
+        Long memberPoint = null;
 
         String userId = (String) httpSession.getAttribute(Constants.USER_ID_SESSION);
-        Long memberPoint = memberService.getMemberPoint(userId);
+        if (memberService.isMember(userId)) {
+            memberPoint = memberService.getMemberPoint(userId);
+        } else{
+            memberPoint = 0L;
+        }
         boolean loggedIn = (httpSession.getAttribute("userId") != null);
 
         model.addAttribute("loggedIn", loggedIn);
-        model.addAttribute(Constants.MEMBER_POINT,memberPoint);
+        model.addAttribute(Constants.MEMBER_POINT, memberPoint);
 
         if (paymentType.equals("CARD")) {
             httpSession.setAttribute(Constants.PAYMENT_TYPE, PaymentType.CARD);
@@ -122,6 +135,6 @@ public class TicketController {
     @PostMapping("/tickets/{ticketNumber}")
     public String cancelTicket(@PathVariable String ticketNumber) {
         ticketService.cancelTicket(ticketNumber);
-        return "home";
+        return "redirect:/api/payments";
     }
 }

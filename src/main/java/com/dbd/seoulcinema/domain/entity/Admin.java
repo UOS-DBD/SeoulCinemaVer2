@@ -16,9 +16,10 @@ import lombok.*;
 public class Admin {
 
     @Id
+    @Column(length = 20)
     private String adminId;
-    
+
+    @Column(length = 64, nullable = false)
     private String password;
 
-    //TODO(관리자등급)
 }

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -15,7 +16,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "PARTICIPANT_MOVIE")
+@Table(name = "PARTICIPANT_MOVIE" //, indexes = {
+   // @Index(name = "idx_participant_movie_pk", columnList = "PARTICIPANT_NUMBER, MOVIE_NUMBER ASC", unique = false)
+//}
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder

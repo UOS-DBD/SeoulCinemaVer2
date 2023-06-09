@@ -9,26 +9,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-@Table(name = "THEATER")
+@Table(name = "CODE_TYPE")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Getter
-public class Theater {
+public class CodeType {
 
     @Id
-    @Column(columnDefinition = "CHAR(1)")
-    private String theaterNumber;
+    @Column(columnDefinition = "CHAR(4)")
+    private String codeTypeNumber;
 
-    @Column(columnDefinition = "CHAR(1)")
-    private String theaterFloor;
-
-
-    @Column(columnDefinition = "NUMBER(3,0)", nullable = false)
-    @ColumnDefault("0")
-    private Long seatQuantity;
-
+    @Column(columnDefinition = "CHAR(4)",nullable = false)
+    private String codeTypeName;
 }

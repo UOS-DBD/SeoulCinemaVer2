@@ -58,7 +58,7 @@ class MovieTest {
                 .movieGenre(MovieGenre.SF)
                 .movieGrade(MovieGrade.FIFTEEN)
                 .movieIntroduction("아이엠그루트")
-                .movieImage("assets/img/가디언즈 오브 갤럭시 VOL.3.png")
+                .movieImage("assets/img/가디언즈 오브 갤럭시 VOL. 3.png")
                 .screeningStatus(ScreeningStatus.N)
                 .build());
         em.persist(Movie.builder()

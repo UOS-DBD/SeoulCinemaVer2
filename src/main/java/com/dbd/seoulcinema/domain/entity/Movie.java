@@ -15,7 +15,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "MOVIE")
+@Table(name = "MOVIE" //, indexes = {
+    //@Index(name = "idx_movie_pk", columnList = "movieNumber ASC"),
+    //@Index(name = "idx_movie_name", columnList = "movieName ASC"),
+    //@Index(name = "idx_movie_screening_status", columnList = "screeningStatus ASC")}
+    )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -26,16 +30,18 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long movieNumber;
 
-    @Column(length = 100)
+    @Column(length = 100, nullable = false)
     private String movieName;
 
-    @Column(length = 5)
+    @Column(columnDefinition = "CHAR(5)", nullable = false)
     private String runningTime;
 
     @Convert(converter = MovieGenreConverter.class)
+    @Column(columnDefinition = "CHAR(2)", nullable = false)
     private MovieGenre movieGenre;
 
     @Convert(converter = MovieGradeConverter.class)
+    @Column(columnDefinition = "CHAR(2)", nullable = false)
     private MovieGrade movieGrade;
 
     @Column(length = 256)
@@ -44,16 +50,19 @@ public class Movie {
     @Column(length = 70)
     private String movieImage;
 
-    @Column(length = 2)
+    @Column(columnDefinition = "CHAR(1)", nullable = false)
+    @Enumerated(EnumType.STRING)
     private ScreeningStatus screeningStatus;
 
-    public void update(String movieName, String runningTime, MovieGenre movieGenre, MovieGrade movieGrade, String movieIntroduction, String movieImage, ScreeningStatus screeningStatus) {
+    public void update(String movieName, String runningTime, MovieGenre movieGenre,
+        MovieGrade movieGrade, String movieIntroduction, String movieImage,
+        ScreeningStatus screeningStatus) {
         this.movieName = movieName;
         this.runningTime = runningTime;
         this.movieGenre = movieGenre;
         this.movieGrade = movieGrade;
         this.movieIntroduction = movieIntroduction;
         this.movieImage = movieImage;
-        this.screeningStatus =screeningStatus;
+        this.screeningStatus = screeningStatus;
     }
 }

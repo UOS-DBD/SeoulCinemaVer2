@@ -24,8 +24,9 @@ public class Discount {
 
 
     @Convert(converter = DiscountTypeConverter.class)
+    @Column(columnDefinition = "CHAR(2)", nullable = false)
     private DiscountType discountType;
 
-
+    @Column(nullable = false)
     private Integer discountPrice;
 }
