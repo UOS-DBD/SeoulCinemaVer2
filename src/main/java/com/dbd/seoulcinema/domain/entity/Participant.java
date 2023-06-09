@@ -28,7 +28,7 @@ public class Participant {
 
 
     @Convert(converter = ParticipantTypeConverter.class)
-    @Column(columnDefinition = "CHAR(11)", nullable = false)
+    @Column(columnDefinition = "CHAR(2)", nullable = false)
     private ParticipantType participantType;
 
     public void update(CreateParticipantDto dto) {
