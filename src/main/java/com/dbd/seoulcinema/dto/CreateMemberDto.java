@@ -5,6 +5,7 @@ import com.dbd.seoulcinema.domain.enumeration.ClientGrade;
 import com.dbd.seoulcinema.global.utils.ClientGradeConverter;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.time.LocalDate;
 
@@ -19,7 +20,7 @@ public class CreateMemberDto {
     public Member toEntity(CreateMemberDto createMemberDto, LocalDate birth){
         return Member.builder()
                 .clientId(createMemberDto.getClientId())
-                .password(createMemberDto.getPassword())
+                .password(BCrypt.hashpw(createMemberDto.getPassword(),BCrypt.gensalt()))
                 .phoneNumber(createMemberDto.getPhoneNumber())
                 .point(0L)
                 .clientGrade(ClientGrade.NORMAL)
