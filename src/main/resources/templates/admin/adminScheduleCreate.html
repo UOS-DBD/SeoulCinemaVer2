@@ -48,16 +48,16 @@
         </div>
     </div>
 </header>
-<form th:action="@{/api/admin/schedule/create}" method="post">
+<form th:action="@{/api/admin/schedule/create}" method="post" class="styled-form">
     <div class="form-group">
-        <label for="movie">상영일정을 등록할 영화를 선택해주세요</label>
+        <label for="movie">상영일정을 등록할 영화를 선택해주세요: </label>
         <select name="movieNumber" id="movie" class="form-control">
             <option th:each="movie : ${movies}" th:value="${movie.movieNumber}" th:text="${movie.movieName}"></option>
         </select>
     </div> <br/>
 
     <div class="form-group">
-        <label for="movie">상영할 상영관을 선택해주세요</label>
+        <label for="movie">상영할 상영관을 선택해주세요: </label>
         <select name="theaterNumber" id="theater" class="form-control">
             <option th:each="theater : ${theaters}" th:value="${theater.theaterNumber}" th:text="${theater.theaterNumber}"></option>
         </select>
@@ -85,6 +85,94 @@
 </body>
 </html>
 
+<style>
+    .styled-form {
+        width: 500px;
+        padding: 30px;
+        background: #FFFFFF;
+        margin: 50px auto;
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+        -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+        -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+    }
+
+    .styled-form h2 {
+        background: #4D4D4D;
+        text-transform: uppercase;
+        font-family: 'Open Sans Condensed', sans-serif;
+        color: #797979;
+        font-size: 18px;
+        font-weight: 100;
+        padding: 20px;
+        margin: -30px -30px 30px -30px;
+    }
+
+    .styled-form input[type="text"],
+    .styled-form input[type="date"],
+    .styled-form input[type="datetime"],
+    .styled-form input[type="email"],
+    .styled-form input[type="number"],
+    .styled-form input[type="search"],
+    .styled-form input[type="time"],
+    .styled-form input[type="url"],
+    .styled-form input[type="password"],
+    .styled-form textarea,
+    .styled-form select {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        display: block;
+        width: 100%;
+        padding: 7px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        background: transparent;
+        margin-bottom: 10px;
+        font: 16px Arial, Helvetica, sans-serif;
+        height: 45px;
+    }
+
+    .styled-form textarea {
+        resize:none;
+        overflow: hidden;
+    }
+
+    .styled-form input[type="button"],
+    .styled-form input[type="submit"] {
+        -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+        -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+        box-shadow: inset 0px 1px 0px 0px #45D6D6;
+        background-color: #2CBBBB;
+        border: 1px solid #27A0A0;
+        display: inline-block;
+        cursor: pointer;
+        color: #FFFFFF;
+        font-family: 'Open Sans Condensed', sans-serif;
+        font-size: 14px;
+        padding: 8px 18px;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .styled-form input[type="button"]:hover,
+    .styled-form input[type="submit"]:hover {
+        background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+        background-color:#34CACA;
+    }
+
+    .triangle-button {
+        display: inline-block;
+        width: 0;
+        height: 0;
+        margin-left: 5px;
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 5px solid #555;
+        cursor: pointer;
+    }
+
+</style>
 <script>
     function showAlert() {
         alert("상영일정 등록이 완료됐습니다!");

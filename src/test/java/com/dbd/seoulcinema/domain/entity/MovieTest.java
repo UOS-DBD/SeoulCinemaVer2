@@ -57,7 +57,7 @@ class MovieTest {
                 .runningTime("03:02")
                 .movieGenre(MovieGenre.SF)
                 .movieGrade(MovieGrade.FIFTEEN)
-                .movieIntroduction("아이엠그루트")
+                .movieIntroduction("‘가모라’를 잃고 슬픔에 빠져 있던 ‘피터 퀼’이 위기에 처한 은하계와 동료를 지키기 위해 다시 한번 가디언즈 팀과 힘을 모으고, 성공하지 못할 경우 그들의 마지막이 될지도 모르는 미션에 나서는 이야기")
                 .movieImage("assets/img/가디언즈 오브 갤럭시 VOL. 3.png")
                 .screeningStatus(ScreeningStatus.N)
                 .build());
@@ -66,7 +66,7 @@ class MovieTest {
                 .runningTime("02:10")
                 .movieGenre(MovieGenre.DRAMA)
                 .movieGrade(MovieGrade.FIFTEEN)
-                .movieIntroduction("무슨 영화인지 모릅니다.")
+                .movieIntroduction("한때 잘 나갔던 전설의 스턴트맨 ‘루오’(성룡) 유일한 파트너마 ‘레드 헤어’가 경매에 부쳐질 위기에 처하자 어쩔 수 없이 소원했던 딸 ‘바오’(류호존)에게 연락해 도움을 청한다.")
                 .movieImage("assets/img/라이드 온.png")
                 .screeningStatus(ScreeningStatus.Y)
                 .build());
@@ -75,7 +75,7 @@ class MovieTest {
                 .runningTime("01:58")
                 .movieGenre(MovieGenre.ACTION)
                 .movieGrade(MovieGrade.ADULT)
-                .movieIntroduction("분노의 질주 시리즈로 빡빡이 형님이 나옵니다.")
+                .movieIntroduction("달리거나 죽거나, 그들의 마지막 질주가 시작된다!")
                 .movieImage("assets/img/분노의 질주 라이드 오어 다이.png")
                 .screeningStatus(ScreeningStatus.N)
                 .build());
