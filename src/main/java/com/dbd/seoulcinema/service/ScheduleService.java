@@ -113,7 +113,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    @Scheduled(cron = "0/30 * * ? * *")
+    @Scheduled(cron = "0 * * ? * *")
     public void deleteScheduleSeatLock(){
         List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findAllByPaymentStatus(PaymentStatus.NO);
         for (ScheduleSeat scheduleSeat : scheduleSeats) {

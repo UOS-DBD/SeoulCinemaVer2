@@ -24,7 +24,7 @@ public class SpecificCode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(length = 3)
+    @Column(columnDefinition = "NUMBER(3)")
     private Long specificCodeNumber;
 
     @Column(length = 6, nullable = false)
