@@ -78,7 +78,7 @@ public class MovieController {
 //        model.addAttribute("movie", new CreateMovieDto());
 //        List<CreateParticipantDto> createParticipantDtoList = new ArrayList<>();
 //        model.addAttribute("participant", createParticipantDtoList);
-        boolean loggedIn = (session.getAttribute("userId") != null);
+        boolean loggedIn = (session.getAttribute("adminId") != null);
 
         model.addAttribute("loggedIn", loggedIn);
         return "admin/adminmoviecreate";
