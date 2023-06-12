@@ -75,6 +75,8 @@ public class LoginController {
     @PostMapping(value = "/api/admin/auth/login")
     public RedirectView adminLoginCheck(@ModelAttribute("formData") @Valid LoginDto loginDto, HttpSession session, Model model){
 
+        //TODO: forgot your pw 지우기
+
         String userId = loginService.adminLogin(loginDto, session);
 
         if(userId != null){ // 로그인 성공

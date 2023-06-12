@@ -17,11 +17,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/home", "/", "/login", "/css/**", "*.ico", "/error",
                         "/admin/**", "/schedules", "/viewSchedulesForm", "/api/schedules",
                         "/api/auth/login", "/api/admin/**", "/assets/img/**", "/movie/**",
-                        "/nonmember/login", "/api/nonmembers");
+                        "/nonmember/login", "/api/nonmembers", "/api/members","/events");
 
         registry.addInterceptor(new AdminLoginCheckInterceptor())
                 .addPathPatterns("/admin/**", "/api/admin/**")
                 .order(2)
-                .excludePathPatterns("/api/admin/auth/login", "/admin/login", "/admin/home", "/assets/img/**");
+                .excludePathPatterns("/api/admin/auth/login", "/admin/login", "/admin/home", "/assets/img/**", "/api/admin");
     }
 }
