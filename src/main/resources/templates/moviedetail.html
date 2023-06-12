@@ -139,7 +139,7 @@
     <div class="col">
         <div th:with="movie=${movie[0]}">
             <img class="card-img-top" th:src = "@{/}+${movie.movieImage}" alt="..." />
-            <h1 class="text-body-emphasis" th:text="${'영화이름: '+movie.movieName}">movieName</h1>
+            <h1 class="text-body-emphasis" th:text="${movie.movieName}">movieName</h1>
             <p class="fs-5 col-md-8" th:text="${'영화소개: '+movie.movieIntroduction}">movieIntroduction</p>
             <hr class="col-3 col-md-2 mb-5">
       </div>
