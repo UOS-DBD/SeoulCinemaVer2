@@ -6,6 +6,7 @@ import com.dbd.seoulcinema.dto.LoginDto;
 import com.dbd.seoulcinema.repository.AdminRepository;
 import com.dbd.seoulcinema.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,7 @@ public class LoginService {
         }
         else{
             // 로그인 성공
-            if(member.get().getPassword().equals(loginDto.getPassword())){
+            if(BCrypt.checkpw(loginDto.getPassword(), member.get().getPassword())){
                 session.setAttribute("userId", loginDto.getId());
                 return loginDto.getId();
             }
