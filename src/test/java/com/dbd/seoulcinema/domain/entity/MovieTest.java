@@ -86,7 +86,7 @@ class MovieTest {
                 .movieGrade(MovieGrade.ALL)
                 .movieIntroduction("문단속을 생활화합시다.")
                 .movieImage("assets/img/스즈메의 문단속.png")
-                .screeningStatus(ScreeningStatus.Y)
+                .screeningStatus(ScreeningStatus.N)
                 .build());
         em.persist(Movie.builder()
                 .movieName("인어공주")
@@ -95,7 +95,7 @@ class MovieTest {
                 .movieGrade(MovieGrade.ALL)
                 .movieIntroduction("언더더씨")
                 .movieImage("assets/img/인어공주.png")
-                .screeningStatus(ScreeningStatus.Y)
+                .screeningStatus(ScreeningStatus.N)
                 .build());
 
             em.flush();

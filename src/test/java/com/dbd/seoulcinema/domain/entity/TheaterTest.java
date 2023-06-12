@@ -1,6 +1,7 @@
 package com.dbd.seoulcinema.domain.entity;
 
 import com.dbd.seoulcinema.domain.enumeration.DiscountType;
+import com.dbd.seoulcinema.domain.enumeration.ParticipantType;
 import com.dbd.seoulcinema.domain.enumeration.TicketingStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,14 +25,55 @@ class TheaterTest {
     @Test
     void injectSeat(){
 
-
-        Theater theater = Theater.builder()
+        em.persist(Theater.builder()
                 .theaterNumber("1")
                 .theaterFloor("1")
                 .seatQuantity(300L)
-                .build();
+                .build());
 
-        em.persist(theater);
+        em.persist(Theater.builder()
+                .theaterNumber("2")
+                .theaterFloor("1")
+                .seatQuantity(300L)
+                .build());
+
+        em.persist(Theater.builder()
+                .theaterNumber("3")
+                .theaterFloor("2")
+                .seatQuantity(300L)
+                .build());
+
+        em.persist(Theater.builder()
+                .theaterNumber("4")
+                .theaterFloor("2")
+                .seatQuantity(300L)
+                .build());
+
+        em.persist(Theater.builder()
+                .theaterNumber("5")
+                .theaterFloor("2")
+                .seatQuantity(300L)
+                .build());
+
+        em.persist(Theater.builder()
+                .theaterNumber("6")
+                .theaterFloor("3")
+                .seatQuantity(300L)
+                .build());
+
+        em.persist(Theater.builder()
+                .theaterNumber("7")
+                .theaterFloor("3")
+                .seatQuantity(300L)
+                .build());
+
+        em.persist(Theater.builder()
+                .theaterNumber("8")
+                .theaterFloor("3")
+                .seatQuantity(300L)
+                .build());
+
+
         em.flush();
         em.clear();
     }
